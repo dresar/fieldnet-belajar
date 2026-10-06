@@ -15,6 +15,7 @@ import { renderReports } from './views/reports.js';
 import { renderSearch } from './views/search-view.js';
 import { renderNotes } from './views/notes.js';
 import { renderSettings, applyTheme } from './views/settings.js';
+import { renderStudio } from './views/studio.js';
 
 // Apply saved theme immediately
 const savedTheme = localStorage.getItem('fn_theme') || 'system';
@@ -29,6 +30,9 @@ app.innerHTML = `
       <span>FieldNet Belajar</span>
     </div>
     <div class="top-bar-actions">
+      <a href="#/studio" class="btn btn-icon" title="Studio">
+        ${icon('image', 20)}
+      </a>
       <a href="#/search" class="btn btn-icon" title="Cari">
         ${icon('search', 20)}
       </a>
@@ -48,6 +52,10 @@ app.innerHTML = `
     <a href="#/modules" class="nav-item">
       ${icon('book-open', 20)}
       <span>Modul</span>
+    </a>
+    <a href="#/studio" class="nav-item">
+      ${icon('image', 20)}
+      <span>Studio</span>
     </a>
     <a href="#/checklist" class="nav-item">
       ${icon('check-square', 20)}
@@ -71,6 +79,7 @@ router
   .add('/', () => renderDashboard(mainContent))
   .add('/dashboard', () => renderDashboard(mainContent))
   .add('/modules', () => renderModules(mainContent))
+  .add('/studio', () => renderStudio(mainContent))
   .add('/lesson/:id', (params) => renderLesson(mainContent, params))
   .add('/quiz/:id', (params) => renderQuiz(mainContent, params))
   .add('/checklist', (params) => renderChecklist(mainContent, params))

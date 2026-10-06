@@ -40,6 +40,23 @@ export async function renderLesson(container, params) {
   const bookmark = await db.bookmarks.get(mod.id);
   let isBookmarked = !!bookmark;
 
+  // Load cached images from IndexedDB
+  const imageMap = new Map();
+  if (Array.isArray(mod.sections)) {
+    for (const sec of mod.sections) {
+      if (sec.imageSlot && sec.imageSlot.filename) {
+        const fname = sec.imageSlot.filename;
+        const bare = fname.replace(/^images\//, '');
+        const item = (await db.settings.get(`image:${fname}`)) ||
+                     (await db.settings.get(`image:${bare}`)) ||
+                     (await db.settings.get(`image:images/${bare}`));
+        if (item && item.dataUrl) {
+          imageMap.set(fname, item.dataUrl);
+        }
+      }
+    }
+  }
+
   container.innerHTML = `
     <div style="display: flex; flex-direction: column; gap: var(--space-4);">
       <!-- Top Action Bar -->
@@ -133,16 +150,34 @@ export async function renderLesson(container, params) {
             </div>
           ` : ''}
 
-          <!-- Image Fallback Card -->
-          ${sec.imageSlot ? `
-            <div class="image-slot">
-              <div class="image-slot-icon">
-                ${icon('image', 24)}
+          <!-- Technical Illustration Card -->
+          ${sec.imageSlot ? (() => {
+            const cachedUrl = imageMap.get(sec.imageSlot.filename);
+            const initialSrc = cachedUrl || `/${sec.imageSlot.filename}`;
+            return `
+              <div class="image-presentation" style="margin: var(--space-2) 0; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); overflow: hidden; background: var(--bg-surface-elevated);">
+                <div style="background: #000; text-align: center; position: relative; min-height: 160px; display: flex; align-items: center; justify-content: center;">
+                  <img src="${initialSrc}" alt="${sec.imageSlot.alt || sec.imageSlot.caption}" style="max-height: 360px; width: 100%; object-fit: contain; display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  <div class="image-slot-inner" style="display: none; flex-direction: column; align-items: center; justify-content: center; padding: var(--space-4); text-align: center; gap: var(--space-2); width: 100%; background: var(--bg-surface-elevated);">
+                    <div class="image-slot-icon">${icon('image', 24)}</div>
+                    <div class="image-slot-caption">${sec.imageSlot.caption}</div>
+                    <div class="image-slot-file">${sec.imageSlot.filename}</div>
+                    <div style="margin-top: var(--space-2);">
+                      <a href="#/studio" class="btn btn-primary btn-sm">${icon('image', 14)} Studio</a>
+                    </div>
+                  </div>
+                </div>
+                <div style="padding: var(--space-2) var(--space-3); background: var(--bg-surface); border-top: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; gap: var(--space-2);">
+                  <span style="font-size: var(--text-xs); color: var(--text-secondary); line-height: 1.4;">
+                    ${sec.imageSlot.caption}
+                  </span>
+                  <a href="#/studio" class="btn btn-outline btn-sm" title="Studio">
+                    ${icon('image', 14)} Studio
+                  </a>
+                </div>
               </div>
-              <div class="image-slot-caption">${sec.imageSlot.caption}</div>
-              <div class="image-slot-file">${sec.imageSlot.filename}</div>
-            </div>
-          ` : ''}
+            `;
+          })() : ''}
         </div>
       `).join('')}
 

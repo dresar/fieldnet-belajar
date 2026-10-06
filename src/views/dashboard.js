@@ -91,7 +91,10 @@ export async function renderDashboard(container) {
       ` : ''}
 
       <!-- Quick Action Shortcuts -->
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2);">
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2);">
+        <a href="#/studio" class="btn btn-secondary" style="font-size: var(--text-xs); padding: 0 var(--space-2);">
+          ${icon('image', 16)} Studio
+        </a>
         <a href="#/checklist" class="btn btn-secondary" style="font-size: var(--text-xs); padding: 0 var(--space-2);">
           ${icon('check-square', 16)} Checklist
         </a>

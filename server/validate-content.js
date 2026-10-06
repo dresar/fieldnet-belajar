@@ -190,14 +190,18 @@ function scanDir(dir) {
 }
 scanDir(srcDir);
 
-// 10. Sync content/ to public/content and dist/content
+// 10. Sync content/ to public/content, dist/content, and android assets
 const pubContentDir = path.join(rootDir, 'public', 'content');
 const distContentDir = path.join(rootDir, 'dist', 'content');
+const androidPublicDir = path.join(rootDir, 'android', 'app', 'src', 'main', 'assets', 'public');
 if (fs.existsSync(contentDir)) {
   fs.cpSync(contentDir, pubContentDir, { recursive: true });
   if (fs.existsSync(path.join(rootDir, 'dist'))) {
     fs.cpSync(contentDir, distContentDir, { recursive: true });
   }
+}
+if (fs.existsSync(path.join(rootDir, 'dist')) && fs.existsSync(androidPublicDir)) {
+  fs.cpSync(path.join(rootDir, 'dist'), androidPublicDir, { recursive: true });
 }
 
 // 11. Validate Production Bundle and Service Worker in dist/

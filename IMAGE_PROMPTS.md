@@ -1,195 +1,300 @@
-# Daftar Prompt Gambar & Panduan Ilustrasi Lapangan
+# Panduan Prompt Gambar 3D & Ilustrasi Lapangan FieldNet
 
-Dokumen ini berisi daftar prompt pembuatan gambar ilustrasi teknis dalam bahasa Inggris untuk seluruh slot gambar pada aplikasi **FieldNet Belajar**. Setiap prompt dirancang dengan konsistensi gaya:
-- **Gaya Visual:** Flat technical illustration, clean precise line art, isometric perspective (jika relevan).
-- **Palet Warna:** Aksen hijau utama (`#16A34A`), netral abu-abu arsitektural, latar belakang polos bersih (plain white / transparent).
-- **Ketentuan:** Tanpa teks acak di dalam gambar kecuali label teknis yang diminta secara eksplisit.
-- **Graceful Fallback:** Aplikasi telah dilengkapi kartu placeholder otomatis dengan caption dan nama file, sehingga tampilan tetap elegan meskipun file gambar belum diisi.
+Dokumen ini memuat seluruh daftar prompt pembuatan model 3D teknis dalam bahasa Indonesia untuk semua slot ilustrasi aplikasi **FieldNet Belajar**. Setiap prompt dirancang khusus untuk memanggil tool pembuatan gambar dengan awalan `create images`, menggunakan gaya 3D model yang bersih, detail, realistis, minim teks di dalam gambar, dan mudah dipahami oleh teknisi pemula atau staf IT.
 
 ---
 
-## 1. Modul 01: Survei Lokasi & Rencana Instalasi
+## Ketentuan Prompting Gambar
 
-### `images/survey-cable-path.png`
+1. **Awalan Wajib:** Seluruh prompt dimulai dengan kata kunci `create images` agar langsung memicu tool generator gambar.
+2. **Gaya Visual:** Render 3D model fotorealistik atau technical 3D visualization, pencahayaan studio lembut, sudut pandang isometrik atau close-up 3/4.
+3. **Bahasa:** Bahasa Indonesia baku dan istilah teknis standar lapangan jaringan/CCTV.
+4. **Elemen Teks:** Hindari teks acak berantakan (gibberish text). Gambar harus fokus pada bentuk fisik perangkat, warna kabel, konektor, dan indikator lampu LED.
+5. **Palet Warna:** Aksen hijau lapangan (`#16A34A`), abu-abu perangkat industri, putih bersih, dan aksen warna kawat standar internasional.
+
+---
+
+## Slot Ilustrasi Modul Kurikulum (11 Modul)
+
+### 1. Modul 01: Survei Lokasi & Perencanaan
+
+#### `images/survey-cable-path.png`
 - **Modul:** Modul 01 - Survei Lokasi (Bagian 1: Observasi Fisik & Struktur Gedung)
 - **Prompt:**
-  > "A clean isometric flat technical illustration showing a ceiling crawl space and gypsum drop ceiling in an office building. On the left, a gray PVC conduit carrying network UTP cables. On the right, a black electrical conduit carrying 220V power cables, strictly separated by a measured distance of at least 30 cm with a clear dashed measurement bracket labeled '30 cm'. Minimalist aesthetic, clean line art, primary green accent (#16A34A) highlighting the data conduit, plain solid background, no extraneous clutter."
+  ```text
+  create images Model 3D bersih dan realistis dari jalur instalasi kabel di atas plafon gedung kantor modern. Di sebelah kiri tampak pipa conduit PVC abu-abu berisi kabel data LAN UTP, dan di sebelah kanan tampak pipa conduit hitam berisi kabel listrik 220V PLN. Kedua pipa dipisahkan secara tegas dengan jarak aman terukur minimal 30 cm. Tampak rangka hollow plafon gypsum dan dak beton dengan pencahayaan studio 3D lembut, gaya isometrik rapi tanpa banyak teks, warna aksen hijau lapangan.
+  ```
 
-### `images/survey-boq-sample.png`
+#### `images/survey-boq-sample.png`
 - **Modul:** Modul 01 - Survei Lokasi (Bagian 2: Penyusunan Bill of Quantities)
 - **Prompt:**
-  > "A flat technical vector illustration of network technician survey tools and planning sheet on an architectural floorplan blueprint. Shows a laser distance meter emitting a crisp green (#16A34A) laser line, a notebook open with a neat Bill of Quantities checklist, a calculator, and a yellow coiled UTP cable roll. Crisp lines, soft neutral tones, high contrast, white background."
+  ```text
+  create images Model 3D meja kerja teknisi jaringan saat survei lokasi gedung. Di atas meja kayu terdapat meteran laser digital memancarkan garis sinar hijau, rol kabel UTP Cat6 oranye, buku catatan survei berisi checklist material BoQ rapi, obeng presisi, tang potong kabel, dan helm keselamatan proyek warna putih. Render 3D bersih, pencahayaan terang studio produk, latar belakang netral minimalis.
+  ```
 
 ---
 
-## 2. Modul 02: Kabel UTP, Crimping & Testing
+### 2. Modul 02: Kabel UTP, Crimping & Testing
 
-### `images/utp-color-pinout.png`
+#### `images/utp-color-pinout.png`
 - **Modul:** Modul 02 - Kabel UTP (Bagian 1: Standar Warna T568A & T568B)
 - **Prompt:**
-  > "A detailed front-facing technical illustration of a transparent RJ45 modular plug viewed with the plastic retaining clip facing downward. Inside the clear plastic body, 8 colored copper wire pins are aligned in exact T568B order from pin 1 to 8: White-Orange, Orange, White-Green, Blue, White-Blue, Green, White-Brown, Brown. Sharp technical diagram, clean vector lines, accent green (#16A34A) highlights on the pin numbering 1 to 8, plain white background."
+  ```text
+  create images Model 3D close-up detail dari konektor RJ45 transparan modular plug dengan klip pengunci menghadap ke bawah. Di dalam badan plastik bening terlihat jelas 8 urutan pin kawat tembaga standar T568B dari pin 1 sampai 8: Putih-Oranye, Oranye, Putih-Hijau, Biru, Putih-Biru, Hijau, Putih-Cokelat, Cokelat. Render 3D fotorealistik presisi tinggi, material plastik mengkilap, pin tembaga emas menyala elegan, sudut pandang depan.
+  ```
 
-### `images/utp-crimping-steps.png`
+#### `images/utp-crimping-steps.png`
 - **Modul:** Modul 02 - Kabel UTP (Bagian 2: Teknik Crimping & Uji Tester LAN)
 - **Prompt:**
-  > "A three-stage technical illustration showing the UTP crimping process: Step 1 shows stripping the outer jacket 2.5 cm and untwisting pairs; Step 2 shows flush cutting wires to 1.2 cm and sliding into RJ45 plug with outer jacket nested past the internal crimp wedge; Step 3 shows heavy-duty ratchet crimping tool pressing down onto the RJ45 plug. Clean line art, green accent (#16A34A) on the tool handle and status ticks, pure solid background."
+  ```text
+  create images Model 3D visual 3 tahapan crimping kabel UTP Cat6. Tahap 1 memperlihatkan pengupasan jaket luar kabel 2,5 cm dan pemisahan 4 pasang pilinan kawat. Tahap 2 kawat dipotong rata rapi 1,2 cm lalu dimasukkan ke dalam kepala RJ45 sampai jaket luar terjepit pasak penahan. Tahap 3 tang crimping ratchet warna hijau menekan konektor hingga pin tembaga menusuk inti kabel. Render 3D studio bersih dan berurutan.
+  ```
 
 ---
 
-## 3. Modul 03: Fiber Optik Dasar, Splicing & Loss
+### 3. Modul 03: Fiber Optik Dasar, Splicing & Loss
 
-### `images/fiber-connector-types.png`
+#### `images/fiber-connector-types.png`
 - **Modul:** Modul 03 - Fiber Optik (Bagian 1: Karakteristik Core & Konektor FO)
 - **Prompt:**
-  > "A technical side-by-side comparison diagram of optical fiber connectors. On the left, a blue SC-UPC connector with a flat ceramic ferrule. On the right, a vibrant green (#16A34A) SC-APC connector highlighting the angled 8-degree ferrule tip with an angle indicator diagram. Precision technical line art, cross-sectional view of the 9-micron single-mode glass core, clean white background."
+  ```text
+  create images Model 3D perbandingan presisi dua konektor fiber optik jenis SC. Di sisi kiri konektor SC-UPC warna biru laut dengan ferrule keramik putih datar 0 derajat. Di sisi kanan konektor SC-APC warna hijau cerah dengan ferrule keramik bersudut miring 8 derajat. Tampak detail inti serat kaca core 9 mikron di tengah ferrule putih mengkilap. Render 3D produk presisi tinggi dengan pencahayaan studio elegan dan latar belakang bersih.
+  ```
 
-### `images/fiber-fusion-splicing.png`
+#### `images/fiber-fusion-splicing.png`
 - **Modul:** Modul 03 - Fiber Optik (Bagian 2: Teknik Splicing & Pengukuran Loss)
 - **Prompt:**
-  > "An isometric technical illustration of a modern fiber optic fusion splicer device with the windproof cover open. Inside the V-grooves, two stripped 125-micron glass fibers meet between dual tungsten electrodes with a miniature electric arc glow. The LCD display screen shows X and Y axis fiber alignment with a reading '0.01 dB'. Green accents (#16A34A) on rubber bumper pads and digital readout, clean white background."
+  ```text
+  create images Model 3D mesin fusion splicer fiber optik modern dengan penutup pelindung angin terbuka ke atas. Di dalam dudukan V-groove tampak dua ujung serat kaca 125 mikron yang telah dikupas bertemu di antara dua jarum elektroda tungsten dengan percikan api busur listrik mikro berwarna biru lembut. Layar digital LCD menampilkan penjajaran serat sumbu X dan Y dengan angka loss 0.01 dB. Render 3D peralatan teknologi tinggi warna abu-abu industri dan aksen hijau.
+  ```
 
 ---
 
-## 4. Modul 04: Instalasi Rack, Switch, Router & Access Point
+### 4. Modul 04: Instalasi Rack, Switch, Router & Access Point
 
-### `images/rack-cable-management.png`
+#### `images/rack-cable-management.png`
 - **Modul:** Modul 04 - Instalasi Rack (Bagian 1: Mounting Rack & Manajemen Kabel)
 - **Prompt:**
-  > "A front-elevation technical vector drawing of a 19-inch server rack enclosure. From top to bottom: 1U 24-port keystone patch panel, 1U horizontal cable management brush duct, and 1U 24-port Gigabit PoE switch. Short 30 cm green (#16A34A) and blue patch cords loop neatly through the brush panel into switch ports. Rack rails show standard 1U tick marks and cage nuts. Crisp engineering illustration, plain neutral background."
+  ```text
+  create images Model 3D kabinet server rack 19 inci dari tampak depan. Di dalamnya terpasang rapi dari atas ke bawah: patch panel 24 port 1U, horizontal cable management brush panel 1U di tengah, dan switch manageable PoE 24 port 1U di bawah. Kabel patch cord pendek warna hijau dan biru tersusun rapi terikat velcro mengalir melalui panel manajemen masuk ke port switch. Render 3D profesional tanpa kabel berantakan.
+  ```
 
-### `images/poe-switch-budget.png`
+#### `images/poe-switch-budget.png`
 - **Modul:** Modul 04 - Instalasi Rack (Bagian 2: Kalkulasi Daya PoE & Penempatan AP)
 - **Prompt:**
-  > "A clean infographic diagram illustrating PoE Power Budget calculation. In the center, a 250W PoE switch with an energy gauge bar showing 180W used (green #16A34A) and 70W headroom reserve. Cables branch out to 8 ceiling-mounted Wi-Fi 6 Access Points (15W each) and 4 outdoor PTZ cameras (25W each). Flat isometric vector art, precise lines, white background."
+  ```text
+  create images Model 3D diagram isometrik switch PoE gigabit 24 port berdaya 250W dengan lampu indikator watt menyala hijau aman. Dari port-port switch menjulur kabel UTP Cat6 terhubung rapi ke Access Point WiFi 6 plafon dan kamera CCTV IP outdoor. Render 3D isometrik bersih menampilkan konsep pembagian daya PoE budget stabil tanpa teks rumit.
+  ```
 
 ---
 
-## 5. Modul 05: Konfigurasi Dasar MikroTik
+### 5. Modul 05: Konfigurasi Dasar MikroTik
 
-### `images/mikrotik-winbox-login.png`
+#### `images/mikrotik-winbox-login.png`
 - **Modul:** Modul 05 - Dasar MikroTik (Bagian 1: Akses Winbox & Pemberian Identitas)
 - **Prompt:**
-  > "A clean vector mockup of the MikroTik Winbox application connection dialog. Focus on the 'Neighbors' discovery tab listing discovered routers by MAC Address, IP Address (0.0.0.0), Identity ('MikroTik'), and Board Name. A mouse cursor highlights the top MAC address row with an accent green (#16A34A) border. Minimalist UI vector style, high legibility, crisp outlines."
+  ```text
+  create images Model 3D routerboard MikroTik hEX RB750Gr3 warna putih abu-abu dengan 5 port gigabit dan lampu indikator LED aktif di samping laptop teknisi yang menampilkan jendela login aplikasi Winbox pada tab Neighbors MAC Address. Sudut pandang isometrik 3D meja kerja teknisi IT dengan kabel LAN terhubung, bersih, realistis, dan informatif.
+  ```
 
-### `images/mikrotik-nat-masquerade.png`
+#### `images/mikrotik-nat-masquerade.png`
 - **Modul:** Modul 05 - Dasar MikroTik (Bagian 2: Konfigurasi IP, DHCP, DNS & NAT)
 - **Prompt:**
-  > "A network translation diagram illustrating NAT Masquerade. On the left, private local network clients (192.168.10.0/24) send data packets. In the center, a MikroTik router box converts source addresses into a single public WAN IP (203.0.113.15) with an arrow pointing toward a clean globe cloud. Green (#16A34A) vector arrows indicate packet flow, crisp line art, white background."
+  ```text
+  create images Model 3D visual diagram alur internet NAT Masquerade. Dari sisi kiri perangkat laptop dan komputer kantor (segmen IP lokal 192.168.10.0/24) terhubung ke router MikroTik putih, lalu router menerjemahkan paket data keluar menuju simbol bola dunia awan internet melalui satu IP publik dengan panah berkilau cahaya hijau. Render 3D modern, bersih, dan mudah dipahami pemula.
+  ```
 
 ---
 
-## 6. Modul 06: Konfigurasi Lanjutan MikroTik
+### 6. Modul 06: Konfigurasi Lanjutan MikroTik
 
-### `images/vlan-bridge-filtering.png`
+#### `images/vlan-bridge-filtering.png`
 - **Modul:** Modul 06 - Konfigurasi Lanjutan (Bagian 1: VLAN & Bridge VLAN Filtering)
 - **Prompt:**
-  > "An architectural diagram showing Bridge VLAN Filtering inside a managed switch. An 802.1Q trunk port carries combined tagged traffic: VLAN 10 (Office Staff - green #16A34A) and VLAN 20 (CCTV - amber). The internal bridge filtering matrix routes untagged frames to dedicated access ports ether3 and ether4. Clean vector isometric network topology, sharp lines, plain background."
+  ```text
+  create images Model 3D konsep pembagian jalur VLAN pada switch manageable. Satu kabel trunk utama membawa paket gabungan, lalu di dalam switch terbagi secara terisolasi menjadi dua jalur warna: jalur VLAN 10 warna hijau untuk komputer kantor dan jalur VLAN 20 warna oranye khusus kamera CCTV. Render 3D isometrik bersih dengan efek jalur warna bercahaya elegan.
+  ```
 
-### `images/firewall-queue-vpn.png`
+#### `images/firewall-queue-vpn.png`
 - **Modul:** Modul 06 - Konfigurasi Lanjutan (Bagian 2: Firewall, Manajemen Bandwidth & VPN)
 - **Prompt:**
-  > "A three-pillar technical illustration representing network security and control. Pillar 1: A firewall shield blocking invalid red packets while letting green (#16A34A) established packets pass. Pillar 2: A bandwidth traffic queue with balanced lanes. Pillar 3: A padlock tunnel representing WireGuard VPN encryption. Flat modern vector art, clean lines, white background."
+  ```text
+  create images Model 3D konsep keamanan router jaringan: perisai firewall hijau melindungi transmisi data dari ancaman luar, tabung antrean bandwidth bertingkat membagi kecepatan internet secara adil, dan terowongan pipa VPN terenkripsi dengan gembok pengaman digital bercahaya. Render 3D modern futuristik, bersih, ramah pemula tanpa teks membingungkan.
+  ```
 
 ---
 
-## 7. Modul 07: CCTV IP & Analog (NVR, DVR & HDD)
+### 7. Modul 07: CCTV IP & Analog (NVR, DVR & HDD)
 
-### `images/cctv-system-topology.png`
+#### `images/cctv-system-topology.png`
 - **Modul:** Modul 07 - CCTV Sistem (Bagian 1: Arsitektur Analog HD vs IP Camera)
 - **Prompt:**
-  > "A comparative split-view diagram of CCTV architectures. Top half: Analog HD camera connecting via passive video balun and UTP wire to a central DVR box and 12V DC power distribution unit. Bottom half: Modern ONVIF IP dome camera connecting via a single green (#16A34A) Cat6 PoE cable directly into an 8-channel NVR. Clean isometric vector, plain white background."
+  ```text
+  create images Model 3D perbandingan berdampingan dua sistem CCTV pengawas. Sisi atas adalah sistem kamera analog bullet terhubung kabel UTP dan video balun menuju power supply sentral 12V jaring dan perekam DVR. Sisi bawah adalah sistem modern IP camera dome putih cukup terhubung satu kabel LAN PoE langsung menuju perekam NVR. Render 3D berdampingan yang sangat jelas membedakan komponen instalasi.
+  ```
 
-### `images/cctv-hdd-calculation.png`
+#### `images/cctv-hdd-calculation.png`
 - **Modul:** Modul 07 - CCTV Sistem (Bagian 2: Kalkulasi Harddisk & Codec Kompresi)
 - **Prompt:**
-  > "A technical graphic comparing video compression storage savings. Shows a purple surveillance-grade 3.5-inch hard drive. Below it, two storage consumption bars: 'H.264 (Old)' taking 10 Terabytes, and 'H.265+ (Smart Codec)' taking only 4 Terabytes, highlighted with a green (#16A34A) '60% Storage Saved' badge. Flat precision technical drawing, crisp lines."
+  ```text
+  create images Model 3D harddisk internal khusus CCTV 3.5 inci Western Digital Purple bersanding dengan grafik silinder perbandingan kapasitas penyimpanan rekaman: format lama H.264 memerlukan kapasitas besar, sedangkan format cerdas H.265+ hemat lebih dari separuh ruang harddisk dengan lencana hijau hemat 60%. Render 3D metalik bersih dengan detail label ungu surveillance drive.
+  ```
 
 ---
 
-## 8. Modul 08: Akses Jarak Jauh CCTV & Jaringan
+### 8. Modul 08: Akses Jarak Jauh CCTV & Jaringan
 
-### `images/cctv-p2p-cloud-setup.png`
+#### `images/cctv-p2p-cloud-setup.png`
 - **Modul:** Modul 08 - Akses Remote (Bagian 1: Koneksi Cloud P2P Tanpa IP Publik)
 - **Prompt:**
-  > "An isometric illustration showing P2P Cloud connectivity. In the center, a secure cloud server icon. On the left, an on-premise NVR displays a QR Code on its monitor with a green (#16A34A) 'Status: Online' indicator. On the right, a technician's smartphone scans the QR code, instantly displaying live multi-camera feeds. Clean vector line art, white background."
+  ```text
+  create images Model 3D kemudahan koneksi CCTV Cloud P2P. Layar monitor NVR menampilkan kode QR verifikasi dengan indikator status online warna hijau, dan di sampingnya smartphone teknisi sedang memindai kode QR tersebut sehingga layar HP langsung menampilkan tayangan langsung video kamera secara instan. Render 3D bersih dengan sudut isometrik modern.
+  ```
 
-### `images/cctv-port-forwarding.png`
+#### `images/cctv-port-forwarding.png`
 - **Modul:** Modul 08 - Akses Remote (Bagian 2: Port Forwarding, DDNS & Aliran RTSP)
 - **Prompt:**
-  > "A network port routing technical diagram. External internet traffic arrives at a modem router with a public IP. The router's NAT Virtual Server table maps incoming Port 8000 (Media Server), Port 554 (RTSP Stream - green #16A34A), and Port 8088 (Web HTTP) to the local private IP of the NVR (192.168.1.100). Clean vector diagram with directional arrows, white background."
+  ```text
+  create images Model 3D diagram alur port forwarding remote CCTV. Dari internet luar paket data masuk ke modem router dengan IP publik, lalu diteruskan melalui port RTSP 554 dan port server 8000 langsung ke alamat IP lokal NVR di jaringan internal. Render 3D dengan garis panah bercahaya hijau mengalir di atas latar belakang putih bersih.
+  ```
 
 ---
 
-## 9. Modul 09: Troubleshooting Jaringan & CCTV
+### 9. Modul 09: Troubleshooting Jaringan & CCTV
 
-### `images/troubleshooting-tree-internet.png`
+#### `images/troubleshooting-tree-internet.png`
 - **Modul:** Modul 09 - Pohon Masalah (Bagian 1: Kasus 1 - Internet Mati Total)
 - **Prompt:**
-  > "A sleek decision-tree flowchart for internet outage diagnosis. Root node: 'Check ONT LOS/PON LEDs'. Branches lead to 'Optical Fiber Cut', 'Modem LAN Link Check', 'Gateway Ping Test', and 'DNS Lookup Check' with green (#16A34A) checkmark branches for YES and red warning nodes for NO. Clean flowchart design with rounded cards, readable structure, plain white background."
+  ```text
+  create images Model 3D diagram langkah penanganan masalah internet mati total. Teknisi memeriksa lampu indikator PON dan LOS pada modem optik ONT, kabel patch cord kuning, pengujian ping pada laptop tester, dan router utama dengan simbol centang hijau untuk jalur normal dan segitiga kuning untuk pemeriksaan. Render 3D isometrik bersih dan terstruktur.
+  ```
 
-### `images/troubleshooting-tree-cctv.png`
+#### `images/troubleshooting-tree-cctv.png`
 - **Modul:** Modul 09 - Pohon Masalah (Bagian 2: Kasus 2 - CCTV Hilang Gambar & RTO)
 - **Prompt:**
-  > "A decision-tree flowchart for CCTV No Video troubleshooting. Step 1: 'Measure 12V DC Voltage at Camera'. Step 2: 'Check PoE Link LED on Switch'. Step 3: 'Ping IP via SADP Tool'. Step 4: 'Verify ONVIF RTSP Stream in VLC'. Clean technical boxes with green (#16A34A) action paths, crisp line art, white background."
+  ```text
+  create images Model 3D alur investigasi kamera CCTV tidak ada gambar atau blank. Menampilkan multimeter digital mengukur voltase 12V DC pada ujung colokan kamera, pemeriksaan lampu link LED port switch PoE, dan laptop yang menjalankan program pencari IP kamera SADP Tool. Render 3D detail fokus pada peralatan kerja teknisi.
+  ```
 
 ---
 
-## 10. Modul 10: Maintenance Berkala Harian, Mingguan, Bulanan
+### 10. Modul 10: Maintenance Berkala Harian, Mingguan, Bulanan
 
-### `images/maintenance-backup-routine.png`
+#### `images/maintenance-backup-routine.png`
 - **Modul:** Modul 10 - Maintenance Berkala (Bagian 1: Rutinitas Harian & Mingguan)
 - **Prompt:**
-  > "A technical illustration of a router backup workflow. A MikroTik router outputs two distinct files into a green (#16A34A) rugged USB flash drive: a binary '.backup' padlock file and a clean readable '.rsc' script text file. In the background, a calendar checklist shows weekly automated schedule ticks. Flat vector style, clean outlines, white background."
+  ```text
+  create images Model 3D rutinitas backup perangkat router jaringan. Flashdisk USB rugged warna hijau dicolokkan ke port USB routerboard untuk menyimpan berkas cadangan .backup terenkripsi dan berkas skrip konfigurasi .rsc, didampingi kalender jadwal perawatan berkala bertanda centang hijau. Render 3D bersih dan elegan.
+  ```
 
-### `images/maintenance-smart-hdd.png`
+#### `images/maintenance-smart-hdd.png`
 - **Modul:** Modul 10 - Maintenance Berkala (Bagian 2: Perawatan Bulanan & Uji S.M.A.R.T)
 - **Prompt:**
-  > "A diagnostic dashboard mockup showing HDD S.M.A.R.T health parameters. A 3.5-inch hard drive graphic with sensor overlays indicating 'Temperature: 36°C' (Green #16A34A), 'Reallocated Sector Count: 0' (Good), and 'Health Status: 100% OK'. Beside it, a technician's antistatic mini blower dusting fan vents safely. High detail, vector aesthetic, white background."
+  ```text
+  create images Model 3D perawatan preventif harddisk CCTV dan perangkat server. Menampilkan harddisk 3.5 inci dengan indikator kesehatan S.M.A.R.T 100% prima, alat mini blower antistatis pembersih debu fan pendingin, dan termometer digital menunjukkan suhu kerja normal 35 derajat Celsius. Render 3D detail, bersih, dan profesional.
+  ```
 
 ---
 
-## 11. Modul 11: Dokumentasi Lapangan & BAST
+### 11. Modul 11: Dokumentasi Lapangan & BAST
 
-### `images/documentation-before-after.png`
+#### `images/documentation-before-after.png`
 - **Modul:** Modul 11 - Dokumentasi Lapangan (Bagian 1: Laporan Harian & Foto Progres 3 Tahap)
 - **Prompt:**
-  > "A split comparison technical illustration of server rack cable dressing. Left side ('Before'): Tangled bird's nest of loose cables, unnumbered wires hanging across equipment. Right side ('After'): Clean professional installation with straight bundle runs, Velcro straps, numbered cable markers, and green (#16A34A) patch cords in horizontal cable managers. Clean vector art, plain background."
+  ```text
+  create images Model 3D perbandingan sebelum dan sesudah perapian kabel server rack. Sisi kiri kabel kusut menjuntai berantakan tanpa label penanda; sisi kanan kabel tersusun lurus rapi di dalam horizontal organizer, diikat rapi dengan velcro strip hijau, dan dilengkapi label nomor port yang seragam. Render 3D kontras tinggi yang sangat memuaskan.
+  ```
 
-### `images/documentation-bast-format.png`
+#### `images/documentation-bast-format.png`
 - **Modul:** Modul 11 - Dokumentasi Lapangan (Bagian 2: Penyusunan Draf BAST & Topologi)
 - **Prompt:**
-  > "An isometric illustration of an official project handover document (Berita Acara Serah Terima - BAST) resting on a clipboard. Features an inventory checklist with green (#16A34A) acceptance stamps, two official signature lines with official company seals and duty stamps (materai), and an attached network topology blueprint. Clean corporate engineering style, white background."
+  ```text
+  create images Model 3D berkas Berita Acara Serah Terima (BAST) pekerjaan IT di atas papan jalan clipboard kayu rapi. Menampilkan lembar checklist inventaris peralatan dengan cap centang hijau, dua kolom tanda tangan resmi bermaterai, dan lampiran denah topologi jaringan bertingkat. Render 3D sudut isometrik bersih berwibawa.
+  ```
 
 ---
 
-## Panduan Penggantian Gambar & Tabel Lisensi
+## Slot Alat Kerja Lapangan & IT Staff Tambahan
 
-Jika kamu mengunduh foto atau gambar dari internet untuk menggantikan slot ilustrasi di atas, ikuti langkah berikut:
-1. Pastikan resolusi gambar minimal **800 x 500 piksel** (rasio 16:9 atau 4:3).
-2. Simpan gambar dalam format `.png` atau `.webp` dengan nama berkas yang sama persis di folder `public/images/`.
-3. Catat sumber dan lisensi pada tabel di bawah ini untuk memastikan kepatuhan hak cipta:
+### `images/cctv-ip-vs-analog.png`
+- **Kategori:** CCTV Lapangan
+- **Deskripsi:** Perbandingan fisik kamera IP Dome vs Analog Bullet dengan konektor portnya.
+- **Prompt:**
+  ```text
+  create images Model 3D bersih dan detail dari kamera CCTV IP dome putih dan kamera CCTV analog bullet berdampingan. Kamera IP dome menunjukkan satu port kabel RJ45 PoE bersih. Kamera analog bullet menunjukkan kabel buntut dengan konektor BNC metal dan jack power DC 12V bersama konektor video balun pasif. Render 3D studio fotorealistik minimalis dengan pencahayaan lembut.
+  ```
 
-| Berkas Tujuan | Modul Terkait | Sumber URL | Jenis Lisensi | Tanggal Unduh |
-|---|---|---|---|---|
-| `images/survey-cable-path.png` | Modul 01 | *Contoh: Unsplash / Wikimedia* | CC-BY / Bebas Hak Cipta | - |
-| `images/survey-boq-sample.png` | Modul 01 | *Contoh: Dokumentasi Internal* | Milik Sendiri | - |
-| `images/utp-color-pinout.png` | Modul 02 | *Contoh: Wikimedia Commons* | CC-BY-SA 4.0 | - |
-| `images/utp-crimping-steps.png` | Modul 02 | *Contoh: Tangkapan Kamera Lapangan* | Milik Sendiri | - |
-| `images/fiber-connector-types.png`| Modul 03 | *Contoh: Wikimedia Commons* | CC-BY 3.0 | - |
-| `images/fiber-fusion-splicing.png`| Modul 03 | *Contoh: Dokumentasi Lapangan* | Milik Sendiri | - |
-| `images/rack-cable-management.png`| Modul 04 | *Contoh: Foto Site Resmi* | Milik Sendiri | - |
-| `images/poe-switch-budget.png` | Modul 04 | *Contoh: Diagram Desain* | Milik Sendiri | - |
-| `images/mikrotik-winbox-login.png`| Modul 05 | *Contoh: Tangkapan Layar Winbox* | Edukasi / Fair Use | - |
-| `images/mikrotik-nat-masquerade.png`| Modul 05| *Contoh: Tangkapan Layar Winbox* | Edukasi / Fair Use | - |
-| `images/vlan-bridge-filtering.png`| Modul 06 | *Contoh: Diagram Topologi* | Milik Sendiri | - |
-| `images/firewall-queue-vpn.png` | Modul 06 | *Contoh: Diagram Keamanan* | Milik Sendiri | - |
-| `images/cctv-system-topology.png` | Modul 07 | *Contoh: Dokumentasi Proyek* | Milik Sendiri | - |
-| `images/cctv-hdd-calculation.png` | Modul 07 | *Contoh: Bagan Teknis* | Milik Sendiri | - |
-| `images/cctv-p2p-cloud-setup.png` | Modul 08 | *Contoh: Tangkapan Layar NVR* | Edukasi / Fair Use | - |
-| `images/cctv-port-forwarding.png` | Modul 08 | *Contoh: Diagram Port NAT* | Milik Sendiri | - |
-| `images/troubleshooting-tree-internet.png`| Modul 09| *Contoh: Diagram Alur* | Milik Sendiri | - |
-| `images/troubleshooting-tree-cctv.png`| Modul 09| *Contoh: Diagram Alur* | Milik Sendiri | - |
-| `images/maintenance-backup-routine.png`| Modul 10| *Contoh: Tangkapan Layar Files* | Edukasi / Fair Use | - |
-| `images/maintenance-smart-hdd.png`| Modul 10| *Contoh: Tangkapan Layar SMART*| Edukasi / Fair Use | - |
-| `images/documentation-before-after.png`| Modul 11| *Contoh: Foto Lapangan Asli* | Milik Sendiri | - |
-| `images/documentation-bast-format.png`| Modul 11| *Contoh: Scan Format BAST* | Milik Sendiri | - |
+### `images/wifi-ap-ceiling-mount.png`
+- **Kategori:** WiFi & Access Point
+- **Deskripsi:** Access Point plafon WiFi 6 dengan instalasi drop ceiling tersembunyi.
+- **Prompt:**
+  ```text
+  create images Model 3D Access Point WiFi 6 bundar warna putih terpasang rapi di plafon gypsum kantor. Tampak kabel LAN UTP Cat6 masuk tersembunyi lewat bracket mounting di balik plafon, dengan cincin lampu LED tipis menyala biru lembut memancarkan sinyal gelombang frekuensi ganda 2.4GHz dan 5GHz. Render 3D modern bersih minimalis.
+  ```
+
+### `images/poe-injector-vs-switch.png`
+- **Kategori:** WiFi & PoE Power
+- **Deskripsi:** Adaptor PoE Injector vs PoE Switch manageable.
+- **Prompt:**
+  ```text
+  create images Model 3D adaptor PoE Injector hitam dengan dua port LAN: port Data In dari router dan port Data+Power Out menuju perangkat Access Point atau kamera CCTV, bersanding dengan switch PoE multi-port. Render 3D bersih dengan diagram aliran arus listrik DC dan data.
+  ```
+
+### `images/fiber-splicer-cleaver-kit.png`
+- **Kategori:** Fiber Optik Tools
+- **Deskripsi:** Paket kit perlengkapan sambung fiber optik lapangan.
+- **Prompt:**
+  ```text
+  create images Model 3D satu set lengkap alat kerja teknisi fiber optik: fusion splicer mini, high-precision fiber cleaver pemotong kaca, stripper kabel drop core 3 lubang, botol alkohol dispenser, dan Optical Power Meter (OPM) berlayar hijau. Render 3D studio teratur di atas meja teknisi.
+  ```
+
+### `images/utp-crimper-lan-tester-kit.png`
+- **Kategori:** UTP Cable Tools
+- **Deskripsi:** Paket perkakas crimping dan testing kabel LAN.
+- **Prompt:**
+  ```text
+  create images Model 3D tas perkakas teknisi UTP: tang crimping ratchet heavy duty warna hijau, LAN tester master dan remote dengan 8 lampu LED hijau berurutan menyala, punch down tool keystone jack, pemotong kabel kawat, dan kotak konektor RJ45 Cat6 tembaga. Render 3D bersih dan tajam.
+  ```
+
+### `images/it-support-work-kit.png`
+- **Kategori:** IT Support Kit
+- **Deskripsi:** Toolkit lengkap penunjang pekerjaan staf IT lapangan.
+- **Prompt:**
+  ```text
+  create images Model 3D work kit lengkap teknisi IT Support lapangan: laptop diagnostik tipis dengan port RJ45, USB to LAN adapter, multimeter digital probe runcing, kabel console roll-over RJ45 to USB, label printer portabel pembuat stiker kabel, dan obeng set teknisi magnetik. Render 3D studio pencahayaan profesional.
+  ```
+
+---
+
+## Tabel Rangkuman Berkas & Lisensi
+
+| Berkas Tujuan | Kategori | Jenis Ilustrasi | Status Integrasi |
+|---|---|---|---|
+| `images/survey-cable-path.png` | Modul 01 | 3D Conduit & Plafon | Terhubung Modul |
+| `images/survey-boq-sample.png` | Modul 01 | 3D Meja Survei BoQ | Terhubung Modul |
+| `images/utp-color-pinout.png` | Modul 02 | 3D Pinout T568B RJ45 | Terhubung Modul |
+| `images/utp-crimping-steps.png` | Modul 02 | 3D Tahap Crimping | Terhubung Modul |
+| `images/fiber-connector-types.png` | Modul 03 | 3D Konektor SC-UPC/APC | Terhubung Modul |
+| `images/fiber-fusion-splicing.png` | Modul 03 | 3D Fusion Splicer Core | Terhubung Modul |
+| `images/rack-cable-management.png` | Modul 04 | 3D Server Rack 19" | Terhubung Modul |
+| `images/poe-switch-budget.png` | Modul 04 | 3D PoE Budget Diagram | Terhubung Modul |
+| `images/mikrotik-winbox-login.png` | Modul 05 | 3D Router & Winbox | Terhubung Modul |
+| `images/mikrotik-nat-masquerade.png` | Modul 05 | 3D Alur NAT Masquerade | Terhubung Modul |
+| `images/vlan-bridge-filtering.png` | Modul 06 | 3D Bridge VLAN Matrix | Terhubung Modul |
+| `images/firewall-queue-vpn.png` | Modul 06 | 3D Firewall Queue VPN | Terhubung Modul |
+| `images/cctv-system-topology.png` | Modul 07 | 3D DVR vs NVR PoE | Terhubung Modul |
+| `images/cctv-hdd-calculation.png` | Modul 07 | 3D HDD WD Purple & Codec | Terhubung Modul |
+| `images/cctv-p2p-cloud-setup.png` | Modul 08 | 3D QR Code Cloud P2P | Terhubung Modul |
+| `images/cctv-port-forwarding.png` | Modul 08 | 3D Port Routing NVR | Terhubung Modul |
+| `images/troubleshooting-tree-internet.png` | Modul 09 | 3D Pohon Internet ONT | Terhubung Modul |
+| `images/troubleshooting-tree-cctv.png` | Modul 09 | 3D Alur CCTV SADP Tool | Terhubung Modul |
+| `images/maintenance-backup-routine.png` | Modul 10 | 3D Backup Router Flashdisk | Terhubung Modul |
+| `images/maintenance-smart-hdd.png` | Modul 10 | 3D SMART HDD & Blower | Terhubung Modul |
+| `images/documentation-before-after.png` | Modul 11 | 3D Sebelum-Sesudah Rack | Terhubung Modul |
+| `images/documentation-bast-format.png` | Modul 11 | 3D Berkas Dokumen BAST | Terhubung Modul |
+| `images/cctv-ip-vs-analog.png` | Studio / CCTV | 3D Kamera IP vs Analog | Studio Lapangan |
+| `images/wifi-ap-ceiling-mount.png` | Studio / WiFi | 3D AP Plafon WiFi 6 | Studio Lapangan |
+| `images/poe-injector-vs-switch.png` | Studio / Power | 3D PoE Injector vs Switch | Studio Lapangan |
+| `images/fiber-splicer-cleaver-kit.png` | Studio / Fiber | 3D Kit Fusion Splicer | Studio Lapangan |
+| `images/utp-crimper-lan-tester-kit.png` | Studio / UTP | 3D Kit Tang Crimping & LAN | Studio Lapangan |
+| `images/it-support-work-kit.png` | Studio / IT Kit | 3D Toolkit IT Support | Studio Lapangan |

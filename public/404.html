@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>FieldNet Belajar</title>
+  <script>
+    (function() {
+      var l = window.location;
+      var pathSegments = l.pathname.split('/').filter(Boolean);
+      var base = '';
+      var target = '';
+      if (pathSegments.length > 0 && pathSegments[0] === 'fieldnet-belajar') {
+        base = '/fieldnet-belajar';
+        target = pathSegments.slice(1).join('/');
+      } else if (pathSegments.length > 0) {
+        base = '/' + pathSegments[0];
+        target = pathSegments.slice(1).join('/');
+      }
+      var route = target ? '/' + target : (l.hash ? l.hash.replace(/^#/, '') : '/');
+      if (!route.startsWith('/')) route = '/' + route;
+      var search = l.search || '';
+      window.location.replace(base + '/#' + route + search);
+    })();
+  </script>
+</head>
+<body>
+  <p>Memuat FieldNet Belajar...</p>
+</body>
+</html>

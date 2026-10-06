@@ -10,7 +10,7 @@ export async function renderDashboard(container) {
   // 1. Fetch manifest
   let manifest = { modules: [] };
   try {
-    const res = await fetch('/content/manifest.json');
+    const res = await fetch('./content/manifest.json');
     manifest = await res.json();
   } catch {
     // Handled with fallback empty modules

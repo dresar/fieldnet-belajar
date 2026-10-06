@@ -11,7 +11,7 @@ export async function renderQuiz(container, params) {
 
   let mod = null;
   try {
-    const res = await fetch(`/content/${moduleId}.json`);
+    const res = await fetch(`./content/${moduleId}.json`);
     mod = await res.json();
   } catch (err) {
     container.innerHTML = `<div class="card"><p>Kuis tidak ditemukan.</p><a href="#/modules" class="btn btn-primary">Kembali</a></div>`;

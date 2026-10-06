@@ -3,44 +3,45 @@
  * Cache-first offline strategy for app shell and all educational modules.
  */
 
-const CACHE_NAME = 'fieldnet-belajar-v1.0.0';
+const CACHE_NAME = 'fieldnet-belajar-v1.0.1';
 
 const PRECACHE_ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.webmanifest',
-  '/favicon.svg',
-  '/src/styles/tokens.css',
-  '/src/styles/base.css',
-  '/src/styles/components.css',
-  '/src/styles/print.css',
-  '/src/main.js',
-  '/src/db.js',
-  '/src/icons.js',
-  '/src/router.js',
-  '/src/search.js',
-  '/src/views/dashboard.js',
-  '/src/views/modules.js',
-  '/src/views/lesson.js',
-  '/src/views/quiz.js',
-  '/src/views/checklist.js',
-  '/src/views/troubleshooter.js',
-  '/src/views/reports.js',
-  '/src/views/search-view.js',
-  '/src/views/notes.js',
-  '/src/views/settings.js',
-  '/content/manifest.json',
-  '/content/module-01.json',
-  '/content/module-02.json',
-  '/content/module-03.json',
-  '/content/module-04.json',
-  '/content/module-05.json',
-  '/content/module-06.json',
-  '/content/module-07.json',
-  '/content/module-08.json',
-  '/content/module-09.json',
-  '/content/module-10.json',
-  '/content/module-11.json'
+  './',
+  './index.html',
+  './manifest.webmanifest',
+  './favicon.svg',
+  './src/styles/tokens.css',
+  './src/styles/base.css',
+  './src/styles/components.css',
+  './src/styles/print.css',
+  './src/main.js',
+  './src/db.js',
+  './src/icons.js',
+  './src/router.js',
+  './src/search.js',
+  './src/views/dashboard.js',
+  './src/views/modules.js',
+  './src/views/lesson.js',
+  './src/views/quiz.js',
+  './src/views/checklist.js',
+  './src/views/troubleshooter.js',
+  './src/views/reports.js',
+  './src/views/search-view.js',
+  './src/views/notes.js',
+  './src/views/settings.js',
+  './src/views/studio.js',
+  './content/manifest.json',
+  './content/module-01.json',
+  './content/module-02.json',
+  './content/module-03.json',
+  './content/module-04.json',
+  './content/module-05.json',
+  './content/module-06.json',
+  './content/module-07.json',
+  './content/module-08.json',
+  './content/module-09.json',
+  './content/module-10.json',
+  './content/module-11.json'
 ];
 
 self.addEventListener('install', (event) => {
@@ -103,8 +104,8 @@ self.addEventListener('fetch', (event) => {
       }).catch(() => {
         // Fallback for navigation requests to offline app shell
         if (req.mode === 'navigate') {
-          return caches.match('/index.html').then((indexRes) => {
-            return indexRes || caches.match('/');
+          return caches.match('./index.html').then((indexRes) => {
+            return indexRes || caches.match('./') || caches.match('/index.html') || caches.match('/');
           });
         }
         return new Response('Offline: Konten belum tercache.', {

@@ -341,11 +341,14 @@ async function commitImageToGithub(token, repo, branch, filename, base64Content)
   // 1. Check existing file to obtain SHA if updating
   let sha = null;
   try {
+    const getHeaders = {
+      'Accept': 'application/vnd.github+json'
+    };
+    if (trimmedToken) {
+      getHeaders['Authorization'] = authHeader;
+    }
     const checkRes = await fetch(`${apiUrl}?ref=${branch}`, {
-      headers: {
-        'Authorization': authHeader,
-        'Accept': 'application/vnd.github+json'
-      }
+      headers: getHeaders
     });
     if (checkRes.ok) {
       const existing = await checkRes.json();
@@ -365,13 +368,17 @@ async function commitImageToGithub(token, repo, branch, filename, base64Content)
     payload.sha = sha;
   }
 
+  const putHeaders = {
+    'Accept': 'application/vnd.github+json',
+    'Content-Type': 'application/json'
+  };
+  if (trimmedToken) {
+    putHeaders['Authorization'] = authHeader;
+  }
+
   const putRes = await fetch(apiUrl, {
     method: 'PUT',
-    headers: {
-      'Authorization': authHeader,
-      'Accept': 'application/vnd.github+json',
-      'Content-Type': 'application/json'
-    },
+    headers: putHeaders,
     body: JSON.stringify(payload)
   });
 
@@ -776,6 +783,11 @@ export async function renderStudio(container) {
 
         const activeRepo = container.querySelector('#cfg-repo')?.value?.trim() || currentRepo;
         const activeToken = container.querySelector('#cfg-token')?.value?.trim() || currentToken;
+
+        if (!activeToken) {
+          showToast('Isi token GitHub di Pengaturan.');
+          return;
+        }
 
         // Extract raw base64 string without data prefix
         const base64Index = dataUrl.indexOf(',');

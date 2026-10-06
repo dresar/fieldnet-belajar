@@ -34,20 +34,20 @@ function syncOfflineAssets() {
       const distSw = path.join(distDir, 'sw.js');
       if (fs.existsSync(distSw)) {
         const prodAssets = [
-          '/',
-          '/index.html',
-          '/manifest.webmanifest',
-          '/favicon.svg'
+          './',
+          './index.html',
+          './manifest.webmanifest',
+          './favicon.svg'
         ];
         if (fs.existsSync(distAssetsDir)) {
           fs.readdirSync(distAssetsDir).forEach(f => {
-            prodAssets.push(`/assets/${f}`);
+            prodAssets.push(`./assets/${f}`);
           });
         }
         if (fs.existsSync(distContentDir)) {
           fs.readdirSync(distContentDir).forEach(f => {
             if (f.endsWith('.json')) {
-              prodAssets.push(`/content/${f}`);
+              prodAssets.push(`./content/${f}`);
             }
           });
         }
@@ -61,6 +61,7 @@ function syncOfflineAssets() {
 }
 
 export default defineConfig({
+  base: './',
   root: '.',
   publicDir: 'public',
   plugins: [syncOfflineAssets()],

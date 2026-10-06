@@ -9,13 +9,13 @@ export async function loadSearchIndex() {
   if (cachedModules) return cachedModules;
 
   try {
-    const manifestRes = await fetch('/content/manifest.json');
+    const manifestRes = await fetch('./content/manifest.json');
     const manifest = await manifestRes.json();
     
     const modules = await Promise.all(
       manifest.modules.map(async (m) => {
         try {
-          const res = await fetch(`/content/${m.id}.json`);
+          const res = await fetch(`./content/${m.id}.json`);
           return await res.json();
         } catch {
           return null;

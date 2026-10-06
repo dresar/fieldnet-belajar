@@ -11,7 +11,7 @@ export async function renderLesson(container, params) {
 
   let mod = null;
   try {
-    const res = await fetch(`/content/${moduleId}.json`);
+    const res = await fetch(`./content/${moduleId}.json`);
     mod = await res.json();
   } catch (err) {
     container.innerHTML = `
@@ -156,7 +156,7 @@ export async function renderLesson(container, params) {
           ${sec.imageSlot ? (() => {
             const cleanFn = sec.imageSlot.filename.replace(/^public\//, '').replace(/^images\//, '');
             const cachedUrl = imageMap.get(sec.imageSlot.filename) || imageMap.get(cleanFn);
-            const initialSrc = cachedUrl || (sec.imageSlot.filename.startsWith('/') ? sec.imageSlot.filename : `/${sec.imageSlot.filename}`);
+            const initialSrc = cachedUrl || `./images/${cleanFn}`;
             return `
               <div class="image-presentation" style="margin: var(--space-2) 0; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); overflow: hidden; background: var(--bg-surface-elevated);">
                 <div style="background: #000; text-align: center; position: relative; min-height: 160px; display: flex; align-items: center; justify-content: center;">

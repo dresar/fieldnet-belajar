@@ -241,10 +241,10 @@ if (fs.existsSync(distDir)) {
         .filter(l => l.length > 0 && !l.startsWith('//'));
 
       for (const url of precacheUrls) {
-        if (url.startsWith('/src/')) {
+        if (url.startsWith('/src/') || url.startsWith('./src/')) {
           errors.push(`dist/sw.js memuat aset dev '/src/' yang tidak ada di dist: ${url}`);
         } else {
-          let testPath = url === '/' ? path.join(distDir, 'index.html') : path.join(distDir, url.replace(/^\//, ''));
+          let testPath = (url === '/' || url === './') ? path.join(distDir, 'index.html') : path.join(distDir, url.replace(/^\.\//, '').replace(/^\//, ''));
           if (!fs.existsSync(testPath)) {
             errors.push(`Aset precache dist/sw.js '${url}' tidak ditemukan di berkas fisik dist (${testPath})!`);
           }

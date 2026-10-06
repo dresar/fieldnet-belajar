@@ -9,7 +9,7 @@ import { icon } from '../icons.js';
 export async function renderModules(container) {
   let manifest = { modules: [] };
   try {
-    const res = await fetch('/content/manifest.json');
+    const res = await fetch('./content/manifest.json');
     manifest = await res.json();
   } catch {
     // Handled with fallback empty modules

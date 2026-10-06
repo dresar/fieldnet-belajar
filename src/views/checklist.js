@@ -9,7 +9,7 @@ import { icon } from '../icons.js';
 export async function renderChecklist(container, params) {
   let manifest = { modules: [] };
   try {
-    const res = await fetch('/content/manifest.json');
+    const res = await fetch('./content/manifest.json');
     manifest = await res.json();
   } catch {
     // Handled with fallback empty manifest
@@ -19,7 +19,7 @@ export async function renderChecklist(container, params) {
   const allModules = await Promise.all(
     manifest.modules.map(async m => {
       try {
-        const r = await fetch(`/content/${m.id}.json`);
+        const r = await fetch(`./content/${m.id}.json`);
         return await r.json();
       } catch {
         return null;

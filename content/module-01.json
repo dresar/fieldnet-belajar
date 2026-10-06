@@ -1,0 +1,147 @@
+{
+  "id": "module-01",
+  "title": "Survei Lokasi",
+  "badge": "Perencanaan",
+  "intro": "Sebelum kamu menarik kabel meteran pertama, survei lokasi adalah penentu apakah pekerjaanmu bakal mulus atau penuh lemburan drama. Bayangkan survei ini seperti memeriksa denah rumah sebelum beli perabotan, biar gak beli lemari raksasa yang pintunya mentok di lorong. Di sini kamu belajar membaca rintangan fisik, mencari jalur kabel teraman, dan menghitung kebutuhan barang secara akurat.",
+  "objectives": [
+    "Memahami cara inspeksi fisik jalur kabel indoor dan outdoor.",
+    "Mengukur kebutuhan material dan menyusun Bill of Quantities (BoQ) akurat.",
+    "Mengidentifikasi sumber induksi listrik dan memastikan grounding aman.",
+    "Menentukan titik penempatan Access Point dan kamera CCTV berdasarkan coverage."
+  ],
+  "sections": [
+    {
+      "title": "Observasi Fisik & Struktur Gedung",
+      "analogy": "Memeriksa gedung itu mirip memilih jalan tol atau jalan tikus waktu mudik. Kalau salah pilih jalan tikus yang sempit dan banyak portal, mobilmu bakal tersangkut dan buang waktu seharian.",
+      "paragraphs": [
+        "Langkah pertama survei adalah berjalan mengelilingi seluruh area kerja bersama penanggung jawab gedung. Buka plafon di beberapa titik untuk melihat kondisi dak beton, rangka hollow, dan jalur instalasi listrik eksisting. Catat apakah gedung memakai dinding bata merah, partisi gypsum, atau beton bertulang yang tebal.",
+        "Ketebalan dinding dan jenis plafon sangat menentukan peralatan yang harus kamu bawa ke lapangan. Menembus dak beton butuh bor rotary hammer berdaya besar, sedangkan plafon gypsum hanya butuh gergaji pelubang sederhana. Jangan sampai kamu baru sadar kekurangan alat saat hari H instalasi sudah berjalan."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Minta Denah Layout & Izin Kerja",
+          "text": "Dapatkan denah denah arsitektur skala 1:100 dan formulir izin kerja (Permit to Work) dari pengelola gedung sebelum mulai survei.",
+          "why": "Denah resmi mencegah kesalahan tebak jarak, sedangkan izin kerja melindungi kamu dari teguran keamanan gedung."
+        },
+        {
+          "step": 2,
+          "title": "Identifikasi Sumber Listrik & Grounding",
+          "text": "Cari stop kontak terdekat di calon titik rack server, lalu ukur voltase Netral ke Ground memakai multimeter digital.",
+          "why": "Voltase Netral ke Ground di atas 2 Volt bisa merusak port switch dan membuat perangkat MikroTik sering reboot sendiri."
+        },
+        {
+          "step": 3,
+          "title": "Tentukan Jalur Tray & Conduit",
+          "text": "Pilih rute kabel yang menjauhi kabel listrik PLN bertegangan tinggi minimal 30 sentimeter sepanjang jalur.",
+          "why": "Induksi elektromagnetik dari kabel PLN bisa menyebabkan noise data tinggi dan packet loss pada kabel data UTP."
+        }
+      ],
+      "warning": "Jangan pernah menggelar kabel UTP langsung menempel di atas rangka plafon tanpa pipa conduit atau kabel tray, karena rawan digigit tikus dan terjepit rangka baja ringan.",
+      "imageSlot": {
+        "id": "img-01-survey-path",
+        "filename": "images/survey-cable-path.png",
+        "caption": "Pemisahan jalur kabel data UTP dan kabel listrik PLN minimal 30 cm dalam conduit pipa PVC.",
+        "alt": "Diagram jalur conduit kabel data dan listrik di plafon gedung"
+      }
+    },
+    {
+      "title": "Penyusunan Bill of Quantities (BoQ)",
+      "analogy": "BoQ itu ibarat daftar belanja resep masakan pesta. Kalau garam atau bumbu kurang satu saja di tengah masak, rasa masakan bisa gagal total dan kamu kerepotan bolak-balik ke pasar.",
+      "paragraphs": [
+        "Bill of Quantities atau BoQ adalah daftar rincian semua material, perangkat, dan jasa yang dibutuhkan dalam proyek. Kamu wajib menambahkan toleransi panjang kabel sebesar 15 hingga 20 persen dari hasil ukur denah lurus. Tambahan ini berguna untuk lekukan sudut ruangan, cadangan di dalam patch panel, dan dropline turun ke meja kerja.",
+        "Selain kabel utama, jangan lupa mencatat perintilan kecil seperti fischer, sekrup, klem pipa, isolasi, kabel ties, dan label penanda kabel. Sering kali proyek terhenti setengah hari hanya karena kehabisan konektor RJ45 atau kabel ties di tengah pemasangan."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Ukur Jarak Horizontal & Vertikal",
+          "text": "Gunakan laser distance meter untuk mengukur jarak dari titik server ke masing-masing titik klien, termasuk tinggi naik dan turun plafon.",
+          "why": "Pengukuran manual dengan langkah kaki sering meleset hingga belasan meter pada gedung bertingkat."
+        },
+        {
+          "step": 2,
+          "title": "Hitung Kebutuhan Roll Kabel",
+          "text": "Bagi total kebutuhan meter kabel dengan 305 meter (panjang 1 roll standar UTP) lalu bulatkan ke atas.",
+          "why": "Satu tarikan kabel tidak boleh disambung di tengah jalan demi menjaga integritas sinyal Gigabit Ethernet."
+        }
+      ],
+      "warning": "Maksimal panjang satu tarikan kabel UTP dari switch ke perangkat klien adalah 90 meter permanen link, ditambah 10 meter total patch cord.",
+      "imageSlot": {
+        "id": "img-01-boq-sample",
+        "filename": "images/survey-boq-sample.png",
+        "caption": "Contoh tabel perhitungan Bill of Quantities dengan toleransi kelenturan kabel 15%.",
+        "alt": "Tabel BoQ estimasi panjang kabel UTP dan aksesoris instalasi"
+      }
+    }
+  ],
+  "realCommands": [
+    {
+      "title": "Checklist Pengukuran Multimeter Grounding",
+      "code": "1. Putar saklar multimeter ke mode AC Voltage (200V / 750V).\n2. Colok probe merah ke Phase (Api) dan hitam ke Netral -> Normal: 220V - 230V.\n3. Colok probe merah ke Phase dan hitam ke Ground -> Normal: 220V - 230V.\n4. Colok probe merah ke Netral dan hitam ke Ground -> Target Aman: < 2.0 Volt AC.",
+      "explanation": "Langkah standar teknisi mengukur kesehatan grounding sebelum perangkat rack dipasang ke stop kontak site klien.",
+      "context": "Pengukuran listrik PLN di ruang server klien."
+    }
+  ],
+  "fieldChecklist": [
+    {
+      "id": "chk-01-01",
+      "text": "Foto kondisi plafon dan jalur shaft gedung sebelum pemasangan dimulai.",
+      "tip": "Dokumentasikan kondisi awal agar tidak disalahkan bila plafon sebelumnya sudah retak."
+    },
+    {
+      "id": "chk-01-02",
+      "text": "Ukur voltase Netral ke Ground di ruang rack (pastikan di bawah 2V).",
+      "tip": "Jika voltase di atas 2V, sarankan klien perbaiki rod grounding tembaga sebelum perangkat dipasang."
+    },
+    {
+      "id": "chk-01-03",
+      "text": "Verifikasi jarak tarikan kabel terjauh tidak melebihi 90 meter.",
+      "tip": "Bila melebihi 90 meter, rencanakan sub-rack atau gunakan media konverter fiber optik."
+    },
+    {
+      "id": "chk-01-04",
+      "text": "Catat titik akses tangga, scaffolding, dan pintu keluar darurat.",
+      "tip": "Penting untuk keselamatan kerja K3 selama proses penarikan kabel di ketinggian."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "qz-01-01",
+      "question": "Berapa jarak maksimal standar kabel UTP untuk permanent link dari switch ke wallplate klien?",
+      "type": "choice",
+      "options": ["50 meter", "90 meter", "100 meter", "150 meter"],
+      "answer": 1,
+      "explanation": "Standar ANSI/TIA-568 menetapkan panjang permanent link maksimal 90 meter, ditambah maksimal 10 meter total patch cord di kedua ujung (total channel 100 meter)."
+    },
+    {
+      "id": "qz-01-02",
+      "question": "Berapa batas voltase aman antara Netral dan Ground untuk perangkat jaringan yang sensitif?",
+      "type": "choice",
+      "options": ["Di bawah 2 Volt AC", "Di atas 10 Volt AC", "Sekitar 220 Volt AC", "Nol mutlak tanpa batas"],
+      "answer": 0,
+      "explanation": "Tegangan Netral-ke-Ground yang aman idealnya di bawah 1V, dan maksimal 2V AC. Di atas itu, port ethernet berisiko rusak terbakar petir atau noise induksi."
+    },
+    {
+      "id": "qz-01-03",
+      "question": "Berapa persen toleransi cadangan kabel yang disarankan saat menghitung BoQ?",
+      "type": "choice",
+      "options": ["0% (pas sesuai denah)", "5%", "15% sampai 20%", "50%"],
+      "answer": 2,
+      "explanation": "Cadangan 15-20% dibutuhkan untuk tarikan vertikal naik-turun plafon, lekukan sudut ruangan, dan slack cadangan di dalam patch panel serta stop kontak."
+    },
+    {
+      "id": "qz-01-04",
+      "question": "Kabel UTP boleh diikat langsung bersentuhan dengan kabel listrik PLN utama asalkan diisolasi hitam.",
+      "type": "boolean",
+      "options": ["Benar", "Salah"],
+      "answer": 1,
+      "explanation": "Salah! Kabel data UTP wajib dipisah minimal 30 cm dari kabel listrik bertegangan tinggi untuk mencegah induksi elektromagnetik yang menyebabkan packet loss."
+    }
+  ],
+  "summary3Points": [
+    "Survei lokasi dan denah akurat mencegah kesalahan belanja material dan mempercepat waktu eksekusi lapangan.",
+    "Pastikan pemisahan minimal 30 cm dari jalur listrik PLN dan uji tegangan ground di bawah 2V untuk keamanan perangkat.",
+    "Hitung panjang kabel dengan batas maksimal link 90 meter dan tambahkan toleransi slack 15-20 persen pada BoQ."
+  ]
+}

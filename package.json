@@ -1,0 +1,35 @@
+{
+  "name": "fieldnet-belajar",
+  "version": "1.0.0",
+  "description": "Aplikasi mobile offline-first belajar teknisi jaringan dan CCTV lapangan",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "node server/server.js",
+    "server": "node server/server.js",
+    "validate": "node server/validate-content.js",
+    "test": "node server/validate-content.js"
+  },
+  "keywords": [
+    "fieldnet",
+    "teknisi-jaringan",
+    "cctv",
+    "mikrotik",
+    "offline-first",
+    "pwa",
+    "capacitor"
+  ],
+  "author": "FieldNet Belajar Team",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^5.4.8"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/cli": "^8.5.2",
+    "@capacitor/core": "^8.5.2",
+    "dexie": "^4.0.8"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "FieldNet Belajar",
+  "short_name": "FieldNet",
+  "description": "Aplikasi Belajar Teknisi Jaringan dan CCTV Offline-First",
+  "start_url": "/#/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FAF9F6",
+  "theme_color": "#16A34A",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

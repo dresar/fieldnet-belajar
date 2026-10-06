@@ -1,0 +1,163 @@
+{
+  "id": "module-07",
+  "title": "CCTV Sistem",
+  "badge": "Kamera Pengawas",
+  "intro": "Kamera pengawas atau CCTV adalah mata penjaga properti yang bekerja 24 jam nonstop. Sebagai teknisi lapangan, kamu wajib paham kapan harus memilih sistem Analog HD yang ekonomis dan kapan harus memasang sistem IP Camera yang tajam dan fleksibel. Di modul ini, kamu akan mempelajari perbedaan DVR dan NVR, memilih kabel coaxial atau UTP balun, menghitung kebutuhan harddisk rekaman berbulan-bulan, dan memilih harddisk khusus CCTV yang tahan banting.",
+  "objectives": [
+    "Membedakan arsitektur Analog HD (TVI/CVI/AHD) dengan IP Camera berbasis protokol ONVIF.",
+    "Menggunakan Video Balun pasif untuk mentransmisikan sinyal kamera analog lewat kabel UTP.",
+    "Menghitung rumus kapasitas harddisk rekaman berdasarkan codec H.265, bitrate, dan target hari retensi.",
+    "Memilih Harddisk tipe Surveillance (WD Purple / SkyHawk) dan mengatur jadwal rekaman Motion Detection."
+  ],
+  "sections": [
+    {
+      "title": "Arsitektur Analog HD vs IP Camera",
+      "analogy": "Kamera analog itu mirip walkie-talkie konvensional yang menyiarkan gelombang mentah langsung lewat kabel ke pangkalan. Sedangkan IP Camera itu smartphone canggih yang memproses video sendiri lalu mengirim paket file digital lewat jaringan LAN.",
+      "paragraphs": [
+        "Sistem Analog HD (TVI, CVI, AHD) mengirimkan sinyal video mentah langsung ke DVR melalui kabel coaxial atau kabel UTP yang dipasangi video balun. DVR bertugas mengompresi dan mengubah sinyal mentah tersebut menjadi file digital untuk disimpan ke harddisk. Sistem analog ini disukai untuk proyek dengan anggaran hemat karena harga kamera dan instalasinya sangat terjangkau.",
+        "Sebaliknya, IP Camera memproses kompresi video langsung di dalam badan kamera, lalu mengirimkan aliran data video dalam bentuk paket IP ke NVR. IP camera menggunakan konektor RJ45 standar dan protokol terbuka ONVIF sehingga kamera merk A bisa dihubungkan ke NVR merk B. Fleksibilitas ini membuat IP camera mudah diintegrasikan dengan infrastruktur kabel jaringan gedung yang sudah ada."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Gunakan Video Balun pada Kabel UTP",
+          "text": "Jika memasang kamera analog dengan kabel UTP, pasang video balun pasif di kedua ujung kabel pada satu pasang kawat warna.",
+          "why": "Balun (Balanced-to-Unbalanced) menyamakan impedansi 75 ohm kabel kamera dengan 100 ohm kabel UTP sehingga gambar tidak berbayang."
+        },
+        {
+          "step": 2,
+          "title": "Verifikasi Kompatibilitas ONVIF",
+          "text": "Pastikan menu profil ONVIF aktif pada IP Camera dan cocokkan Profile S atau Profile T pada NVR penerima.",
+          "why": "Protokol ONVIF menjamin fitur streaming video, audio, dan kontrol gerak kamera PTZ bekerja lintas pabrikan."
+        },
+        {
+          "step": 3,
+          "title": "Gunakan Power Supply Sentral 12V DC Bersekring",
+          "text": "Pasang power supply jaring 12V 10A-20A dengan fuse box tersendiri untuk kamera analog, bukan adaptor colokan satuan.",
+          "why": "Sekring individu mencegah satu kamera yang korslet mematikan seluruh kamera lain di dalam gedung."
+        }
+      ],
+      "warning": "Jangan pernah memakai adaptor voltase AC pada kamera CCTV yang membutuhkan arus 12V DC, karena sirkuit sensor gambar kamera akan langsung meledak mengeluarkan asap.",
+      "imageSlot": {
+        "id": "img-07-cctv-topology",
+        "filename": "images/cctv-system-topology.png",
+        "caption": "Perbandingan topologi kabel coaxial/balun DVR analog dan topologi PoE switch NVR IP kamera.",
+        "alt": "Diagram perbandingan instalasi sistem CCTV Analog DVR dan IP NVR PoE"
+      }
+    },
+    {
+      "title": "Kalkulasi Harddisk & Codec Kompresi",
+      "analogy": "Harddisk itu mirip ember penampung air dari keran yang mengalir 24 jam. Kalau keran dibuka besar-besaran (bitrate tinggi tanpa kompresi), ember bakal luber dalam hitungan jam. Tapi dengan saringan cerdas H.265+, air yang keluar hanya tetesan penting saat ada gerakan.",
+      "paragraphs": [
+        "Kapasitas harddisk adalah hal yang paling sering ditanyakan oleh pemilik gedung saat survei instalasi CCTV. Codec video modern seperti H265 dan varian plus mampu menghemat kapasitas penyimpanan hingga 50 sampai 70 persen dibanding codec lawas H264. Pada resolusi Full HD 1080p dengan kompresi modern, satu kamera umumnya hanya butuh bitrate sekitar dua megabit per detik.",
+        "Pilihlah selalu harddisk khusus pengawasan (Surveillance Grade) seperti Western Digital Purple atau Seagate SkyHawk. Harddisk komputer biasa (PC desktop) dirancang untuk pemakaian 8 jam sehari dengan beban 80% membaca data. Harddisk CCTV dirancang khusus untuk kerja 24/7 tanpa henti dengan beban 90% menulis data terus-menerus dan tahan panas tinggi."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Gunakan Rumus Cepat Kapasitas HDD",
+          "text": "Hitung: Penyimpanan (GB) = [Bitrate (Mbps) x 3600 x 24 x Hari x Jumlah Kamera] dibagi 8000.",
+          "why": "Rumus matematis ini memberikan estimasi akurat kebutuhan Terabyte harddisk sebelum kamu memesan barang ke distributor."
+        },
+        {
+          "step": 2,
+          "title": "Aktifkan Fitur Smart Codec H.265+",
+          "text": "Masuk ke menu Video/Encode pada NVR/DVR lalu centang opsi H.265+ atau Smart Codec.",
+          "why": "Fitur ini mendeteksi area gambar yang diam dan hanya merekam frame perubahan objek bergerak sehingga ukuran file turun drastis."
+        },
+        {
+          "step": 3,
+          "title": "Konfigurasi Jadwal Rekam Motion Detection",
+          "text": "Atur jadwal rekaman: Continuous pada jam kerja ramai (08:00-18:00) dan Motion Detection pada malam hari sepi.",
+          "why": "Metode kombinasi ini menghemat ruang harddisk hingga 40% sekaligus mempermudah pencarian rekaman kejadian mencurigakan."
+        }
+      ],
+      "warning": "Jangan pernah menggunakan harddisk bekas copotan laptop atau harddisk rekondisi murah untuk NVR/DVR, karena bad sector akan merusak seluruh file database rekaman rekaman rekaman.",
+      "imageSlot": {
+        "id": "img-07-hdd-calculation",
+        "filename": "images/cctv-hdd-calculation.png",
+        "caption": "Tabel kalkulasi hari retensi rekaman berdasarkan resolusi kamera, FPS, dan kapasitas TB HDD.",
+        "alt": "Grafik kalkulasi kapasitas penyimpanan harddisk CCTV H.264 vs H.265"
+      }
+    }
+  ],
+  "realCommands": [
+    {
+      "title": "Contoh Kalkulasi Nyata di Lapangan",
+      "code": "# Kasus: 8 Kamera IP 1080p, Codec H.265, Bitrate 2 Mbps (2048 Kbps), Target Simpan: 30 Hari.\n# Perhitungan:\n# Data per hari per kamera = (2 Mbps x 3600 detik x 24 jam) / 8 = 21.600 MegaByte = 21.6 GB\n# Total per hari 8 kamera = 21.6 GB x 8 = 172.8 GB / hari\n# Total 30 hari = 172.8 GB x 30 = 5.184 GB = ~5.2 Terabyte (Disarankan Pasang 6 TB HDD WD Purple)",
+      "explanation": "Langkah penghitungan kapasitas riil penyimpanan CCTV untuk dimasukkan ke dalam proposal penawaran klien.",
+      "context": "Perhitungan teknis estimasi harddisk CCTV di ruang rapat klien."
+    }
+  ],
+  "fieldChecklist": [
+    {
+      "id": "chk-07-01",
+      "text": "Pastikan harddisk terpasang kuat dengan keempat sekrup bawah pada sasis NVR/DVR.",
+      "tip": "Getaran motor piringan harddisk yang longgar dapat menyebabkan bad sector mekanik."
+    },
+    {
+      "id": "chk-07-02",
+      "text": "Lakukan format awal harddisk (Initialize) melalui menu Storage GUI NVR/DVR.",
+      "tip": "Status harddisk wajib berubah menjadi 'Normal' atau 'Read/Write' sebelum rekaman aktif."
+    },
+    {
+      "id": "chk-07-03",
+      "text": "Pastikan tanggal dan jam NVR/DVR sudah sinkron ke server NTP (misal pool.ntp.org).",
+      "tip": "Rekaman CCTV tidak sah di mata hukum dan kepolisian bila stempel waktu (timestamp) terbukti salah."
+    },
+    {
+      "id": "chk-07-04",
+      "text": "Uji mode malam kamera dengan menutup sensor cahaya (LDR) memakai telapak tangan.",
+      "tip": "Pastikan lampu LED Infrared atau Warm Light menyala dan gambar beralih mulus tanpa flickering."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "qz-07-01",
+      "question": "Apa fungsi utama alat Video Balun saat memasang kamera CCTV Analog HD memakai kabel UTP?",
+      "type": "choice",
+      "options": [
+        "Menyesuaikan impedansi sinyal 75 ohm ke 100 ohm agar gambar tidak distorsi",
+        "Mengubah kamera analog menjadi kamera IP digital secara instan",
+        "Menambah resolusi kamera dari 720p menjadi 4K",
+        "Menyimpan rekaman video ke memori micro SD"
+      ],
+      "answer": 0,
+      "explanation": "Video Balun (Balanced-Unbalanced) mengonversi sinyal video unbalance kabel coaxial (75 ohm) menjadi sinyal balance kabel UTP (100 ohm) untuk meredam noise jarak jauh."
+    },
+    {
+      "id": "qz-07-02",
+      "question": "Mengapa harddisk tipe Surveillance (seperti WD Purple) wajib dipilih dibandingkan harddisk PC desktop biasa?",
+      "type": "choice",
+      "options": [
+        "Karena harddisk pengawasan dirancang tahan kerja 24/7 dengan siklus 90% write nonstop dan tahan panas",
+        "Karena harddisk pengawasan memiliki suara sirine bawaan",
+        "Karena harddisk PC biasa tidak memiliki lubang colokan SATA",
+        "Karena harddisk pengawasan menggunakan baterai internal tanpa listrik PLN"
+      ],
+      "answer": 0,
+      "explanation": "Harddisk desktop biasa dirancang untuk beban 8 jam/hari (mayoritas membaca data), sedangkan NVR/DVR menulis video terus menerus 24 jam sehari yang butuh firmware surveillance khusus."
+    },
+    {
+      "id": "qz-07-03",
+      "question": "Berapa kira-kira penghematan kapasitas harddisk yang didapat dengan menggunakan codec H.265 dibandingkan H.264 lama?",
+      "type": "choice",
+      "options": ["Sekitar 10%", "Sekitar 50%", "Tidak ada penghematan sama sekali", "Tepat 100%"],
+      "answer": 1,
+      "explanation": "Teknologi kompresi H.265 (HEVC) mampu memotong bitrate sekitar 50% dibandingkan H.264 pada tingkat ketajaman visual yang identik."
+    },
+    {
+      "id": "qz-07-04",
+      "question": "Stempel tanggal dan waktu (timestamp) pada layar kamera CCTV boleh dibiarkan salah karena tidak memengaruhi rekaman.",
+      "type": "boolean",
+      "options": ["Benar", "Salah"],
+      "answer": 1,
+      "explanation": "Salah! Timestamp yang salah membuat rekaman gugur sebagai barang bukti hukum di kepolisian dan menyulitkan pencarian rekaman insiden penting."
+    }
+  ],
+  "summary3Points": [
+    "Pahami perbedaan Analog HD DVR vs IP NVR dan gunakan video balun bila menyalurkan sinyal analog lewat kabel UTP.",
+    "Gunakan codec H.265 atau Smart Codec untuk menghemat penyimpanan hingga 50% pada kualitas visual maksimal.",
+    "Wajib gunakan harddisk khusus surveillance 24/7 dan pastikan sinkronisasi jam NTP akurat sebagai bukti valid."
+  ]
+}

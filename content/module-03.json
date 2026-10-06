@@ -1,0 +1,152 @@
+{
+  "id": "module-03",
+  "title": "Fiber Optik",
+  "badge": "Transmisi",
+  "intro": "Kalau kabel UTP adalah jalan tol dalam kota, kabel fiber optik adalah jalur kereta cepat antarpulau. Di dalam helai fiber sekecil rambut manusia ini, data mengalir dalam bentuk kedipan cahaya laser berkecepatan tinggi tanpa takut induksi petir. Di modul ini, kamu akan belajar cara mengupas serat kaca, memotongnya dengan cleaver presisi, menyambung dengan mesin fusion splicer, dan mengukur redaman loss memakai Optical Power Meter.",
+  "objectives": [
+    "Membedakan kabel Single-Mode (kuning/biru) dan Multi-Mode (oranye/toska) beserta aplikasinya.",
+    "Mengoperasikan stripper serat optik tiga lubang tanpa mematahkan core kaca.",
+    "Memotong core serat dengan optical cleaver hingga menghasilkan sudut potongan tegak lurus sempurna.",
+    "Melakukan penyambungan fusion splicer dengan loss di bawah 0.05 dB serta uji OPM dan VFL."
+  ],
+  "sections": [
+    {
+      "title": "Karakteristik Core & Konektor FO",
+      "analogy": "Fiber optik itu seperti sedotan kaca super bening yang dialiri sinar senter laser. Kalau sedotannya lurus dan bersih, sinarnya tembus berkilo-kilo meter tanpa berkurang terangnya.",
+      "paragraphs": [
+        "Secara umum ada dua jenis fiber optik: Single-Mode (SM) dengan diameter core 9 mikron, dan Multi-Mode (MM) dengan core 50 atau 62.5 mikron. Single-mode digunakan untuk jarak jauh kilometeran karena cahaya merambat lurus tanpa pantulan sudut berlebih. Kabel single-mode biasanya berkulit kuning untuk patch cord dan hitam untuk kabel outdoor drop core.",
+        "Konektor fiber optik yang paling umum dijumpai di lapangan adalah SC (bentuk kotak besar) dan LC (bentuk kotak kecil). Ada dua jenis polesan ujung konektor: UPC berwarna biru (ujung rata datar) dan APC berwarna hijau (ujung miring 8 derajat). Jangan pernah menyambung konektor biru UPC langsung ke konektor hijau APC karena akan merusak ujung ferrule keramik."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Pilih Jenis Kabel Sesuai Jarak",
+          "text": "Gunakan kabel Single-Mode G.652D atau G.657A untuk tarikan antar gedung atau jaringan ISP di atas 500 meter.",
+          "why": "Single-mode memiliki redaman loss sangat rendah (sekitar 0.35 dB per kilometer pada panjang gelombang 1310nm)."
+        },
+        {
+          "step": 2,
+          "title": "Kenali Warna Ferrule Konektor",
+          "text": "Pasangkan selalu konektor biru (UPC) dengan adapter biru, dan konektor hijau (APC) dengan adapter hijau.",
+          "why": "Sudut 8 derajat pada APC dirancang meredam pantulan balik cahaya (return loss) khusus untuk sinyal GPON dan TV kabel."
+        }
+      ],
+      "warning": "Jangan pernah melihat langsung ke ujung konektor fiber optik atau lubang port SFP yang aktif, karena radiasi sinar laser tak kasat mata dapat membakar retina mata secara permanen.",
+      "imageSlot": {
+        "id": "img-03-connectors",
+        "filename": "images/fiber-connector-types.png",
+        "caption": "Perbedaan konektor SC-UPC (biru) dan SC-APC (hijau) beserta penampang ferrule keramik.",
+        "alt": "Perbandingan visual konektor fiber optik SC, LC, UPC biru dan APC hijau"
+      }
+    },
+    {
+      "title": "Teknik Splicing & Pengukuran Loss",
+      "analogy": "Menyambung fiber optik itu ibarat mengelas dua batang pipa kaca tipis menggunakan busur api listrik. Kalau ujung kedua pipa tidak dipotong tegak lurus, sambungannya bakal retak dan air di dalamnya bocor ke mana-mana.",
+      "paragraphs": [
+        "Proses penyambungan dimulai dengan memasukkan protection sleeve (selongsong pelindung) ke salah satu helai serat sebelum dikupas. Kupas lapisan jaket dan coating memakai stripper tiga lubang, lalu bersihkan sisa gel coating memakai tisu bebas serat yang dibasahi alkohol isopropil 99%. Serat yang sudah bersih akan berdecit saat ditarik tisu alkohol.",
+        "Potong serat memakai optical fiber cleaver dengan sudut potong seragam di bawah 1 derajat. Letakkan kedua ujung serat ke V-groove mesin fusion splicer, lalu tutup penutup angin mesin. Mesin akan mensejajarkan core secara otomatis dan menembakkan loncatan busur api listrik tegangan tinggi untuk meleburkan kedua kaca menjadi satu kesatuan."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Bersihkan dengan Alkohol Sebelum Cleaving",
+          "text": "Usap serat kaca memakai tisu alkohol setelah dikupas dan sebelum dipotong dengan cleaver.",
+          "why": "Debu mikroskopis yang menempel pada mata pisau cleaver akan membuat kaca pecah tak beraturan saat ditekan."
+        },
+        {
+          "step": 2,
+          "title": "Panaskan Protection Sleeve di Heater",
+          "text": "Geser selongsong pelindung ke titik sambungan kaca, lalu masukkan ke slot pemanas splicer selama 15-20 detik.",
+          "why": "Batang stainless steel di dalam sleeve mengunci titik sambungan agar kaca tidak patah saat dirapikan di kaset OTB."
+        },
+        {
+          "step": 3,
+          "title": "Ukur Redaman dengan OPM (Optical Power Meter)",
+          "text": "Hubungkan OLS (Light Source) di ujung kirim dan OPM di ujung terima pada panjang gelombang yang sama (1310nm atau 1550nm).",
+          "why": "Standar sambungan fusion splicer yang bagus harus menghasilkan perkiraan loss di bawah 0.05 dB per sambungan."
+        }
+      ],
+      "warning": "Pecahan serat kaca bekas potongan cleaver sangat berbahaya! Selalu kumpulkan ke wadah tertutup khusus dan jangan biarkan tercecer di karpet atau lantai.",
+      "imageSlot": {
+        "id": "img-03-splicer-screen",
+        "filename": "images/fiber-fusion-splicing.png",
+        "caption": "Tampilan layar fusion splicer saat alignment sumbu X-Y dan estimasi nilai redaman sambungan.",
+        "alt": "Layar monitor fusion splicer menunjukkan penyelarasan core serat dan proses peleburan"
+      }
+    }
+  ],
+  "realCommands": [
+    {
+      "title": "Membaca Daya Optik SFP di Router MikroTik",
+      "code": "/interface ethernet monitor sfp-sfpplus1 once\n/interface ethernet print stats-detail where name=sfp-sfpplus1",
+      "explanation": "Perintah ini menampilkan data DDM (Digital Diagnostic Monitoring) modul SFP, termasuk nilai RX Power (daya terima optik dalam satuan dBm) dan temperatur modul.",
+      "context": "Pengecekan sinyal masuk pada port fiber optik router core MikroTik."
+    }
+  ],
+  "fieldChecklist": [
+    {
+      "id": "chk-03-01",
+      "text": "Selalu masukkan protection sleeve ke serat sebelum melakukan pengupasan jaket.",
+      "tip": "Jika lupa, kamu terpaksa memotong ulang sambungan yang sudah jadi untuk memasukkan selongsong."
+    },
+    {
+      "id": "chk-03-02",
+      "text": "Bersihkan sisa serpihan kaca cleaver ke botol pembuangan limbah tertutup.",
+      "tip": "Serat kaca dapat menembus kulit dan masuk ke peredaran darah jika terinjak atau tertusuk tangan."
+    },
+    {
+      "id": "chk-03-03",
+      "text": "Pastikan hasil estimasi loss pada layar fusion splicer maksimal 0.03 dB sampai 0.05 dB.",
+      "tip": "Bila nilai loss menunjukkan di atas 0.05 dB, buka penutup dan lakukan potong ulang cleaver."
+    },
+    {
+      "id": "chk-03-04",
+      "text": "Cek kontinuitas jalur menggunakan laser merah VFL (Visual Fault Locator).",
+      "tip": "Cahaya merah VFL yang bocor di tengah kabel menandakan ada bending ekstrem atau core patah."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "qz-03-01",
+      "question": "Berapakah batas estimasi nilai redaman (loss) sambungan fusion splicer yang dianggap bagus untuk standar teknisi lapangan?",
+      "type": "choice",
+      "options": ["Di bawah 0.05 dB", "Sekitar 3.0 dB", "Minimal 10 dB", "Harus minus 25 dB"],
+      "answer": 0,
+      "explanation": "Penyambungan fusi yang presisi memiliki redaman sambungan sangat kecil, umumnya di bawah 0.03 dB hingga maksimal 0.05 dB per titik fusi."
+    },
+    {
+      "id": "qz-03-02",
+      "question": "Apa warna ferrule bodi konektor fiber optik dengan sudut polesan APC 8 derajat?",
+      "type": "choice",
+      "options": ["Biru", "Kuning", "Hijau", "Hitam"],
+      "answer": 2,
+      "explanation": "Konektor APC (Angled Physical Contact) selalu diberi kode warna hijau, sedangkan UPC (Ultra Physical Contact) berwarna biru."
+    },
+    {
+      "id": "qz-03-03",
+      "question": "Alat apa yang memancarkan sinar laser merah tampak untuk menemukan kabel fiber yang patah atau tertekuk?",
+      "type": "choice",
+      "options": [
+        "OPM (Optical Power Meter)",
+        "VFL (Visual Fault Locator)",
+        "Cleaver optik",
+        "Multimeter digital"
+      ],
+      "answer": 1,
+      "explanation": "VFL memancarkan cahaya laser merah 650nm kasat mata. Pada titik serat yang patah atau menekuk tajam, sinar merah akan terlihat berpendar menembus jaket pelindung."
+    },
+    {
+      "id": "qz-03-04",
+      "question": "Boleh melihat langsung ke dalam lubang port SFP optik aktif untuk memastikan lasernya menyala.",
+      "type": "boolean",
+      "options": ["Benar", "Salah"],
+      "answer": 1,
+      "explanation": "Salah dan sangat berbahaya! Laser inframerah pada fiber optik tidak terlihat oleh mata telanjang tetapi energinya dapat membakar retina secara permanen dalam hitungan detik."
+    }
+  ],
+  "summary3Points": [
+    "Pahami perbedaan konektor biru UPC dan hijau APC serta jangan pernah mencampur keduanya tanpa adapter transisi.",
+    "Jaga kebersihan serat dengan alkohol 99% sebelum cleaving untuk menghasilkan permukaan potong datar tegak lurus sempurna.",
+    "Wajib gunakan wadah limbah kaca bekas dan selalu uji kontinuitas jalur menggunakan VFL serta pengukur redaman OPM."
+  ]
+}

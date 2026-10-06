@@ -1,0 +1,168 @@
+{
+  "id": "module-09",
+  "title": "Pohon Masalah",
+  "badge": "Troubleshooting",
+  "intro": "Menjadi teknisi lapangan yang hebat bukan berarti kamu gak pernah ketemu masalah, tapi kamu tahu langkah pasti saat bencana terjadi. Waktu internet kantor mati atau kamera CCTV tiba-tiba gelap gulita di depan bos klien yang marah-marah, jangan panik dan jangan tebak-tebak buah manggis. Di modul ini, kamu akan memegang pohon keputusan (decision tree) sistematis mulai dari lapisan fisik kabel, tegangan listrik, hingga konfigurasi routing.",
+  "objectives": [
+    "Menerapkan metodologi troubleshooting sistematis bottom-up dari Layer 1 Fisik hingga Layer 7 Aplikasi.",
+    "Mengeksekusi pohon keputusan 'Internet Mati Total' untuk melokalisasi masalah di modem, router, atau DNS.",
+    "Mendiagnosa kasus 'CCTV No Video' pada sistem IP dan Analog secara terukur tanpa bongkar pasang acak.",
+    "Menemukan biang keladi jaringan 'RTO Berkala' akibat loop broadcast storm atau kabel cacat CRC error."
+  ],
+  "sections": [
+    {
+      "title": "Kasus 1: Internet Mati Total",
+      "analogy": "Mencari sumber internet mati itu persis seperti memeriksa keran air rumah yang kering. Kamu cek dulu pompa sumur di depan (modem ISP), cek pipa utama ke toren (kabel router), baru cek apakah keran kamar mandimu yang mampet.",
+      "paragraphs": [
+        "Ketika pengguna berteriak internet mati, langkah pertama bukanlah merestart router secara membabi-buta. Berjalanlah ke modem ONT penyedia internet dan amati lampu indikator PON dan LOS. Jika lampu LOS berkedip merah terang, itu tanda mutlak kabel fiber optik dari tiang luar putus dan kamu wajib menelepon bantuan teknisi NOC ISP.",
+        "Jika lampu PON menyala hijau stabil, colokkan laptopmu ke port LAN modem untuk memastikan modem membagikan internet. Jika modem lancar tapi jaringan kantor mati, pindah ke router MikroTik untuk memeriksa IP WAN dan melakukan tes ping bertahap. Urutan uji ping bertahap adalah mengontak gateway modem, mengontak IP DNS publik, lalu mengontak nama domain web."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Cek Lampu PON & LOS Modem",
+          "text": "Lihat indikator fisik modem ISP: Lampu PON hijau solid = jalur optik normal. Lampu LOS merah kedip = kabel fiber optik luar putus.",
+          "why": "Membedakan dalam 5 detik pertama apakah masalah berasal dari pihak ISP atau internal kantor."
+        },
+        {
+          "step": 2,
+          "title": "Uji Ping Bertahap 3 Titik",
+          "text": "Buka terminal, ping IP gateway modem (misal 192.168.1.1), lalu ping DNS 8.8.8.8, lalu ping google.com.",
+          "why": "Menemukan titik putus rantai: jika tembus 8.8.8.8 tapi gagal google.com, masalahnya 100% hanya di DNS."
+        },
+        {
+          "step": 3,
+          "title": "Periksa Status DHCP Server Klien",
+          "text": "Cek di komputer klien apakah status kartu jaringan memperoleh IP otomatis atau berstatus APIPA (169.254.x.x).",
+          "why": "IP 169.254.x.x membuktikan paket DHCP Discover klien tidak sampai ke router akibat kabel lepas atau switch hang."
+        }
+      ],
+      "warning": "Jangan pernah menekan tombol 'Reset' kecil pada router atau modem sebelum kamu memiliki salinan file backup konfigurasi di laptopmu!",
+      "imageSlot": {
+        "id": "img-09-tree-internet",
+        "filename": "images/troubleshooting-tree-internet.png",
+        "caption": "Diagram pohon keputusan diagnosa internet mati total dari lampu ONT hingga DNS resolve.",
+        "alt": "Alur decision tree pemecahan masalah koneksi internet mati langkah demi langkah"
+      }
+    },
+    {
+      "title": "Kasus 2: CCTV Hilang Gambar & RTO Jaringan",
+      "analogy": "Kamera yang mati itu seperti lampu motor yang gak nyala. Pertama kamu cek apakah akinya ada setrum (daya 12V/PoE), lalu cek saklar dan kabelnya putus atau enggak, baru curigai bohlam lampunya yang putus.",
+      "paragraphs": [
+        "Kasus 'No Video' atau gambar hitam pada CCTV sering kali disebabkan oleh masalah suplai daya listrik, bukan kerusakan sensor kamera. Pada kamera analog, gunakan multimeter untuk mengukur voltase di ujung jack DC kamera, pastikan tegangan tetap stabil minimal 11.5 Volt saat malam hari. Penurunan tegangan (voltage drop) akibat kabel terlalu panjang sering membuat kamera restart terus-menerus.",
+        "Untuk IP Camera, perhatikan lampu indikator link pada port PoE switch: apakah lampu kuning dan hijau menyala berkedip atau mati total. Jika port switch menyala tetapi status di NVR offline, lakukan scan IP menggunakan software SADP atau IP Config tool untuk memeriksa apakah IP kamera bentrok dengan IP perangkat lain. Pada jaringan lokal yang sering RTO, periksa tab Interface MikroTik untuk melihat lonjakan Tx/Rx akibat looping kabel jaringan yang tidak sengaja tercolok balik."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Ukur Tegangan Ujung Kabel Kamera",
+          "text": "Ukur jack DC 12V dengan multimeter di dekat bodi kamera saat kamera terbeban kabel panjang.",
+          "why": "Kamera CCTV butuh minimal 11.2V DC agar prosesor dan lampu inframerah tidak drop mati mendadak."
+        },
+        {
+          "step": 2,
+          "title": "Periksa Tab RX/TX Drop & CRC Error",
+          "text": "Buka Winbox Interfaces, cek kolom 'Rx Drops' dan 'Tx Drops' serta status auto-negotiation.",
+          "why": "Angka Rx Drops yang terus bertambah ribuan paket per detik mengindikasikan konektor RJ45 kotor atau kabel cacat."
+        },
+        {
+          "step": 3,
+          "title": "Deteksi Looping dengan Torch MikroTik",
+          "text": "Jalankan tool Torch pada interface LAN untuk memantau paket broadcast ARP atau DHCP flooding.",
+          "why": "Satu kabel switch yang dicolok berputar ke port switch yang sama akan membekukan seluruh trafik jaringan dalam 30 detik."
+        }
+      ],
+      "warning": "Cabut segera kabel patch cord yang dicurigai menjadi penyebab looping jika lampu seluruh port switch berkedip sangat cepat secara serentak tanpa henti.",
+      "imageSlot": {
+        "id": "img-09-tree-cctv",
+        "filename": "images/troubleshooting-tree-cctv.png",
+        "caption": "Pohon keputusan penanganan CCTV No Video: Power -> Link PoE -> Ping IP -> Stream RTSP.",
+        "alt": "Diagram alur decision tree pelacakan masalah CCTV hilang gambar dan jaringan RTO"
+      }
+    }
+  ],
+  "realCommands": [
+    {
+      "title": "Diagnosa Jaringan Lengkap di Terminal MikroTik",
+      "code": "# 1. Ping DNS Google dengan jumlah 4 paket\n/ping 8.8.8.8 count=4\n\n# 2. Trace Route Jalur Internet\n/tool traceroute 8.8.8.8\n\n# 3. Pantau Trafik Paket Nyata (Torch)\n/tool torch ether2\n\n# 4. Deteksi Komputer Loop / Perangkat Mac Address di Jaringan\n/ip arp print where complete=no",
+      "explanation": "Perintah diagnosa cepat untuk melacak jalur paket, menemukan titik bottleneck internet, dan melihat tabel ARP yang bermasalah.",
+      "context": "Perintah darurat saat troubleshooting jaringan lambat atau putus di site klien."
+    }
+  ],
+  "fieldChecklist": [
+    {
+      "id": "chk-09-01",
+      "text": "Periksa indikator lampu fisik terlebih dahulu sebelum masuk ke menu software konfigurasi.",
+      "tip": "Melihat lampu LED hardware sering kali langsung memangkas 70% waktu investigasi lapangan."
+    },
+    {
+      "id": "chk-09-02",
+      "text": "Lakukan tes isolasi dengan mencolokkan laptop langsung ke port modem dan port router.",
+      "tip": "Metode isolasi memastikan apakah sumber kendala ada di kabel, switch lokal, atau ISP."
+    },
+    {
+      "id": "chk-09-03",
+      "text": "Ukur tegangan adaptor 12V CCTV saat diberi beban, bukan saat kabel terbuka tanpa beban.",
+      "tip": "Adaptor rusak sering menunjukkan 12V saat kosong tetapi langsung drop ke 8V saat dicolok ke beban kamera."
+    },
+    {
+      "id": "chk-09-04",
+      "text": "Simpan tangkapan layar (screenshot) log router saat error terjadi untuk bukti laporan ke NOC ISP.",
+      "tip": "Log resmi MikroTik dengan stempel waktu membuat komplain ke pihak ISP ditangani jauh lebih cepat."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "qz-09-01",
+      "question": "Jika lampu indikator LOS pada modem fiber optik ISP berkedip warna merah, apa arti kondisi tersebut?",
+      "type": "choice",
+      "options": [
+        "Koneksi kabel fiber optik terputus atau tidak menerima cahaya laser sama sekali dari sentral OLT",
+        "Password Wi-Fi salah dimasukkan oleh pengguna",
+        "Komputer klien terkena virus ransomware",
+        "Kapasitas harddisk NVR CCTV sudah penuh"
+      ],
+      "answer": 0,
+      "explanation": "LOS adalah singkatan dari Loss of Signal. Lampu merah berkedip menandakan daya optik yang diterima OPM modem di bawah batas sensitivitas (kabel putus atau bending parah)."
+    },
+    {
+      "id": "qz-09-02",
+      "question": "Jika laptop klien memperoleh IP otomatis dengan awalan 169.254.x.x, apa arti status jaringan tersebut?",
+      "type": "choice",
+      "options": [
+        "Klien terhubung ke server super cepat NASA",
+        "Klien mengalami kegagalan menerima respon dari DHCP Server (APIPA) dan tidak bisa mengakses jaringan lokal",
+        "Klien berhasil mendapatkan IP publik resmi",
+        "Router berhasil dibackup sempurna"
+      ],
+      "answer": 1,
+      "explanation": "Alamat IP 169.254.0.0/16 adalah alamat APIPA (Automatic Private IP Addressing) yang dibuat sistem operasi ketika permintaan DHCP Discover tidak dijawab oleh router."
+    },
+    {
+      "id": "qz-09-03",
+      "question": "Apa gejala fisik paling jelas pada switch unmanaged ketika terjadi loop kabel (kabel dicolok ke switch yang sama)?",
+      "type": "choice",
+      "options": [
+        "Lampu seluruh port berkedip sangat cepat dan serentak akibat badai broadcast storm",
+        "Switch mengeluarkan nada musik merdu",
+        "Kabel otomatis mencabut dirinya sendiri",
+        "Semua lampu langsung padam total selamanya"
+      ],
+      "answer": 0,
+      "explanation": "Looping Layer 2 menciptakan badai frame broadcast yang berputar tanpa henti, menyebabkan seluruh lampu port berkedip sinkron dengan frekuensi tinggi dan jaringan lumpuh total."
+    },
+    {
+      "id": "qz-09-04",
+      "question": "Langkah pertama saat menghadapi jaringan mati adalah langsung mereset router MikroTik ke setelan pabrik.",
+      "type": "boolean",
+      "options": ["Benar", "Salah"],
+      "answer": 1,
+      "explanation": "Salah besar! Menekan tombol reset menghapus semua konfigurasi, IP, VLAN, dan user tanpa menyelesaikan akar masalah fisik yang sebenarnya."
+    }
+  ],
+  "summary3Points": [
+    "Ikuti alur decision tree sistematis mulai dari lampu fisik modem LOS/PON hingga tes ping bertahap 3 titik.",
+    "Ukur tegangan drop 12V saat berbeban dan periksa bentrok IP saat menangani kamera CCTV yang berstatus No Video.",
+    "Deteksi loop broadcast storm dari kedipan serentak switch dan jangan pernah mereset router tanpa backup konfigurasi."
+  ]
+}

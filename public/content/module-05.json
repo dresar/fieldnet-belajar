@@ -1,0 +1,169 @@
+{
+  "id": "module-05",
+  "title": "Dasar MikroTik",
+  "badge": "Konfigurasi",
+  "intro": "MikroTik RouterOS adalah pisau lipat Swiss bagi setiap teknisi jaringan di Indonesia. Harganya ramah kantong tapi fiturnya sanggup mengelola jaringan kantor ratusan pengguna dengan sangat stabil. Di modul ini, kita akan mulai dari nol: cara login lewat Winbox pakai MAC Address, memberi nama interface biar gak ketuker, pasang IP, bikin DHCP Server otomatis, setting DNS, sampai pasang NAT Masquerade agar semua komputer bisa browsing internet.",
+  "objectives": [
+    "Masuk ke RouterOS via Winbox menggunakan MAC Address dan mengamankan akun default admin.",
+    "Mengonfigurasi IP Address statis dan dynamic pada interface WAN dan LAN.",
+    "Membangun DHCP Server otomatis agar komputer klien langsung dapat IP dan gateway.",
+    "Mengaktifkan NAT Masquerade dan DNS Resolver agar seluruh klien lokal bisa terhubung ke internet."
+  ],
+  "sections": [
+    {
+      "title": "Akses Winbox & Pemberian Identitas",
+      "analogy": "Login Winbox pakai MAC address itu seperti memanggil nama panggilan teman waktu dia belum punya nomor HP resmi. Walaupun router belum punya alamat IP sama sekali, kamu tetap bisa menyapa dan masuk ke dalam otaknya.",
+      "paragraphs": [
+        "Winbox adalah aplikasi resmi paling praktis untuk mengonfigurasi MikroTik melalui antarmuka grafis. Colokkan kabel LAN dari laptopmu ke ether2 atau ether3 router, lalu buka Winbox dan klik tab Neighbors. Klik deretan MAC Address router yang muncul di daftar, ketik user 'admin' dengan password kosong (atau sesuai stiker bawah router), lalu klik Connect.",
+        "Hal pertama yang wajib kamu lakukan adalah mengganti nama router (Identity) dan memberi komentar pada tiap interface. Jangan biarkan routermu tetap bernama 'MikroTik' default karena akan membingungkan saat kamu menangani banyak perangkat di satu jaringan. Tandai ether1 sebagai 'WAN-ISP' dan ether2 sebagai 'LAN-LOKAL' agar tidak salah colok kabel di kemudian hari."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Ubah System Identity",
+          "text": "Buka menu System -> Identity, lalu ketik nama identitas unik seperti 'ROUTER-KANTOR-UTAMA'.",
+          "why": "Nama identitas ini akan langsung muncul di bar judul Winbox sehingga kamu tidak salah eksekusi saat membuka banyak tab router."
+        },
+        {
+          "step": 2,
+          "title": "Beri Nama & Komentar Interface",
+          "text": "Buka Interfaces, klik ganda ether1 lalu isi Comment dengan 'Uplink ISP Modem', dan ether2 dengan 'Jalur Switch Kantor'.",
+          "why": "Komentar interface mempermudah teknisi lain memahami topologi fisik tanpa perlu menelusuri kabel ke belakang rack."
+        },
+        {
+          "step": 3,
+          "title": "Ganti Password Default Admin",
+          "text": "Buka System -> Users, klik akun admin lalu ganti password dengan kombinasi huruf besar, angka, dan simbol.",
+          "why": "Membiarkan password kosong adalah penyebab nomor satu router disusupi botnet miner dan script jahat dari internet."
+        }
+      ],
+      "warning": "Jangan pernah mencolok kabel uplink modem ISP langsung ke port ether1 sebelum password default admin router MikroTik diganti!",
+      "imageSlot": {
+        "id": "img-05-winbox-login",
+        "filename": "images/mikrotik-winbox-login.png",
+        "caption": "Tampilan tab Neighbors pada Winbox untuk login via MAC Address dan penggantian System Identity.",
+        "alt": "Tangkapan layar aplikasi Winbox MikroTik tab Neighbors dan koneksi MAC address"
+      }
+    },
+    {
+      "title": "Konfigurasi IP, DHCP, DNS & NAT",
+      "analogy": "DHCP itu seperti resepsionis hotel yang membagikan kunci kamar bernomor ke tamu yang baru datang. Sedangkan NAT Masquerade adalah kantor pos terpadu yang meminjamkan cap resmi kantor saat surat dari karyawan dikirim ke luar negeri.",
+      "paragraphs": [
+        "Jaringan lokal membutuhkan alokasi IP privat gateway yang dipasang langsung pada interface LAN router. Setelah IP terpasang, jalankan wizard DHCP Setup untuk menentukan rentang IP pool yang akan dibagikan otomatis ke komputer klien. Dengan DHCP aktif, pengguna kantor tidak perlu lagi repot mengatur alamat IP manual satu per satu.",
+        "Agar komputer klien bisa membuka website seperti google.com, router membutuhkan pengaturan DNS dan NAT Masquerade. NAT atau Network Address Translation bertugas membungkus ribuan IP privat di jaringan lokal menjadi satu IP publik resmi saat paket keluar ke arah ISP. Tanpa NAT Masquerade, paket data klien lokalmu akan langsung ditolak mentah-mentah oleh router internet dunia."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Pasang IP Address LAN",
+          "text": "Buka IP -> Addresses, klik tombol tambah (+) lalu masukkan Address 192.168.10.1/24 pada Interface ether2.",
+          "why": "IP ini bertindak sebagai pintu gerbang utama (default gateway) bagi seluruh komputer dan access point di jaringan lokal."
+        },
+        {
+          "step": 2,
+          "title": "Jalankan DHCP Server Setup",
+          "text": "Buka IP -> DHCP Server, klik tombol 'DHCP Setup', pilih ether2, lalu ikuti wizard hingga selesai.",
+          "why": "Wizard otomatis membuat DHCP Pool, konfigurasi gateway, dan waktu sewa (lease time) tanpa risiko typo angka."
+        },
+        {
+          "step": 3,
+          "title": "Isi DNS Server & Centang Remote Requests",
+          "text": "Buka IP -> DNS, isi Server dengan 8.8.8.8 dan 1.1.1.1, lalu centang kotak 'Allow Remote Requests'.",
+          "why": "Klien lokal membutuhkan DNS resolver dari router untuk menerjemahkan nama domain web menjadi alamat IP tujuan."
+        },
+        {
+          "step": 4,
+          "title": "Aktifkan NAT Masquerade Out-Interface WAN",
+          "text": "Buka IP -> Firewall -> tab NAT, tambah rule baru dengan Chain: srcnat, Out-Interface: ether1, dan Action: masquerade.",
+          "why": "Masquerade adalah mantra sakti yang menyamarkan IP klien lokal agar paket data diizinkan berlayar di jaringan internet publik."
+        }
+      ],
+      "warning": "Saat membuat rule NAT Masquerade, pastikan Out-Interface dipilih ke interface arah internet (misal ether1). Jika Out-Interface dikosongkan, seluruh port lokal akan ikut termasquerade dan membebani prosesor CPU router.",
+      "imageSlot": {
+        "id": "img-05-nat-config",
+        "filename": "images/mikrotik-nat-masquerade.png",
+        "caption": "Menu IP Firewall NAT dengan Chain srcnat, Out Interface ether1, dan Action masquerade.",
+        "alt": "Tangkapan layar konfigurasi NAT Masquerade pada menu Firewall RouterOS"
+      }
+    }
+  ],
+  "realCommands": [
+    {
+      "title": "Script Konfigurasi Lengkap Dasar MikroTik",
+      "code": "# 1. Ganti Identitas Router\n/system identity set name=\"ROUTER-FIELDNET\"\n\n# 2. Pasang IP Address LAN\n/ip address add address=192.168.10.1/24 interface=ether2 comment=\"LAN-KANTOR\"\n\n# 3. Pasang IP WAN dari Modem (DHCP Client)\n/ip dhcp-client add interface=ether1 disabled=no comment=\"WAN-ISP\"\n\n# 4. Konfigurasi DNS & Izinkan Request Lokal\n/ip dns set allow-remote-requests=yes servers=8.8.8.8,1.1.1.1\n\n# 5. Pasang DHCP Server untuk Klien LAN\n/ip pool add name=dhcp_pool_lan ranges=192.168.10.100-192.168.10.200\n/ip dhcp-server add address-pool=dhcp_pool_lan interface=ether2 lease-time=8h name=dhcp-lan disabled=no\n/ip dhcp-server network add address=192.168.10.0/24 gateway=192.168.10.1 dns-server=192.168.10.1\n\n# 6. Pasang NAT Masquerade ke WAN\n/ip firewall nat add chain=srcnat out-interface=ether1 action=masquerade comment=\"NAT-INTERNET\"",
+      "explanation": "Kumpulan perintah CLI RouterOS siap copas untuk membangun router fungsional yang langsung membagikan internet ke jaringan kantor.",
+      "context": "Pengaturan dasar router MikroTik baru dari terminal console."
+    }
+  ],
+  "fieldChecklist": [
+    {
+      "id": "chk-05-01",
+      "text": "Ubah password default user admin MikroTik segera setelah pertama kali login.",
+      "tip": "Gunakan password kombinasi minimal 10 karakter dengan huruf kapital dan angka."
+    },
+    {
+      "id": "chk-05-02",
+      "text": "Pastikan router mendapatkan Default Gateway dari modem ISP (cek IP -> Routes berstatus DAs).",
+      "tip": "Status 'DAs' menandakan Dynamic, Active, Static route menuju gateway 0.0.0.0/0 bekerja."
+    },
+    {
+      "id": "chk-05-03",
+      "text": "Cek apakah komputer klien sudah menerima IP otomatis dan bisa ping ke 192.168.10.1.",
+      "tip": "Gunakan perintah 'ipconfig' di Windows atau 'ip a' di Linux untuk melihat IP klien."
+    },
+    {
+      "id": "chk-05-04",
+      "text": "Uji ping dari terminal MikroTik ke 8.8.8.8 dan google.com untuk memastikan koneksi dan DNS hidup.",
+      "tip": "Bila ping ke 8.8.8.8 berhasil tapi google.com gagal, periksa pengaturan DNS server kamu."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "qz-05-01",
+      "question": "Fitur apa pada Winbox yang memungkinkan kita login ke MikroTik meskipun router belum memiliki IP Address sama sekali?",
+      "type": "choice",
+      "options": ["Login MAC Address via Neighbors", "Login Webfig HTTP", "Login FTP Port 21", "Login SSH Port 22"],
+      "answer": 0,
+      "explanation": "Winbox menggunakan protokol penemuan Layer 2 (MNDP/CDP) yang memungkinkan komunikasi langsung melalui alamat fisik MAC Address tanpa butuh konfigurasi IP Layer 3."
+    },
+    {
+      "id": "qz-05-02",
+      "question": "Apa fungsi aksi 'masquerade' pada rule NAT MikroTik saat paket data keluar menuju ISP?",
+      "type": "choice",
+      "options": [
+        "Mematikan koneksi internet pengguna",
+        "Menyamarkan IP privat klien menjadi IP publik interface WAN router",
+        "Menghapus virus di laptop pengguna secara otomatis",
+        "Membagi file dokumen kantor ke cloud publik"
+      ],
+      "answer": 1,
+      "explanation": "Masquerade adalah jenis Source NAT khusus yang secara otomatis mengganti alamat sumber paket dengan alamat IP dinamis interface keluar (out-interface)."
+    },
+    {
+      "id": "qz-05-03",
+      "question": "Jika komputer klien bisa melakukan ping ke 8.8.8.8 tetapi tidak bisa membuka website lewat browser, bagian mana yang paling mungkin bermasalah?",
+      "type": "choice",
+      "options": [
+        "Kabel UTP terputus total",
+        "Pengaturan DNS server atau centang Allow Remote Requests",
+        "Port switch terbakar",
+        "Lampu indikator modem padam"
+      ],
+      "answer": 1,
+      "explanation": "Bisa ping ke IP angka (8.8.8.8) berarti routing dan gateway internet sudah lancar. Gagal membuka web berarti proses menerjemahkan nama domain (DNS lookup) mengalami kegagalan."
+    },
+    {
+      "id": "qz-05-04",
+      "question": "Membuat rule NAT Masquerade tanpa menentukan Out-Interface adalah praktik yang sangat dianjurkan.",
+      "type": "boolean",
+      "options": ["Benar", "Salah"],
+      "answer": 1,
+      "explanation": "Salah! Tanpa Out-Interface, semua paket antarmuka lokal juga akan dimasking. Hal ini memboroskan resource CPU router dan merusak komunikasi antar klien di LAN."
+    }
+  ],
+  "summary3Points": [
+    "Masuk via MAC Address Winbox dan segera ganti identity serta password admin demi keamanan jaringan.",
+    "Beri IP statis pada LAN lalu gunakan DHCP Setup wizard untuk pembagian IP otomatis ke komputer klien.",
+    "Aktifkan DNS dengan remote request dan pasang NAT masquerade dengan out-interface WAN agar klien bisa berinternet."
+  ]
+}

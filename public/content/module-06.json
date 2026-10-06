@@ -1,0 +1,158 @@
+{
+  "id": "module-06",
+  "title": "Konfigurasi Lanjutan",
+  "badge": "Jaringan Tingkat Lanjut",
+  "intro": "Setelah router dasar bisa jalan, saatnya naik kelas ke konfigurasi tingkat lanjut yang sering diminta perusahaan. Di kantor besar, kamu gak bisa mencampur lalu lintas komputer bos, tamu kafe, dan kamera CCTV dalam satu ruangan yang sama tanpa sekat. Di modul ini, kamu akan menguasai VLAN untuk menyekat jaringan, firewall filter untuk menolak hacker iseng, simple queue agar bandwidth gak dimonopoli download, dan VPN aman untuk kerja jarak jauh.",
+  "objectives": [
+    "Memahami konsep VLAN 802.1Q dan mengonfigurasi Bridge VLAN Filtering di MikroTik.",
+    "Membangun aturan Firewall Filter dasar untuk memblokir paket invalid dan serangan brute force.",
+    "Mengatur Simple Queue dan PCQ untuk pembagian bandwidth adil antarpengguna.",
+    "Mengonfigurasi tunnel VPN WireGuard sederhana untuk akses aman kantor dari rumah."
+  ],
+  "sections": [
+    {
+      "title": "VLAN & Bridge VLAN Filtering",
+      "analogy": "VLAN diibaratkan rombongan warga yang beda jalur biar gak tabrakan di satu jalan raya yang sama. Rombongan dinas kantor pakai pita biru, rombongan tamu kafe pakai pita kuning, jalan di aspal yang sama tapi tujuan dan pintunya terpisah rapat.",
+      "paragraphs": [
+        "VLAN atau Virtual Local Area Network memungkinkan kita membagi satu switch fisik menjadi beberapa jaringan logis yang terisolasi. Standar IEEE 802.1Q menambahkan tag 4-byte pada header frame ethernet untuk memberi label ID VLAN (misalnya VLAN 10 untuk Kantor, VLAN 20 untuk CCTV, dan VLAN 30 untuk Tamu). Port penghubung antar switch dinamakan Trunk Port (tagged), sedangkan port ke komputer disebut Access Port (untagged).",
+        "Di MikroTik RouterOS v7 modern, cara resmi membuat VLAN adalah menggunakan fitur Bridge VLAN Filtering. Semua port ethernet digabungkan ke dalam satu bridge, lalu diatur keanggotaan tag VLAN-nya pada tabel VLAN Bridge. Metode ini memanfaatkan akselerasi hardware (hardware offloading) switch chip sehingga proses switching sangat cepat dan tidak membebani prosesor router."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Buat Interface Bridge & Interface VLAN",
+          "text": "Buat bridge bernama 'bridge-lan', lalu buat interface VLAN pada menu Interfaces -> VLAN dengan interface induk 'bridge-lan'.",
+          "why": "Interface VLAN di atas bridge ini berfungsi sebagai pintu gateway Layer 3 bagi masing-masing subnet."
+        },
+        {
+          "step": 2,
+          "title": "Tentukan Port Tagged & Untagged",
+          "text": "Buka Bridge -> VLANs, tambahkan entri ID 10 dengan tagged bridge-lan dan ether2 (trunk), serta untagged ether3 (akses).",
+          "why": "Port trunk membawa banyak VLAN sekaligus dengan tag, sedangkan port akses melepas tag sebelum paket masuk ke PC biasa."
+        },
+        {
+          "step": 3,
+          "title": "Aktifkan VLAN Filtering pada Bridge",
+          "text": "Centang opsi 'VLAN Filtering' pada pengaturan bridge-lan setelah seluruh konfigurasi tagged dan untagged selesai dipetakan.",
+          "why": "Mengaktifkan filtering sebelum port dipetakan dapat memutus koneksi Winbox kamu seketika dari router."
+        }
+      ],
+      "warning": "Gunakan selalu fitur 'Safe Mode' (Ctrl+X) di pojok kiri atas Winbox saat mengaktifkan VLAN Filtering. Jika konfigurasi salah dan koneksi terputus, router otomatis membatalkan perubahan sehingga kamu tidak terkunci di luar.",
+      "imageSlot": {
+        "id": "img-06-vlan-trunk",
+        "filename": "images/vlan-bridge-filtering.png",
+        "caption": "Peta trunk port berlabel tagged dan access port untagged dalam konfigurasi Bridge VLAN Filtering.",
+        "alt": "Diagram arsitektur Bridge VLAN filtering port trunk dan access di MikroTik"
+      }
+    },
+    {
+      "title": "Firewall, Manajemen Bandwidth & VPN",
+      "analogy": "Firewall itu pos satpam ketat yang memeriksa KTP tamu asing sebelum masuk lobi. Queue seperti polisi lalu lintas yang mengatur jalur khusus motor dan busway biar bus umum gak kejebak macet sedan pribadi.",
+      "paragraphs": [
+        "Firewall filter MikroTik beroperasi melalui tiga rantai utama: Input (paket menuju router), Forward (paket melintasi router antar jaringan), dan Output (paket keluar dari router). Prinsip keamanan terbaik adalah membuat aturan default drop: izinkan koneksi established dan related yang sah, lalu tolak paket berstatus invalid dan akses luar yang tidak diinginkan. Ini melindungi port Winbox dan Webfig router dari serangan botnet massal.",
+        "Simple Queue adalah cara termudah membatasi kecepatan download dan upload tiap pengguna atau per subnet IP. Kamu bisa menentukan Limit At (kecepatan garansi minimal) dan Max Limit (kecepatan maksimal yang boleh dicapai). Untuk akses remote jarak jauh yang aman, protokol VPN modern seperti WireGuard menawarkan enkripsi kuat dengan konfigurasi kunci publik-privat yang sangat ringan dan cepat diaktifkan."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Pasang Filter Drop Invalid Connection",
+          "text": "Buka IP -> Firewall -> Filter Rules, tambah rule chain forward/input, connection-state: invalid, action: drop.",
+          "why": "Paket invalid adalah paket data cacat atau rusak yang sering kali merupakan bagian dari serangan flooding jaringan."
+        },
+        {
+          "step": 2,
+          "title": "Buat Simple Queue Pembatas Bandwidth",
+          "text": "Buka Queues -> Simple Queues, isi Target dengan IP subnet klien misal 192.168.10.0/24, lalu set Max Limit Upload/Download ke 10M/20M.",
+          "why": "Mencegah satu pengguna yang sedang mendownload file besar menghabiskan seluruh jatah kuota internet satu kantor."
+        },
+        {
+          "step": 3,
+          "title": "Siapkan WireGuard Interface & Peer",
+          "text": "Buka WireGuard, buat interface baru dengan port listen 13231, lalu buat Peer dengan menyalin Public Key dari HP atau laptop klien.",
+          "why": "WireGuard memungkinkan teknisi melakukan maintenance router dan cek CCTV kantor secara aman dari mana saja melalui internet."
+        }
+      ],
+      "warning": "Jangan pernah meletakkan rule 'Action: Drop' di urutan paling atas pada Chain Input sebelum rule accept established-related dan accept LAN dibuat, karena kamu akan langsung terputus dari Winbox.",
+      "imageSlot": {
+        "id": "img-06-firewall-rules",
+        "filename": "images/firewall-queue-vpn.png",
+        "caption": "Urutan eksekusi rantai Firewall Filter dan Simple Queue bandwidth management.",
+        "alt": "Tangkapan layar konfigurasi firewall filter chains dan simple queue RouterOS"
+      }
+    }
+  ],
+  "realCommands": [
+    {
+      "title": "Script Konfigurasi VLAN & Firewall Standar Industri",
+      "code": "# 1. Buat VLAN 10 (Staff) dan VLAN 20 (CCTV)\n/interface vlan add name=vlan10-staff vlan-id=10 interface=bridge1\n/interface vlan add name=vlan20-cctv vlan-id=20 interface=bridge1\n\n# 2. Tambah IP Gateway VLAN\n/ip address add address=192.168.10.1/24 interface=vlan10-staff\n/ip address add address=192.168.20.1/24 interface=vlan20-cctv\n\n# 3. Firewall Filter Dasar\n/ip firewall filter add chain=input connection-state=established,related action=accept comment=\"Terima sah\"\n/ip firewall filter add chain=input connection-state=invalid action=drop comment=\"Tolak cacat\"\n/ip firewall filter add chain=input in-interface=ether1 protocol=tcp dst-port=80,8291,22 action=drop comment=\"Blokir akses luar\"\n\n# 4. Simple Queue Batas Kecepatan Staff\n/queue simple add name=\"Queue-Staff\" target=192.168.10.0/24 max-limit=10M/20M comment=\"Batas Staff 20Mbps\"",
+      "explanation": "Script gabungan pembuatan interface VLAN terisolasi, pengamanan filter firewall port router, dan pembatasan bandwidth simple queue.",
+      "context": "Pengaturan tingkat lanjut untuk segmentasi jaringan kantor menengah."
+    }
+  ],
+  "fieldChecklist": [
+    {
+      "id": "chk-06-01",
+      "text": "Selalu aktifkan tombol Safe Mode (Ctrl+X) sebelum memodifikasi Bridge VLAN Filtering.",
+      "tip": "Jika konfigurasi membuat router kehilangan kontak dengan Winbox, Safe Mode otomatis me-rollback settingan."
+    },
+    {
+      "id": "chk-06-02",
+      "text": "Uji isolasi antar VLAN dengan melakukan ping dari subnet Staff ke subnet CCTV.",
+      "tip": "Pastikan hasil ping Request Timed Out (RTO) jika memang diprogram terisolasi penuh lewat firewall forward."
+    },
+    {
+      "id": "chk-06-03",
+      "text": "Verifikasi kecepatan download dan upload klien menggunakan Speedtest lokal.",
+      "tip": "Periksa tab Queues di Winbox untuk melihat warna antrean berubah menjadi hijau, kuning, atau merah saat beban maksimal."
+    },
+    {
+      "id": "chk-06-04",
+      "text": "Pastikan port sensitif seperti Winbox 8291 dan SSH 22 diblokir dari arah interface publik WAN.",
+      "tip": "Atur firewall input agar hanya mengizinkan login Winbox dari IP subnet staf internal saja."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "qz-06-01",
+      "question": "Fitur keselamatan apa di pojok kiri atas Winbox yang otomatis membatalkan perubahan jika teknisi terputus akibat salah konfigurasi?",
+      "type": "choice",
+      "options": ["Safe Mode", "Reboot Mode", "Reset Configuration", "Backup Auto"],
+      "answer": 0,
+      "explanation": "Safe Mode (tombol di kiri atas Winbox atau shortcut Ctrl+X) menyimpan state sementara. Jika koneksi TCP terputus mendadak, RouterOS otomatis me-rollback semua konfigurasi ke kondisi sebelum Safe Mode ditekan."
+    },
+    {
+      "id": "qz-06-02",
+      "question": "Apa perbedaan utama antara Port Trunk (Tagged) dan Port Access (Untagged) pada jaringan VLAN?",
+      "type": "choice",
+      "options": [
+        "Port Trunk membawa banyak VLAN berlabel tag, sedangkan Port Access membawa satu VLAN tanpa tag ke perangkat klien",
+        "Port Trunk hanya untuk kabel fiber optik, Port Access hanya untuk kabel tembaga",
+        "Port Access selalu lebih cepat sepuluh kali lipat daripada Port Trunk",
+        "Port Trunk digunakan khusus untuk menghubungkan router ke colokan listrik PLN"
+      ],
+      "answer": 0,
+      "explanation": "Port Trunk membawa frame dengan header 802.1Q berisi VLAN ID antar switch, sedangkan port Access mencopot label tag tersebut agar paket bisa diproses oleh komputer atau printer klien."
+    },
+    {
+      "id": "qz-06-03",
+      "question": "Rantai (Chain) firewall filter manakah yang digunakan untuk menyaring paket data yang ditujukan langsung ke router itu sendiri (seperti login Winbox)?",
+      "type": "choice",
+      "options": ["Chain Input", "Chain Forward", "Chain Output", "Chain Postrouting"],
+      "answer": 0,
+      "explanation": "Chain Input memproses paket dengan tujuan alamat IP router itu sendiri, sedangkan Chain Forward memproses paket yang hanya melintasi router menuju komputer lain."
+    },
+    {
+      "id": "qz-06-04",
+      "question": "WireGuard adalah protokol VPN modern yang terkenal ringan dan memiliki enkripsi kriptografi tinggi.",
+      "type": "boolean",
+      "options": ["Benar", "Salah"],
+      "answer": 0,
+      "explanation": "Benar! WireGuard adalah standar VPN modern yang jauh lebih cepat, hemat CPU, dan lebih mudah dikonfigurasi dibandingkan IPsec atau OpenVPN lama."
+    }
+  ],
+  "summary3Points": [
+    "Gunakan Bridge VLAN Filtering untuk menyekat lalu lintas antar divisi dan selalu manfaatkan Safe Mode saat mengubahnya.",
+    "Terapkan aturan firewall filter dengan chain input dan forward yang menolak paket invalid serta membatasi port manajemen.",
+    "Atur batas kecepatan dengan Simple Queue agar pembagian bandwidth adil dan gunakan WireGuard VPN untuk remote akses aman."
+  ]
+}

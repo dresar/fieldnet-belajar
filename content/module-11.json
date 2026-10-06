@@ -1,0 +1,168 @@
+{
+  "id": "module-11",
+  "title": "Dokumentasi Lapangan",
+  "badge": "Administrasi",
+  "intro": "Pekerjaan instalasi sehebat apa pun belum bisa dikatakan selesai sebelum dokumen serah terimanya ditandatangani oleh klien. Banyak teknisi hebat yang rugi jutaan rupiah atau gak dibayar tuntas cuma gara-gara malas mendokumentasikan foto sebelum-sesudah dan lupa bikin BAST resmi. Di modul penutup ini, kamu akan belajar menyusun laporan harian yang rapi, mendokumentasikan foto progres profesional, menggambar skema topologi, dan menyusun draf Berita Acara Serah Terima (BAST) anti sengketa.",
+  "objectives": [
+    "Menyusun formulir Laporan Kerja Harian (Daily Site Report) yang jelas dan ringkas.",
+    "Mengambil foto dokumentasi progres 3 tahap: Sebelum (Before), Proses (In-Progress), dan Sesudah (After).",
+    "Membuat skema topologi jaringan fisik dan logis yang mudah dipahami teknisi generasi berikutnya.",
+    "Menyusun draf Berita Acara Serah Terima (BAST) lengkap dengan klausul garansi dan kolom tanda tangan resmi."
+  ],
+  "sections": [
+    {
+      "title": "Laporan Harian & Foto Progres 3 Tahap",
+      "analogy": "Mengambil foto progres itu mirip memotret barang sebelum dikirim lewat kurir ekspedisi. Kalau barang sampai dalam keadaan lecet atau plafon retak, foto awal membuktikan bahwa kerusakan bukan akibat ulah kamu.",
+      "paragraphs": [
+        "Laporan kerja harian adalah bukti nyata bahwa kamu dan tim benar-benar bekerja di lokasi proyek setiap hari. Format laporan harus memuat informasi penting: Nama Site Gedung, Tanggal Kerja, Nama Personil Teknisi, Daftar Pekerjaan Selesai, Material yang Terpakai, serta Kendala Lapangan yang Dihadapi. Laporan ini dikirimkan ke manajer proyek atau penanggung jawab klien setiap sore sebelum tim pulang.",
+        "Dokumentasi foto wajib mengikuti kaidah 3 tahap: Before, In-Progress, dan After pada sudut pengambilan kamera yang sama. Ambil foto kondisi plafon dan dinding sebelum dibor (Before), foto saat penarikan kabel dan crimping (In-Progress), dan foto hasil akhir rack rapi serta lampu indikator menyala hijau (After). Foto yang jelas dan rapi adalah tameng hukum terkuat jika ada pihak gedung yang mengklaim kamu merusak fasilitas mereka."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Ambil Foto Sudut Lebar Sebelum Kerja",
+          "text": "Potret seluruh ruangan rack dan jalur kabel dari sudut lebar sebelum ada satu pun perkakas yang menyentuh dinding.",
+          "why": "Merekam kondisi eksisting asli gedung agar kamu tidak disalahkan atas cacat fisik yang sudah ada sebelumnya."
+        },
+        {
+          "step": 2,
+          "title": "Foto Detail Label Kabel & Serial Number",
+          "text": "Ambil foto jarak dekat stiker barcode serial number (SN) perangkat switch, router, dan NVR yang dipasang.",
+          "why": "Mempermudah klaim garansi ke distributor di masa depan tanpa perlu membongkar unit dari dalam rack."
+        },
+        {
+          "step": 3,
+          "title": "Buat Catatan Kendala & Solusi",
+          "text": "Tuliskan kendala riil di formulir harian (contoh: 'Plafon lantai 2 terkunci, koordinasi dengan sekuriti untuk buka esok hari').",
+          "why": "Memberikan transparansi alasan keterlambatan kepada klien sehingga tidak timbul prasangka buruk."
+        }
+      ],
+      "warning": "Jangan pernah meninggalkan site proyek tanpa meminta tanda tangan paraf pengawas gedung pada lembar laporan kerja harian hari itu juga.",
+      "imageSlot": {
+        "id": "img-11-photo-progress",
+        "filename": "images/documentation-before-after.png",
+        "caption": "Contoh perbandingan foto dokumentasi Before (kabel berantakan) dan After (terpasang rapi di rack).",
+        "alt": "Perbandingan foto hasil kerja sebelum dan sesudah instalasi kabel rack server"
+      }
+    },
+    {
+      "title": "Penyusunan Draf BAST & Topologi",
+      "analogy": "BAST itu seperti surat tanda terima kunci saat kamu menyerahkan mobil sewaan kembali ke pemiliknya. Begitu surat ditandatangani kedua pihak, tanggung jawab serah terima resmi beralih dan kamu berhak menerima pembayaran penuh.",
+      "paragraphs": [
+        "Berita Acara Serah Terima atau BAST adalah dokumen hukum paling sakral dalam setiap proyek instalasi jaringan dan CCTV. BAST menyatakan bahwa pihak penyedia jasa telah menyelesaikan seluruh lingkup pekerjaan dan pihak klien telah memeriksa serta menerima hasil pekerjaan dengan baik. BAST yang baik mencantumkan rincian nomor surat, daftar inventaris perangkat beserta jumlahnya, serta batas masa garansi pemeliharaan.",
+        "Lampirkan pula diagram topologi jaringan dan tabel alokasi IP Address di lembar lampiran BAST. Cantumkan informasi password akun manajemen dalam amplop tertutup bersegel atau kirimkan ke email resmi penanggung jawab IT klien. Dengan menyerahkan dokumentasi lengkap, kamu meninggalkan jejak reputasi sebagai teknisi berkelas tinggi yang dicari-cari perusahaan."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Tulis Identitas Kedua Pihak Secara Jelas",
+          "text": "Cantumkan nama lengkap, jabatan, nama perusahaan, dan alamat resmi Pihak Pertama (Pelaksana) dan Pihak Kedua (Klien).",
+          "why": "Memastikan dokumen memiliki kekuatan hukum yang sah dan mengikat antara kedua badan usaha."
+        },
+        {
+          "step": 2,
+          "title": "Rinci Klausul Garansi & Pengecualian",
+          "text": "Tuliskan masa garansi (contoh: 'Garansi instalasi 3 bulan, tidak mencakup sambaran petir dan bencana banjir').",
+          "why": "Melindungi teknisi dari tuntutan sepihak klien atas kerusakan perangkat akibat bencana alam di luar kendali."
+        },
+        {
+          "step": 3,
+          "title": "Tanda Tangan & Materai Resmi",
+          "text": "Cetak rangkap dua, tempel materai resmi pada kolom tanda tangan klien dan pelaksana, lalu stempel cap perusahaan.",
+          "why": "Satu berkas asli dipegang oleh pihak klien dan satu berkas asli disimpan di arsip keuangan teknisi."
+        }
+      ],
+      "warning": "Jangan pernah menyerahkan hak akses akun master admin tertinggi sebelum BAST ditandatangani dan kesepakatan termin pembayaran disepakati kedua belah pihak.",
+      "imageSlot": {
+        "id": "img-11-bast-sample",
+        "filename": "images/documentation-bast-format.png",
+        "caption": "Format draf resmi Berita Acara Serah Terima (BAST) dengan daftar perangkat dan kolom tanda tangan.",
+        "alt": "Contoh format dokumen resmi Berita Acara Serah Terima pekerjaan jaringan dan CCTV"
+      }
+    }
+  ],
+  "realCommands": [
+    {
+      "title": "Contoh Format Teks Berita Acara Serah Terima (BAST)",
+      "code": "BERITA ACARA SERAH TERIMA PEKERJAAN (BAST)\nNomor: BAST/FN/2026/X/001\n\nPada hari ini, Selasa tanggal 06 Oktober 2026, kami yang bertanda tangan di bawah ini:\n1. PIHAK PERTAMA (Pelaksana):\n   Nama: Agus Setiawan (Lead Technician FieldNet)\n2. PIHAK KEDUA (Pemberi Kerja):\n   Nama: Budi Pratama (Manager Operasional PT Berkah Jaya)\n\nMenyatakan bahwa PIHAK PERTAMA telah menyelesaikan 100% instalasi jaringan LAN dan CCTV:\n- 1 Unit Router MikroTik RB4011 terkonfigurasi VLAN dan DHCP\n- 8 Unit Kamera IP Hikvision 1080p terpasang di jalur conduit\n- 1 Unit NVR 8 Channel + HDD 4TB Surveillance (Rekaman Normal)\n\nPIHAK KEDUA telah menguji dan menerima hasil pekerjaan tersebut dengan baik.\nMasa garansi instalasi berlaku selama 90 (sembilan puluh) hari kalender sejak penandatanganan.\n\nPIHAK PERTAMA (Pelaksana)              PIHAK KEDUA (Pemberi Kerja)\n[Materai & TTD]                        [Materai & TTD]\n( Agus Setiawan )                      ( Budi Pratama )",
+      "explanation": "Format teks draf resmi BAST standar Indonesia yang diakui secara hukum untuk penagihan invoice proyek.",
+      "context": "Pembuatan dokumen serah terima proyek akhir instalasi di hadapan klien."
+    }
+  ],
+  "fieldChecklist": [
+    {
+      "id": "chk-11-01",
+      "text": "Ambil foto Before, In-Progress, dan After pada seluruh titik penarikan kabel.",
+      "tip": "Simpan foto dengan resolusi cukup jelas dan pastikan stempel tanggal foto diaktifkan."
+    },
+    {
+      "id": "chk-11-02",
+      "text": "Cetak dan tempel tabel label nomor kabel di pintu bagian dalam rack server.",
+      "tip": "Membantu klien dan teknisi lain mengetahui nomor kabel tanpa perlu membuka dokumen digital."
+    },
+    {
+      "id": "chk-11-03",
+      "text": "Pastikan seluruh item perangkat keras diuji coba bersama klien sebelum tanda tangan BAST.",
+      "tip": "Ajak penanggung jawab klien melihat monitor CCTV dan tes kecepatan internet bersama-sama."
+    },
+    {
+      "id": "chk-11-04",
+      "text": "Simpan salinan fisik atau scan PDF dokumen BAST yang sudah bermaterai dan bertanda tangan basah.",
+      "tip": "Dokumen BAST adalah syarat wajib pencairan dana pembayaran invoice termin terakhir dari bagian keuangan."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "qz-11-01",
+      "question": "Mengapa dokumentasi foto kondisi lokasi kerja sebelum instalasi dimulai (tahap Before) sangat krusial bagi teknisi?",
+      "type": "choice",
+      "options": [
+        "Sebagai bukti legal bahwa kerusakan atau retakan fisik gedung sudah ada sebelum teknisi mulai bekerja",
+        "Untuk diunggah ke media sosial pribadi tanpa izin",
+        "Sebagai syarat membeli kabel di toko bangunan",
+        "Untuk menghapus nomor induk kependudukan teknisi"
+      ],
+      "answer": 0,
+      "explanation": "Foto Before melindungi teknisi dari tuduhan merusak properti (seperti plafon jebol, cat dinding terkelupas, atau kaca retak) yang sebetulnya sudah terjadi sebelum proyek dimulai."
+    },
+    {
+      "id": "qz-11-02",
+      "question": "Apa fungsi utama dokumen Berita Acara Serah Terima (BAST) dalam kontrak proyek instalasi jaringan dan CCTV?",
+      "type": "choice",
+      "options": [
+        "Bukti sah bahwa seluruh pekerjaan telah selesai diuji dan diterima klien, serta menjadi dasar pencairan pembayaran",
+        "Surat izin meminjam tangga dan obeng dari tetangga",
+        "Kuitansi pembelian makan siang tim teknisi",
+        "Daftar nomor telepon darurat pemadam kebakaran"
+      ],
+      "answer": 0,
+      "explanation": "BAST adalah bukti legal serah terima hasil kerja dari pelaksana ke pemberi kerja yang menandai berakhirnya masa konstruksi dan dimulainya masa garansi serta pencairan pembayaran."
+    },
+    {
+      "id": "qz-11-03",
+      "question": "Informasi penting apa yang WAJIB dicantumkan pada klausul garansi dalam lembar BAST untuk melindungi teknisi?",
+      "type": "choice",
+      "options": [
+        "Durasi masa garansi dan pengecualian kerusakan (seperti bencana banjir, sambaran petir, atau sabotase)",
+        "Nama kucing peliharaan teknisi",
+        "Merek sepatu yang dipakai teknisi",
+        "Warna cat rumah klien di masa kecil"
+      ],
+      "answer": 0,
+      "explanation": "Klausul garansi harus secara gamblang membatasi lingkup garansi instalasi (misal 30-90 hari) dan menegaskan bahwa force majeure (sambaran petir, banjir, tegangan listrik PLN melonjak) tidak ditanggung gratis."
+    },
+    {
+      "id": "qz-11-04",
+      "question": "Setelah BAST ditandatangani, salinan dokumen BAST cukup disimpan oleh salah satu pihak saja tanpa perlu rangkap dua.",
+      "type": "boolean",
+      "options": ["Benar", "Salah"],
+      "answer": 1,
+      "explanation": "Salah! Dokumen kontrak dan BAST wajib dibuat minimal rangkap dua bermaterai sah, di mana satu dipegang oleh pihak pelaksana dan satu dipegang oleh pihak klien."
+    }
+  ],
+  "summary3Points": [
+    "Susun laporan kerja harian dan abadikan foto progres 3 tahap Before, In-Progress, dan After secara disiplin.",
+    "Beri label fisik pada seluruh kabel dan sediakan diagram topologi serta tabel alokasi IP di dalam rack server.",
+    "Pastikan draf BAST resmi ditandatangani bermaterai dengan klausul garansi yang jelas untuk mengunci pembayaran aman."
+  ]
+}

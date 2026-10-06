@@ -1,0 +1,107 @@
+{
+  "version": "1.0.0",
+  "name": "FieldNet Belajar - Kurikulum Teknisi Lapangan",
+  "updatedAt": "2026-10-06",
+  "author": "Tim Engineering FieldNet",
+  "modules": [
+    {
+      "id": "module-01",
+      "order": 1,
+      "title": "Survei Lokasi",
+      "badge": "Perencanaan",
+      "desc": "Teknik observasi fisik, jalur kabel, grounding, dan perhitungan Bill of Quantities.",
+      "duration": "25 Menit",
+      "icon": "map-pin"
+    },
+    {
+      "id": "module-02",
+      "order": 2,
+      "title": "Kabel UTP",
+      "badge": "Pengkabelan",
+      "desc": "Standar T568A vs T568B, teknik crimping presisi, dan uji continuity tester.",
+      "duration": "30 Menit",
+      "icon": "cable"
+    },
+    {
+      "id": "module-03",
+      "order": 3,
+      "title": "Fiber Optik",
+      "badge": "Transmisi",
+      "desc": "Single-mode vs multi-mode, teknik fusion splicing, cleaver, dan ukur loss OPM.",
+      "duration": "35 Menit",
+      "icon": "zap"
+    },
+    {
+      "id": "module-04",
+      "order": 4,
+      "title": "Instalasi Rack",
+      "badge": "Perangkat Keras",
+      "desc": "Mounting rack server, patch panel, manajemen kabel rapi, dan kalkulasi PoE.",
+      "duration": "30 Menit",
+      "icon": "server"
+    },
+    {
+      "id": "module-05",
+      "order": 5,
+      "title": "Dasar MikroTik",
+      "badge": "Konfigurasi",
+      "desc": "Akses Winbox, penamaan interface, IP address, DHCP server, DNS, dan NAT masquerade.",
+      "duration": "40 Menit",
+      "icon": "router"
+    },
+    {
+      "id": "module-06",
+      "order": 6,
+      "title": "Konfigurasi Lanjutan",
+      "badge": "Jaringan Tingkat Lanjut",
+      "desc": "Bridge VLAN filtering, static routing, filter firewall, queue bandwith, dan VPN.",
+      "duration": "45 Menit",
+      "icon": "network"
+    },
+    {
+      "id": "module-07",
+      "order": 7,
+      "title": "CCTV Sistem",
+      "badge": "Kamera Pengawas",
+      "desc": "Kamera Analog vs IP ONVIF, DVR vs NVR, kalkulasi kapasitas HDD, dan lensa sudut.",
+      "duration": "35 Menit",
+      "icon": "camera"
+    },
+    {
+      "id": "module-08",
+      "order": 8,
+      "title": "Akses Remote",
+      "badge": "Akses Jarak Jauh",
+      "desc": "Koneksi P2P Cloud, port forwarding, konfigurasi DDNS, dan streaming HP.",
+      "duration": "30 Menit",
+      "icon": "smartphone"
+    },
+    {
+      "id": "module-09",
+      "order": 9,
+      "title": "Pohon Masalah",
+      "badge": "Troubleshooting",
+      "desc": "Decision tree langkah demi langkah atasi jaringan mati, CCTV blank, dan koneksi RTO.",
+      "duration": "40 Menit",
+      "icon": "alert-triangle"
+    },
+    {
+      "id": "module-10",
+      "order": 10,
+      "title": "Maintenance Berkala",
+      "badge": "Pemeliharaan",
+      "desc": "Jadwal dan checklist perawatan harian, mingguan, dan bulanan untuk jamin uptime.",
+      "duration": "25 Menit",
+      "icon": "shield-check"
+    },
+    {
+      "id": "module-11",
+      "order": 11,
+      "title": "Dokumentasi Lapangan",
+      "badge": "Administrasi",
+      "desc": "Penyusunan laporan harian, foto progress pekerjaan, topologi, dan format BAST.",
+      "duration": "30 Menit",
+      "icon": "file-text"
+    }
+  ]
+}

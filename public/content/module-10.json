@@ -1,0 +1,163 @@
+{
+  "id": "module-10",
+  "title": "Maintenance Berkala",
+  "badge": "Pemeliharaan",
+  "intro": "Perangkat jaringan dan CCTV yang tidak pernah dirawat itu seperti motor matic yang gak pernah ganti oli. Kelihatannya hari ini jalan lancar, tapi besok mendadak pistonnya macet dan mogok di tengah jalan layang waktu jam sibuk. Teknisi profesional bukan yang cuma jago pasang alat baru, tapi yang bisa menjaga sistem klien tetap menyala bertahun-tahun tanpa downtime tak terduga. Di modul ini, kamu akan memegang ritme checklist perawatan harian, mingguan, dan bulanan.",
+  "objectives": [
+    "Menyusun prosedur inspeksi harian untuk suhu ruang server, lampu rack, dan status perekaman CCTV.",
+    "Membuat jadwal backup otomatis konfigurasi MikroTik format biner .backup dan teks .rsc setiap minggu.",
+    "Melakukan pembersihan fisik filter debu kipas NVR dan switch tanpa memicu mati listrik mendadak.",
+    "Membaca indikator S.M.A.R.T kesehatan harddisk dan menguji link failover internet bulanan."
+  ],
+  "sections": [
+    {
+      "title": "Rutinitas Harian & Mingguan",
+      "analogy": "Inspeksi harian itu seperti mencuci muka dan menyisir rambut di cermin sebelum berangkat kerja. Butuh waktu cuma 5 menit, tapi langsung kelihatan kalau ada mata merah atau kancing baju yang lepas.",
+      "paragraphs": [
+        "Pemeriksaan harian adalah tugas cepat yang dapat dilakukan secara remote maupun langsung di lokasi. Periksa apakah suhu ruang server berkisar antara 18 hingga 24 derajat Celsius, karena suhu panas di atas 30 derajat akan memperpendek umur kapasitor switch dan power supply. Buka software CMS CCTV untuk memeriksa apakah tanda titik merah rekaman aktif di seluruh saluran kamera.",
+        "Setiap akhir pekan, luangkan waktu untuk membuat salinan cadangan konfigurasi router MikroTik. RouterOS memiliki dua jenis backup: file biner ekstensi backup untuk router bertipe sama, serta file script teks ekstensi rsc yang fleksibel disalin ke tipe lain. Simpan kedua file cadangan tersebut ke flashdisk atau cloud penyimpanan pribadi kamu, bukan hanya ditinggal di memori internal router."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Cek Status Indikator & Suhu Ruang",
+          "text": "Lihat panel suhu AC ruang server dan pastikan kipas exhaust rack berputar normal tanpa suara mendecit.",
+          "why": "Kipas rack yang macet dapat menaikkan suhu dalam boks hingga 45°C yang memicu thermal throttle pada switch."
+        },
+        {
+          "step": 2,
+          "title": "Inspeksi Titik Merah Rekaman NVR",
+          "text": "Buka grid multi-view di monitor NVR dan pastikan ikon roll film atau titik merah menyala di semua channel.",
+          "why": "Sering kali satu kamera tidak sengaja terlepas dari jadwal rekam tanpa disadari pengelola gedung."
+        },
+        {
+          "step": 3,
+          "title": "Ekspor Script Konfigurasi .rsc Mingguan",
+          "text": "Jalankan perintah '/export file=backup-mingguan' di terminal Winbox lalu download filenya ke komputer teknisi.",
+          "why": "Jika router tersambar petir dan mati total, file script .rsc bisa diimport langsung ke router baru dalam 2 menit."
+        }
+      ],
+      "warning": "Jangan pernah menyimpan file backup hanya di dalam disk internal router, karena jika router mati total atau dicuri, file backup tersebut akan hilang bersamanya.",
+      "imageSlot": {
+        "id": "img-10-backup-export",
+        "filename": "images/maintenance-backup-routine.png",
+        "caption": "Menu Files MikroTik menunjukkan file .backup biner dan file script .rsc yang siap diunduh.",
+        "alt": "Tangkapan layar manajemen file backup router dan script export di RouterOS"
+      }
+    },
+    {
+      "title": "Perawatan Bulanan & Uji S.M.A.R.T",
+      "analogy": "Servis bulanan itu seperti tune-up mobil berkala: bersihkan saringan udara, cek kampas rem, dan tes jalan nanjak biar gak mogok waktu dipakai luar kota.",
+      "paragraphs": [
+        "Debu adalah musuh nomor satu perangkat elektronik yang menyedot udara dingin tanpa henti. Setiap bulan, bersihkan kisi-kisi ventilasi NVR, switch, dan UPS menggunakan kuas halus antistatis dan blower mini bertekanan rendah. Jangan gunakan kain basah di sekitar lubang motherboard yang dialiri arus listrik aktif.",
+        "Lakukan pemeriksaan kesehatan harddisk melalui menu SMART di NVR atau software pengelola penyimpanan rekaman. Perhatikan nilai Reallocated Sector Count dan Current Pending Sector: jika bernilai di atas nol, harddisk mulai aus dan wajib segera diganti. Terakhir, lakukan simulasi pemadaman listrik PLN untuk memastikan baterai cadangan UPS sanggup bertahan minimal lima belas menit."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Bersihkan Filter Kipas dengan Blower",
+          "text": "Semprotkan udara kering bertekanan rendah ke arah luar sasis dengan menahan bilah kipas agar tidak berputar liar.",
+          "why": "Membiarkan bilah kipas berputar terlalu kencang akibat semprotan angin bisa menghasilkan arus balik dinamo yang merusak motherboard."
+        },
+        {
+          "step": 2,
+          "title": "Periksa Status S.M.A.R.T Harddisk",
+          "text": "Buka Storage -> S.M.A.R.T Detection di NVR dan pastikan status keseluruhan bernilai 'Good' atau 'Normal'.",
+          "why": "Mengganti harddisk yang terdeteksi bad sector lebih awal menyelamatkan ribuan jam rekaman penting sebelum piringan macet total."
+        },
+        {
+          "step": 3,
+          "title": "Uji Failover Link Backup Internet",
+          "text": "Cabut sementara kabel WAN-1 ISP utama lalu amati apakah koneksi kantor otomatis berpindah ke WAN-2 dalam 5 detik.",
+          "why": "Fitur failover redundan sering kali tidak berfungsi saat dibutuhkan hanya karena rute gateway cadangan lupa diperbarui."
+        }
+      ],
+      "warning": "Sebelum melakukan upgrade firmware RouterOS atau NVR bulanan, pastikan router terhubung ke UPS aktif dan file konfigurasi sudah dibackup ke tempat aman.",
+      "imageSlot": {
+        "id": "img-10-smart-hdd",
+        "filename": "images/maintenance-smart-hdd.png",
+        "caption": "Status tabel S.M.A.R.T harddisk NVR menunjukkan suhu operasional dan reallocated sector 0.",
+        "alt": "Menu diagnostik S.M.A.R.T harddisk CCTV menunjukkan parameter kesehatan drive"
+      }
+    }
+  ],
+  "realCommands": [
+    {
+      "title": "Script Otomatis Backup Mingguan MikroTik ke Flashdisk",
+      "code": "# Script Scheduler Otomatis Setiap Minggu Pukul 02:00 Pagi\n/system scheduler add name=AutoBackup start-time=02:00:00 interval=7d on-event=\"\\\n    /system backup save name=('backup-' . [/system clock get date]) encryption=aes-sha256 password=KunciR4hasia;\\\n    /export file=('export-' . [/system clock get date])\"\n\n# Perintah Manual Cek Harddisk / USB di MikroTik\n/disk print\n/system resource print",
+      "explanation": "Script penjadwalan otomatis yang membuat file biner terenkripsi dan script konfigurasi teks setiap 7 hari sekali tanpa campur tangan manusia.",
+      "context": "Pengaturan pemeliharaan preventif otomatis di router klien."
+    }
+  ],
+  "fieldChecklist": [
+    {
+      "id": "chk-10-01",
+      "text": "Pastikan file export .rsc terbaru disimpan di cloud atau flashdisk teknisi.",
+      "tip": "File .rsc adalah penyelamat tercepat saat kamu harus mengganti hardware router yang terbakar."
+    },
+    {
+      "id": "chk-10-02",
+      "text": "Cek nilai Reallocated Sector Count pada S.M.A.R.T harddisk CCTV bernilai 0.",
+      "tip": "Nilai di atas 0 menandakan sektor fisik mulai aus dan harus dijadwalkan penggantian unit baru."
+    },
+    {
+      "id": "chk-10-03",
+      "text": "Uji ketahanan baterai UPS dengan simulasi pemutusan sumber listrik PLN utama.",
+      "tip": "Baterai UPS aki kering biasanya wajib diganti setelah 2 sampai 3 tahun pemakaian."
+    },
+    {
+      "id": "chk-10-04",
+      "text": "Tahan bilah kipas dengan jari atau isolasi saat membersihkan sasis memakai blower angin.",
+      "tip": "Mencegah dinamo kipas bertindak sebagai generator listrik yang menembakkan tegangan ke soket kipas."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "qz-10-01",
+      "question": "Apa keunggulan file cadangan script teks format .rsc dibandingkan file biner .backup di MikroTik?",
+      "type": "choice",
+      "options": [
+        "File .rsc berupa teks terbuka yang dapat diedit dan diimport ke tipe model router MikroTik mana saja",
+        "File .rsc otomatis mematikan semua virus di internet",
+        "File .rsc hanya bisa dibuka menggunakan komputer mainframe",
+        "File .rsc tidak membutuhkan memori penyimpanan sama sekali"
+      ],
+      "answer": 0,
+      "explanation": "File .backup adalah citra biner utuh yang terikat ke arsitektur dan model hardware tertentu, sedangkan file .rsc adalah kumpulan perintah teks yang fleksibel diimport ke model apa saja."
+    },
+    {
+      "id": "qz-10-02",
+      "question": "Nilai parameter S.M.A.R.T harddisk manakah yang menjadi peringatan dini bahwa piringan magnetik harddisk mulai rusak secara fisik?",
+      "type": "choice",
+      "options": [
+        "Reallocated Sector Count bernilai lebih besar dari nol",
+        "Harddisk berwarna ungu",
+        "Kabel SATA dicolok ke port 1",
+        "Kamera CCTV menyala di malam hari"
+      ],
+      "answer": 0,
+      "explanation": "Reallocated Sector Count mencatat berapa banyak sektor rusak yang telah dipetakan ulang ke sektor cadangan. Jika angka ini naik, kerusakan fatal mekanik piringan tinggal menunggu waktu."
+    },
+    {
+      "id": "qz-10-03",
+      "question": "Berapakah rentang suhu ideal ruang server atau ruang rack agar perangkat jaringan memiliki umur pakai optimal?",
+      "type": "choice",
+      "options": ["18°C sampai 24°C", "35°C sampai 45°C", "Di bawah minus 20°C", "Suhu ruangan tidak berpengaruh sama sekali"],
+      "answer": 0,
+      "explanation": "Standar ASHRAE untuk ruang data server merekomendasikan suhu antara 18°C hingga 24°C dengan kelembapan 40-60% untuk mencegah overheat dan kondensasi air."
+    },
+    {
+      "id": "qz-10-04",
+      "question": "Membiarkan bilah kipas pendingin router/NVR berputar liar saat disemprot blower angin kencang adalah tindakan yang aman.",
+      "type": "boolean",
+      "options": ["Benar", "Salah"],
+      "answer": 1,
+      "explanation": "Salah! Putaran bilah kipas yang dipaksa angin kencang menghasilkan arus induksi dinamo (back EMF) yang dapat merusak sirkuit sensor tachometer motherboard."
+    }
+  ],
+  "summary3Points": [
+    "Lakukan inspeksi harian pada suhu ruangan dan tanda aktif perekaman CCTV di seluruh channel kamera.",
+    "Jadwalkan backup mingguan rutin format .backup dan export .rsc lalu simpan ke media penyimpanan luar.",
+    "Pantau parameter S.M.A.R.T harddisk setiap bulan dan tahan bilah kipas saat membersihkan debu dengan blower."
+  ]
+}

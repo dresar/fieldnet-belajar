@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">FieldNet Belajar</string>
+    <string name="title_activity_main">FieldNet Belajar</string>
+    <string name="package_name">com.fieldnet.belajar</string>
+    <string name="custom_url_scheme">com.fieldnet.belajar</string>
+</resources>

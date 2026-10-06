@@ -1,0 +1,107 @@
+/**
+ * FieldNet Belajar - Print Stylesheet
+ * Produces crisp, professional Daily Reports and BAST documents when printed or exported as PDF.
+ */
+
+@media print {
+  /* Hide all app chrome and interactive controls */
+  .top-bar,
+  .bottom-nav,
+  .btn,
+  .modal-overlay,
+  .toast-msg,
+  .no-print {
+    display: none !important;
+  }
+
+  body, html {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    font-size: 11pt !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #app {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #FFFFFF !important;
+  }
+
+  .main-content {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .print-document {
+    padding: 1.5cm !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .print-header {
+    border-bottom: 2px solid #000000;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .print-header h1, .print-header .print-title {
+    font-size: 16pt !important;
+    font-weight: bold;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  .print-header p {
+    font-size: 10pt !important;
+    color: #333333 !important;
+  }
+
+  .print-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+  }
+
+  .print-table th,
+  .print-table td {
+    border: 1px solid #000000;
+    padding: 6px 10px;
+    font-size: 10pt;
+    text-align: left;
+  }
+
+  .print-table th {
+    background-color: #F0F0F0 !important;
+    font-weight: bold;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print-signatures {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    page-break-inside: avoid;
+  }
+
+  .print-sig-box {
+    width: 45%;
+    text-align: center;
+  }
+
+  .print-sig-line {
+    margin-top: 60px;
+    border-top: 1px solid #000000;
+    padding-top: 4px;
+    font-weight: bold;
+  }
+
+  /* Force page breaks cleanly */
+  .page-break {
+    page-break-before: always;
+  }
+}

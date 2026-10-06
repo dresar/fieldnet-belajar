@@ -1,0 +1,163 @@
+{
+  "id": "module-08",
+  "title": "Akses Remote",
+  "badge": "Akses Jarak Jauh",
+  "intro": "Pemilik bisnis zaman sekarang menuntut bisa memantau kondisi toko atau kantornya langsung dari layar smartphone di mana saja dan kapan saja. Sebagai teknisi lapangan, menghubungkan NVR dan router ke genggaman HP klien adalah menu wajib penutup proyek yang sering bikin klien kagum. Di modul ini, kamu akan mempelajari rahasia P2P Cloud QR code sekali scan, teknik port forwarding bila modem punya IP publik, konfigurasi DDNS, dan uji streaming RTSP.",
+  "objectives": [
+    "Mengaktifkan layanan Cloud P2P (Hik-Connect, DMSS, XMeye) dengan status 'Online' di NVR.",
+    "Mengatur Port Forwarding (Virtual Server) pada modem ISP untuk IP publik statis/dinamis.",
+    "Mengonfigurasi layanan Dynamic DNS (DDNS) seperti No-IP atau MikroTik Cloud DNS.",
+    "Menguji aliran streaming video RTSP menggunakan pemutar video pihak ketiga seperti VLC."
+  ],
+  "sections": [
+    {
+      "title": "Koneksi Cloud P2P Tanpa IP Publik",
+      "analogy": "P2P Cloud itu seperti aplikasi ojek online yang mempertemukan pelanggan dan driver lewat server pusat. NVR dan HP kamu sama-sama lapor ke server awan, jadi kamu gak perlu tahu alamat rumah atau IP publik modem sama sekali.",
+      "paragraphs": [
+        "Metode paling populer dan bebas ribet untuk menghubungkan CCTV ke HP adalah teknologi Peer-to-Peer (P2P) Cloud. Pabrikan ternama menyediakan platform gratis seperti Hik-Connect untuk Hikvision/HiLook, DMSS untuk Dahua/Imou, dan XMeye untuk kamera OEM. Dengan P2P, kamu tidak perlu pusing memikirkan apakah modem klien mendapatkan IP publik atau terjebak di belakang CGNAT (Carrier-Grade NAT) penyedia internet.",
+        "Kunci sukses koneksi P2P adalah memastikan NVR/DVR sudah mendapatkan IP lokal yang benar, default gateway aktif, dan DNS server bisa menjangkau internet global. Begitu terhubung, status platform di menu Network akan berubah dari 'Offline' menjadi 'Online'. Klien cukup mengunduh aplikasi di Play Store atau App Store lalu memindai kode QR yang tertera di layar monitor."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Aktifkan Opsi Platform Access",
+          "text": "Masuk ke menu Network -> Advanced -> Platform Access di NVR/DVR, lalu centang kotak Enable.",
+          "why": "NVR akan memulai jabat tangan (handshake) terenkripsi ke server cloud pabrikan."
+        },
+        {
+          "step": 2,
+          "title": "Buat Kode Verifikasi Enkripsi Kuat",
+          "text": "Ketik 6 sampai 12 karakter kode verifikasi acak (misal 'K4ntorAman#') pada kolom Verification Code.",
+          "why": "Kode verifikasi ini melindungi aliran video stream agar tidak disadap oleh orang lain yang sekadar memotret QR code kamu."
+        },
+        {
+          "step": 3,
+          "title": "Scan Kode QR di Aplikasi Smartphone Klien",
+          "text": "Buka aplikasi Hik-Connect atau DMSS di HP, klik tambah perangkat (+) lalu scan QR code SN (Serial Number) di layar monitor.",
+          "why": "Aplikasi HP akan otomatis menautkan NVR ke akun klien secara permanen tanpa perlu memasukkan angka IP rumit."
+        }
+      ],
+      "warning": "Jangan pernah memberikan kode verifikasi stream NVR kepada pihak luar, dan segera catat kode tersebut di buku catatan teknisi agar tidak lupa saat klien mengganti HP baru.",
+      "imageSlot": {
+        "id": "img-08-p2p-scan",
+        "filename": "images/cctv-p2p-cloud-setup.png",
+        "caption": "Menu Platform Access di NVR menunjukkan status Online dan QR Code serial number.",
+        "alt": "Tangkapan layar menu konfigurasi Cloud P2P dan QR code pada monitor CCTV"
+      }
+    },
+    {
+      "title": "Port Forwarding, DDNS & Aliran RTSP",
+      "analogy": "Port forwarding itu nomor sambungan ekstensi di resepsionis kantor. Kalau ada tamu luar telepon ke nomor utama kantor minta ekstensi 8000, operator langsung menyambungkan kabel telepon ke meja NVR tanpa salah kamar.",
+      "paragraphs": [
+        "Jika klien membutuhkan akses langsung berkecepatan tinggi tanpa perantara server pihak ketiga, metode Port Forwarding adalah pilihannya. Pada router atau modem internet yang memiliki IP publik, kita membuat aturan Virtual Server yang membelokkan lalu lintas dari port publik ke IP lokal NVR. Tiga port utama CCTV adalah Port Server/Media (misal 8000 atau 37777), Port Web HTTP (misal 80 atau 88), dan Port RTSP (554).",
+        "Karena IP publik dari sebagian besar ISP rumahan berganti-ganti setiap kali modem restart, kita membutuhkan Dynamic DNS. DDNS memperbarui catatan domain internet kantor secara otomatis setiap kali IP publik modem berubah alamat. Dengan DDNS dan port forwarding, aliran RTSP juga bisa ditarik langsung ke software Command Center seperti vMix, OBS, atau pemutar VLC."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Buat Port Forwarding di Modem ISP",
+          "text": "Masuk ke modem, cari menu Port Forwarding / NAT Virtual Server, lalu petakan port eksternal 8000 ke IP lokal NVR 192.168.1.100 port 8000.",
+          "why": "Mengizinkan software CMS di komputer luar kantor mengakses rekaman dan video live secara langsung."
+        },
+        {
+          "step": 2,
+          "title": "Gunakan MikroTik Cloud DDNS Gratis",
+          "text": "Di router MikroTik, aktifkan menu IP -> Cloud lalu centang 'DDNS Enabled'.",
+          "why": "MikroTik menyediakan nama domain unik *.sn.mynetname.net yang otomatis mengikuti perubahan IP publik WAN."
+        },
+        {
+          "step": 3,
+          "title": "Uji Aliran Video RTSP di VLC Player",
+          "text": "Buka VLC -> Media -> Open Network Stream, masukkan URL rtsp://admin:pass@ip:554/Streaming/Channels/101 lalu klik Play.",
+          "why": "Memastikan sensor video kamera aktif dan codec transmisi H.264/H.265 terbaca normal tanpa frame patah."
+        }
+      ],
+      "warning": "Jangan pernah mem-forward port standar default seperti HTTP 80 dan RTSP 554 tanpa mengganti password perangkat dari default, karena scanner otomatis internet akan langsung mendeteksi perangkatmu.",
+      "imageSlot": {
+        "id": "img-08-port-forwarding",
+        "filename": "images/cctv-port-forwarding.png",
+        "caption": "Skema pembagian port media 8000, RTSP 554, dan HTTP pada modem IP publik.",
+        "alt": "Diagram alur port forwarding dari modem publik ke IP lokal NVR dan kamera"
+      }
+    }
+  ],
+  "realCommands": [
+    {
+      "title": "Format Standar URL RTSP Stream Kamera CCTV",
+      "code": "# 1. Format Hikvision / HiLook Main Stream (Kualitas Tinggi):\nrtsp://admin:Password123@192.168.1.64:554/Streaming/Channels/101\n\n# 2. Format Hikvision Sub Stream (Hemat Kuota HP):\nrtsp://admin:Password123@192.168.1.64:554/Streaming/Channels/102\n\n# 3. Format Dahua / Imou Main Stream:\nrtsp://admin:Password123@192.168.1.108:554/cam/realmonitor?channel=1&subtype=0",
+      "explanation": "Format link RTSP resmi untuk menguji streaming kamera CCTV di VLC atau integrasi ke website dashboard lokal.",
+      "context": "Pengujian video streaming langsung dari terminal atau pemutar media VLC."
+    }
+  ],
+  "fieldChecklist": [
+    {
+      "id": "chk-08-01",
+      "text": "Pastikan status Platform Access di NVR berubah menjadi 'Online' sebelum dicoba di HP.",
+      "tip": "Bila status masih 'Offline', periksa kabel LAN NVR dan pastikan DNS server terisi 8.8.8.8."
+    },
+    {
+      "id": "chk-08-02",
+      "text": "Catat Kode Verifikasi Stream NVR di formulir serah terima klien.",
+      "tip": "Klien pasti akan bertanya kembali kode verifikasi ini saat anggota keluarga lain ingin ikut memantau di HP mereka."
+    },
+    {
+      "id": "chk-08-03",
+      "text": "Uji live view di HP menggunakan koneksi paket data seluler 4G/5G, bukan Wi-Fi lokal kantor.",
+      "tip": "Pengujian dengan data seluler membuktikan bahwa video benar-benar bisa diakses dari jaringan luar internet."
+    },
+    {
+      "id": "chk-08-04",
+      "text": "Ubah port eksternal port forwarding dari angka bawaan (misal ubah port 80 ke 8088).",
+      "tip": "Mengganti angka port publik mempersulit bot scanner peretas menemukan pintu masuk NVR kamu."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "qz-08-01",
+      "question": "Mengapa teknologi Cloud P2P sangat disukai untuk instalasi CCTV rumahan dan toko kecil di Indonesia?",
+      "type": "choice",
+      "options": [
+        "Karena tidak membutuhkan langganan IP publik statis dan tahan terhadap sistem CGNAT penyedia internet",
+        "Karena tidak membutuhkan kabel listrik untuk menyalakan kamera",
+        "Karena otomatis menggandakan jumlah kamera di lokasi",
+        "Karena gambar kamera otomatis menjadi 3 dimensi"
+      ],
+      "answer": 0,
+      "explanation": "Sebagian besar ISP ritel memberikan IP private CGNAT (100.64.x.x) yang tidak bisa di-port forward. Layanan P2P memecahkan masalah ini dengan menghubungkan NVR dan HP lewat server perantara awan."
+    },
+    {
+      "id": "qz-08-02",
+      "question": "Port standar berapakah yang secara global dipakai oleh protokol Real-Time Streaming Protocol (RTSP) pada kamera video?",
+      "type": "choice",
+      "options": ["Port 80", "Port 443", "Port 554", "Port 8291"],
+      "answer": 2,
+      "explanation": "Port 554 TCP/UDP adalah port resmi IANA untuk protokol streaming multimedia RTSP."
+    },
+    {
+      "id": "qz-08-03",
+      "question": "Jika status platform P2P di layar NVR masih 'Offline', langkah diagnosa apa yang pertama kali harus dicek teknisi?",
+      "type": "choice",
+      "options": [
+        "Langsung ganti kabel HDMI monitor",
+        "Periksa kabel LAN, pastikan IP Address satu segmen dengan modem, dan isi DNS dengan 8.8.8.8",
+        "Format seluruh harddisk rekaman",
+        "Ganti semua kamera dengan merk lain"
+      ],
+      "answer": 1,
+      "explanation": "Status Offline hampir selalu disebabkan oleh kegagalan NVR menjangkau gateway internet atau kegagalan DNS dalam menerjemahkan alamat domain server cloud P2P."
+    },
+    {
+      "id": "qz-08-04",
+      "question": "Aliran video RTSP sub-stream menghasilkan resolusi lebih rendah dan bitrate lebih kecil sehingga sangat cocok untuk pantauan lancar di HP.",
+      "type": "boolean",
+      "options": ["Benar", "Salah"],
+      "answer": 0,
+      "explanation": "Benar! Sub-stream memang dirancang ringan khusus untuk tampilan multi-kamera di smartphone dan jaringan seluler yang hemat kuota."
+    }
+  ],
+  "summary3Points": [
+    "Manfaatkan fitur P2P Cloud scan QR code untuk kemudahan akses jarak jauh tanpa pusing kendala IP privat CGNAT.",
+    "Beri kode verifikasi stream yang kuat dan ganti port bawaan saat menggunakan port forwarding di modem publik.",
+    "Uji selalu live view menggunakan kuota paket seluler di HP serta verifikasi aliran stream RTSP port 554."
+  ]
+}

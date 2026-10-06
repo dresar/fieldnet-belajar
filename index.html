@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#16A34A" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121412" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Aplikasi mobile offline belajar teknisi jaringan dan CCTV lapangan.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="FieldNet">
+
+  <title>FieldNet Belajar</title>
+
+  <!-- Anti-flash inline script: immediately applies theme before rendering -->
+  <script>
+    (function() {
+      try {
+        var theme = localStorage.getItem('fn_theme') || 'system';
+        if (theme === 'dark' || theme === 'light') {
+          document.documentElement.setAttribute('data-theme', theme);
+        } else {
+          document.documentElement.setAttribute('data-theme', 'system');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- Self-Hosted Stylesheets (Zero external network dependencies) -->
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/components.css">
+  <link rel="stylesheet" href="/src/styles/print.css" media="print">
+</head>
+<body>
+  <div id="app"></div>
+
+  <!-- Main ES Module Entrypoint -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

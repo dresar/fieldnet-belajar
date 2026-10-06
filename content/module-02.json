@@ -1,0 +1,157 @@
+{
+  "id": "module-02",
+  "title": "Kabel UTP",
+  "badge": "Pengkabelan",
+  "intro": "Kabel UTP adalah urat nadi jaringan lokal yang paling sering kamu pegang di lapangan. Menguasai urutan warna dan crimping yang presisi membedakan teknisi profesional dengan yang asal colok. Kalau ujung kabelmu longgar atau urutan pin salah, jaringan bakal sering putus-nyambung dan bikin pusing seluruh kantor. Di modul ini, kamu bakal kuasai standar T568B sampai hafal di luar kepala beserta teknik crimping sekali jadi.",
+  "objectives": [
+    "Menghafal urutan warna standar T568B dan T568A secara akurat.",
+    "Menguasai teknik mengupas, meluruskan, dan meratakan urutan kabel tanpa melukai isolator dalam.",
+    "Melakukan crimping konektor RJ45 dengan jacket terkunci sempurna di dalam slot.",
+    "Membaca hasil lampu indikator cable tester LAN untuk mendeteksi short, open, dan cross."
+  ],
+  "sections": [
+    {
+      "title": "Standar Warna T568A & T568B",
+      "analogy": "Urutan warna kabel ini seperti urutan kabel aki mobil atau kabel rem sepeda. Kalau warna kabel tertukar tempat, arusnya tetap jalan tapi tujuannya salah alamat dan mesin mogok seketika.",
+      "paragraphs": [
+        "Dalam dunia instalasi jaringan modern di Indonesia dan internasional, standar T568B adalah standar wajib yang paling banyak dipakai. Standar T568A masih ada, tapi biasanya hanya dipakai pada proyek instalasi militer atau jaringan telepon lama. Kabel straight memakai standar T568B di kedua ujungnya untuk menghubungkan switch ke PC, router, atau access point.",
+        "Delapan kabel kecil di dalam UTP dipilin menjadi empat pasang warna: Oranye, Hijau, Biru, dan Cokelat. Pilinan ini bukan hiasan, melainkan pelindung alami dari interferensi sinyal antar kabel atau crosstalk. Karena itu jangan mengurai pilinan terlalu panjang di dekat konektor agar performa sinyal tetap Gigabit."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Hafalkan Urutan Standar T568B",
+          "text": "Urutkan dari pin 1 (kiri) ke pin 8 (kanan): Putih-Oranye, Oranye, Putih-Hijau, Biru, Putih-Biru, Hijau, Putih-Cokelat, Cokelat.",
+          "why": "Urutan ini wajib seragam di kedua sisi agar semua pin transmit (TX) dan receive (RX) terhubung presisi ke port ethernet."
+        },
+        {
+          "step": 2,
+          "title": "Ketahui Standar T568A",
+          "text": "Pada T568A, pasangan oranye dan hijau bertukar tempat: Putih-Hijau, Hijau, Putih-Oranye, Biru, Putih-Biru, Oranye, Putih-Cokelat, Cokelat.",
+          "why": "Jika ujung 1 memakai T568A dan ujung 2 memakai T568B, kamu menghasilkan kabel Crossover yang dahulu dipakai menghubungkan switch-ke-switch."
+        }
+      ],
+      "warning": "Meskipun port ethernet modern memiliki fitur Auto-MDIX yang bisa mendeteksi kabel cross, tetap gunakan standar T568B murni di kedua ujung demi kerapian dokumentasi proyek.",
+      "imageSlot": {
+        "id": "img-02-pinout-diagram",
+        "filename": "images/utp-color-pinout.png",
+        "caption": "Diagram urutan 8 warna kabel standar T568B dilihat dengan klip RJ45 menghadap ke bawah.",
+        "alt": "Diagram urutan warna T568B dan T568A pada konektor RJ45"
+      }
+    },
+    {
+      "title": "Teknik Crimping & Uji Tester LAN",
+      "analogy": "Mencrimping kabel itu mirip memasang rantai sepeda ke gir. Begitu dipress dengan pas, rantai bakal mengunci kuat bertahun-tahun tanpa pernah lepas walau ditarik kencang.",
+      "paragraphs": [
+        "Kupas jaket luar kabel sekitar 2 sampai 3 sentimeter menggunakan tang stripper khusus kabel UTP. Luruskan kedelapan kawat menggunakan jari atau selongsong obeng kecil sampai benar-benar rata sejajar. Potong kawat kawat tersebut secara lurus menyisakan sekitar 1.2 sentimeter saja sebelum dimasukkan ke konektor RJ45.",
+        "Dorong kawat masuk ke konektor sampai ujung tembaga menyentuh mentok dinding depan plastik RJ45. Pastikan jaket abu-abu kabel ikut masuk ke dalam area pengunci di belakang konektor sebelum tang crimping ditekan. Jika jaket tidak ikut terjepit, kabel bakal cepat putus saat ditarik atau digerakkan."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Periksa Melalui Plastik Bening",
+          "text": "Lihat bagian depan konektor RJ45 di bawah cahaya terang untuk memastikan semua 8 kawat sudah mentok di ujung tembaga.",
+          "why": "Kawat yang kurang masuk setengah milimeter saja akan gagal tertembus gigi tembaga saat tang crimping ditekan."
+        },
+        {
+          "step": 2,
+          "title": "Tekan Tang Crimping dengan Kuat",
+          "text": "Masukkan konektor ke slot 8P tang crimping lalu tekan tuas hingga berbunyi klik pengunci atau tuas kembali terbuka penuh.",
+          "why": "Gigi emas pin RJ45 harus menusuk tembaga konduktor secara sempurna untuk mengalirkan arus data dan daya PoE."
+        },
+        {
+          "step": 3,
+          "title": "Uji dengan LAN Cable Tester",
+          "text": "Colok kedua ujung kabel ke unit master dan remote tester, lalu amati urutan kedipan lampu indikator 1 sampai 8.",
+          "why": "Lampu wajib menyala hijau berurutan dari angka 1 hingga 8 di kedua unit tanpa ada angka yang mati atau lompat."
+        }
+      ],
+      "warning": "Jika lampu tester menyala tidak berurutan (misal 1-2-4-3-5-6-7-8), kabel mengalami miswire atau split pair dan wajib dipotong lalu dicrimping ulang.",
+      "imageSlot": {
+        "id": "img-02-crimping-process",
+        "filename": "images/utp-crimping-steps.png",
+        "caption": "Langkah pemotongan rata, penyusupan jaket luar, dan penekanan tang crimping RJ45.",
+        "alt": "Langkah crimping konektor RJ45 dengan tang crimper dan jaket kabel terkunci"
+      }
+    }
+  ],
+  "realCommands": [
+    {
+      "title": "Cek Kecepatan Port Link di Terminal MikroTik",
+      "code": "/interface ethernet monitor ether2 once",
+      "explanation": "Perintah ini menampilkan status negosiasi link (1000Mbps full-duplex atau 100Mbps). Jika kabel hanya terhubung di 100Mbps padahal perangkat Gigabit, kemungkinan pin 4, 5, 7, atau 8 tidak terkoneksi dengan baik.",
+      "context": "Verifikasi kualitas kabel fisik yang tercolok ke router MikroTik."
+    }
+  ],
+  "fieldChecklist": [
+    {
+      "id": "chk-02-01",
+      "text": "Pastikan jaket pelindung luar kabel terjepit rapi di dalam pengunci konektor RJ45.",
+      "tip": "Kabel yang jaketnya di luar konektor akan mudah patah saat dilepas-pasang berulang kali."
+    },
+    {
+      "id": "chk-02-02",
+      "text": "Uji kedua ujung kabel dengan LAN tester dan pastikan lampu 1 sampai 8 menyala berurutan.",
+      "tip": "Jangan tinggalkan lokasi sebelum tester menunjukkan urutan 1-2-3-4-5-6-7-8 sempurna di kedua sisi."
+    },
+    {
+      "id": "chk-02-03",
+      "text": "Beri label penomoran (cable marker) di kedua ujung kabel sebelum dicolok ke patch panel.",
+      "tip": "Label kabel menghemat waktu pelacakan hingga 80% saat ada kendala pemeliharaan jaringan nanti."
+    },
+    {
+      "id": "chk-02-04",
+      "text": "Gunakan plug boot pelindung klip RJ45 untuk kabel patch cord yang sering dipindah.",
+      "tip": "Klip pengunci plastik RJ45 sangat rentan patah jika tersangkut kabel lain di dalam tas atau rack."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "qz-02-01",
+      "question": "Apa warna kabel pin nomor 1 pada standar pengkabelan T568B?",
+      "type": "choice",
+      "options": ["Putih-Hijau", "Putih-Oranye", "Biru", "Oranye"],
+      "answer": 1,
+      "explanation": "Urutan T568B dimulai dari pin 1 yaitu Putih-Oranye, lalu diikuti oleh Oranye di pin 2."
+    },
+    {
+      "id": "qz-02-02",
+      "question": "Jika lampu tester LAN nomor 4 dan 5 mati sedangkan yang lain menyala normal, apa dampaknya pada jaringan Gigabit?",
+      "type": "choice",
+      "options": [
+        "Jaringan tetap berjalan di kecepatan 1000 Mbps",
+        "Kabel turun ke kecepatan 100 Mbps (Fast Ethernet) atau gagal negosiasi",
+        "Router akan langsung restart otomatis",
+        "Kamera CCTV analog akan kehilangan suara"
+      ],
+      "answer": 1,
+      "explanation": "Jaringan Gigabit (1000BASE-T) membutuhkan seluruh 8 pin (4 pasang) bekerja sempurna. Jika pin 4-5 atau 7-8 putus, koneksi turun ke 100 Mbps (hanya butuh pin 1, 2, 3, 6)."
+    },
+    {
+      "id": "qz-02-03",
+      "question": "Mengapa jaket luar kabel UTP wajib masuk ke dalam bodi konektor RJ45 saat dicrimping?",
+      "type": "choice",
+      "options": [
+        "Supaya warna kabel tidak terlihat orang lain",
+        "Agar jaket terkunci dan kawat tembaga tidak tertarik lepas saat kabel bergoyang",
+        "Untuk menambah kecepatan transfer data hingga dua kali lipat",
+        "Agar konektor RJ45 tahan terhadap sambaran petir langsung"
+      ],
+      "answer": 1,
+      "explanation": "Pengunci plastik di bodi RJ45 didesain untuk menjepit jaket luar sehingga tarikan mekanik tidak langsung mengenai pin tembaga yang rapuh."
+    },
+    {
+      "id": "qz-02-04",
+      "question": "Kabel straight T568B dipakai untuk menghubungkan port switch ke komputer atau access point.",
+      "type": "boolean",
+      "options": ["Benar", "Salah"],
+      "answer": 0,
+      "explanation": "Benar! Kabel straight T568B di kedua ujung adalah konfigurasi standar industri untuk menghubungkan end-device ke perangkat switch distribusi."
+    }
+  ],
+  "summary3Points": [
+    "Hafalkan urutan T568B (Putih-Oranye sampai Cokelat) sebagai standar baku instalasi LAN lapangan.",
+    "Pastikan jaket luar kabel terkunci di dalam RJ45 dan potong kawat rata 1.2 cm agar semua pin tembaga menusuk sempurna.",
+    "Uji selalu dengan LAN tester 8 pin berurutan untuk menjamin link beroperasi pada kecepatan Gigabit 1000 Mbps penuh."
+  ]
+}

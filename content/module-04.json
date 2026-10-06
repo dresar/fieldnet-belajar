@@ -1,0 +1,152 @@
+{
+  "id": "module-04",
+  "title": "Instalasi Rack",
+  "badge": "Perangkat Keras",
+  "intro": "Rack server adalah rumah utama seluruh perangkat penting di jaringanmu. Rack yang tertata rapi bukan cuma memanjakan mata, tapi juga menyelamatkan kamu dari keringat dingin saat harus mengganti kabel di tengah jam sibuk kantor. Di modul ini, kamu akan belajar cara memasang cage nut tanpa jempol lecet, menata cable management horisontal, menghitung beban PoE switch, dan memasang Access Point di plafon.",
+  "objectives": [
+    "Memahami ukuran standar 1U (1.75 inci) dan teknik memasang cage nut baut rack.",
+    "Mengatur airflow depan-ke-belakang dan memasang grounding kabel tembaga rack.",
+    "Membedakan standar daya PoE aktif 802.3af/at/bt dengan Passive PoE 24V agar perangkat tidak hangus.",
+    "Memasang Access Point di plafon dengan manajemen channel non-overlapping 1, 6, dan 11."
+  ],
+  "sections": [
+    {
+      "title": "Mounting Rack & Manajemen Kabel",
+      "analogy": "Menata rack server itu mirip merapikan lemari dapur restoran bintang lima. Kalau piring, wajan, dan pisau ditumpuk sembarangan tanpa rak terpisah, koki bakal tersandung kabel dan piring pecah berhamburan.",
+      "paragraphs": [
+        "Satu unit rack atau 1U memiliki tinggi standar 44,45 milimeter atau 1,75 inci dengan tiga lubang vertikal berjarak khusus. Letakkan perangkat yang paling berat seperti UPS dan power amplifier di bagian bawah rack untuk menjaga titik berat rack tetap stabil dan tidak mudah terguling. Router MikroTik, switch distribusi, dan patch panel dipasang di area tengah sejajar dada teknisi.",
+        "Gunakan horizontal cable management (brush panel atau slot bergerigi) di antara patch panel dan switch ethernet. Kabel patch cord pendek berukuran 30 sentimeter ideal untuk menghubungkan port patch panel langsung ke port switch tepat di bawahnya. Hindari membuat 'sarang burung' dengan patch cord kepanjangan yang menjuntai di depan indikator lampu LED."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Pasang Cage Nut dengan Alat Penarik",
+          "text": "Jepitkan bibir cage nut pada lubang rail rack menggunakan tuas penarik khusus atau obeng minus kecil dari sisi belakang.",
+          "why": "Memaksa cage nut masuk memakai jempol telanjang sangat berisiko merobek kulit kuku karena pelat bajanya tajam."
+        },
+        {
+          "step": 2,
+          "title": "Sambungkan Kabel Grounding Rack",
+          "text": "Bautkan kabel tembaga BC hijau-kuning minimal 6 mm2 dari baut grounding bodi rack ke busbar grounding gedung.",
+          "why": "Muatan listrik statis dari puluhan port switch yang terinduksi kabel panjang dapat dialirkan aman ke bumi."
+        },
+        {
+          "step": 3,
+          "title": "Gunakan Patch Panel Berpenomoran",
+          "text": "Terminasi kabel permanen link ke punch-down block patch panel lalu pasang label nomor port yang cocok dengan nomor meja klien.",
+          "why": "Patch panel melindungi kabel instalasi utama di plafon agar tidak sering dicolok-cabut yang membuat kawat tembaga rapuh."
+        }
+      ],
+      "warning": "Jangan pernah meletakkan UPS aki basah atau perangkat tanpa baut penopang di rail atas rack server yang tinggi, karena beban berat dapat membengkokkan tiang rack.",
+      "imageSlot": {
+        "id": "img-04-rack-layout",
+        "filename": "images/rack-cable-management.png",
+        "caption": "Penyusunan 1U patch panel, 1U cable management, dan 1U switch Gigabit dengan patch cord rapi.",
+        "alt": "Diagram tata letak rack server 1U patch panel dan switch dengan kabel rapi"
+      }
+    },
+    {
+      "title": "Kalkulasi Daya PoE & Penempatan AP",
+      "analogy": "PoE atau Power over Ethernet itu seperti selang pemadam kebakaran yang mengalirkan air bertekanan tinggi sekaligus membawa kabel lampu di dalamnya. Kalau tekanannya salah, lampunya pecah seketika.",
+      "paragraphs": [
+        "Teknologi PoE memungkinkan kabel UTP mengalirkan data sekaligus arus listrik untuk Access Point dan IP Camera. Standar PoE aktif tipe af menyediakan daya hingga 15 Watt, sedangkan tipe at menyediakan 30 Watt untuk kamera PTZ. Selalu hitung total watt PoE Power Budget switch agar tidak kelebihan beban saat semua perangkat menyala serentak.",
+        "Hati-hati dengan jebakan Passive PoE 24V yang sering dipakai perangkat CPE outdoor lama dan MikroTik seri tertentu. Switch Passive PoE mengalirkan arus 24V terus-menerus tanpa handshake negosiasi pintar. Jika kamu salah mencolok kabel dari switch Passive PoE 24V ke laptop biasa, port LAN laptopmu bisa langsung hangus terbakar."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Periksa PoE Budget Switch",
+          "text": "Jumlahkan kebutuhan konsumsi watt maksimal seluruh AP dan CCTV, lalu pastikan nilainya tidak melebihi 80% kapasitas power supply switch.",
+          "why": "Menyisakan headroom 20% mencegah switch mengalami power cut-off saat malam hari ketika infrared kamera menyala serentak."
+        },
+        {
+          "step": 2,
+          "title": "Pilih Channel Non-Overlapping 2.4 GHz",
+          "text": "Atur channel radio 2.4 GHz pada AP berdekatan ke channel 1, 6, dan 11 dengan lebar channel 20 MHz murni.",
+          "why": "Hanya channel 1, 6, dan 11 yang tidak saling bertumpukan frekuensi sehingga bebas dari interferensi co-channel."
+        }
+      ],
+      "warning": "Jangan pernah menyalakan mode Passive PoE 48V/24V pada port switch yang terhubung ke komputer klien atau printer kantor non-PoE.",
+      "imageSlot": {
+        "id": "img-04-poe-budget",
+        "filename": "images/poe-switch-budget.png",
+        "caption": "Skema penghitungan total watt perangkat aktif terhadap PoE power budget switch 250W.",
+        "alt": "Diagram kalkulasi daya PoE budget switch dan sambungan Access Point"
+      }
+    }
+  ],
+  "realCommands": [
+    {
+      "title": "Cek Daya Keluar PoE di Port Switch MikroTik",
+      "code": "/interface ethernet poe monitor ether5 once\n/interface ethernet poe set ether5 poe-out=auto-on",
+      "explanation": "Perintah untuk memonitor konsumsi arus (mA), voltase (V), dan watt yang disedot oleh perangkat yang terhubung ke port ether5 MikroTik.",
+      "context": "Monitoring beban PoE pada switch MikroTik CRS seri PoE."
+    }
+  ],
+  "fieldChecklist": [
+    {
+      "id": "chk-04-01",
+      "text": "Pastikan kabel grounding sasis rack terikat kencang ke busbar grounding tembaga.",
+      "tip": "Gunakan tooth washer (ring gerigi) agar cat sasis rack terkikis dan tembaga bersentuhan sempurna."
+    },
+    {
+      "id": "chk-04-02",
+      "text": "Cek total konsumsi daya PoE tidak melebihi 80% dari PoE budget switch.",
+      "tip": "Ingat bahwa kamera CCTV menyedot daya lebih tinggi hingga 2x lipat saat infrared menyala malam hari."
+    },
+    {
+      "id": "chk-04-03",
+      "text": "Pasang AP Wi-Fi di plafon terbuka, jauh dari pipa air baja dan ducting AC.",
+      "tip": "Ducting seng AC bertindak sebagai reflektor yang merusak pola radiasi antena sinyal Wi-Fi."
+    },
+    {
+      "id": "chk-04-04",
+      "text": "Gunakan patch cord warna berbeda untuk jalur data, CCTV, dan uplink ISP.",
+      "tip": "Contoh: Biru untuk LAN kantor, Kuning untuk kamera CCTV, dan Merah untuk jalur WAN internet."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "qz-04-01",
+      "question": "Berapakah ukuran tinggi standar untuk satu unit rack server (1U)?",
+      "type": "choice",
+      "options": ["1.75 inci (44.45 mm)", "2.5 inci (63.5 mm)", "5.0 cm", "10 cm"],
+      "answer": 0,
+      "explanation": "Standar EIA-310 menetapkan 1U setara dengan 1.75 inci atau 44.45 milimeter dengan formasi 3 lubang baut per U."
+    },
+    {
+      "id": "qz-04-02",
+      "question": "Standar PoE manakah yang menyediakan daya hingga 30 Watt untuk kamera PTZ atau AP Wi-Fi 6?",
+      "type": "choice",
+      "options": ["802.3af (PoE)", "802.3at (PoE+)", "Passive 12V", "USB 2.0"],
+      "answer": 1,
+      "explanation": "Standar IEEE 802.3at atau PoE+ mampu menyuplai daya hingga 30 Watt pada port switch (sekitar 25.5 Watt di perangkat tujuan)."
+    },
+    {
+      "id": "qz-04-03",
+      "question": "Mengapa pada frekuensi 2.4 GHz hanya disarankan menggunakan channel 1, 6, dan 11?",
+      "type": "choice",
+      "options": [
+        "Karena channel lain tidak memiliki izin pemerintah",
+        "Karena ketiga channel tersebut tidak saling bertumpukan frekuensi spektrum gelombangnya",
+        "Supaya kecepatan internet naik menjadi 10 Gbps",
+        "Agar sinyal Wi-Fi bisa menembus dinding timbal tebal"
+      ],
+      "answer": 1,
+      "explanation": "Spektrum 2.4 GHz memiliki lebar kanal yang saling overlap. Hanya channel 1, 6, dan 11 yang berdiri independen tanpa interferensi co-channel di lebar 20 MHz."
+    },
+    {
+      "id": "qz-04-04",
+      "question": "Port switch dengan fitur Passive PoE 24V aman dicolokkan langsung ke kartu LAN laptop kantor biasa tanpa risiko.",
+      "type": "boolean",
+      "options": ["Benar", "Salah"],
+      "answer": 1,
+      "explanation": "Salah besar! Passive PoE tidak melakukan deteksi aman (handshake). Arus 24V langsung ditembakkan ke pin kabel sehingga dapat membakar chip ethernet laptop biasa."
+    }
+  ],
+  "summary3Points": [
+    "Susun rack dengan UPS di bagian terbawah, gunakan patch panel bernomor, dan kelola kabel memakai manajemen horizontal.",
+    "Pahami batasan PoE Power Budget dan bedakan PoE pintar 802.3af/at dengan Passive PoE agar port tidak rusak.",
+    "Pasang AP Wi-Fi dengan channel non-overlapping 1, 6, dan 11 pada frekuensi 2.4 GHz untuk mencegah tabrakan sinyal."
+  ]
+}

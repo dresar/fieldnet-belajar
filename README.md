@@ -116,31 +116,39 @@ node server/validate-content.js
 
 ---
 
-## Opsi Build APK dengan Capacitor
+## Opsi Build APK dengan Capacitor & GitHub Actions
 
-Proyek ini telah dilengkapi dengan `capacitor.config.json` sejak awal. Untuk membungkus aplikasi web menjadi file APK Android:
+### A. Otomatis Lewat GitHub Actions (Rekomendasi)
+Setiap kali kamu melakukan `git push` ke branch `main`, alur kerja CI/CD (`.github/workflows/build-and-deploy.yml`) akan otomatis:
+1. Memvalidasi seluruh modul dan skema data (`npm test`).
+2. Melakukan kompilasi bundle web produksi (`npm run build`).
+3. Mensinkronkan aset ke platform Android Capacitor (`npx cap sync android`).
+4. Mengkompilasi file APK Android secara otomatis (`./gradlew assembleDebug`).
+5. Merilis file APK ke **GitHub Releases** dengan tag `v1.0.0` dan mengunggah artifact yang langsung siap diunduh!
 
-1. **Lakukan Build Aset Web:**
+**Format URL Siap Download:**
+- **Halaman Rilis Terkini:** `https://github.com/<USERNAME>/<REPO>/releases/latest`
+- **Link Download Langsung APK:** `https://github.com/<USERNAME>/<REPO>/releases/download/v1.0.0/FieldNet-Belajar-v1.0.0.apk`
+- **Link Web App (GitHub Pages):** `https://<USERNAME>.github.io/<REPO>/`
+
+### B. Build Manual di Komputer Lokal
+1. **Lakukan Build Aset Web & Sync:**
    ```bash
    npm run build
+   npx cap sync android
    ```
 
-2. **Inisialisasi Platform Android:**
+2. **Kompilasi APK Langsung Lewat Terminal:**
    ```bash
-   npm install @capacitor/core @capacitor/cli @capacitor/android
-   npx cap add android
+   cd android && ./gradlew assembleDebug
    ```
+   File APK siap dipasang akan berada di: `android/app/build/outputs/apk/debug/app-debug.apk`
 
-3. **Sinkronisasi Kode ke Proyek Android:**
-   ```bash
-   npx cap sync
-   ```
-
-4. **Buka Proyek di Android Studio & Build APK:**
+3. **Atau Buka di Android Studio:**
    ```bash
    npx cap open android
    ```
-   Di Android Studio, pilih menu **Build -> Build Bundle(s) / APK(s) -> Build APK(s)** untuk menghasilkan file `.apk` yang siap dipasang di ponsel teknisi.
+   Pilih menu **Build -> Build Bundle(s) / APK(s) -> Build APK(s)**.
 
 ---
 

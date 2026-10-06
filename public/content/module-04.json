@@ -73,6 +73,35 @@
         "caption": "Skema penghitungan total watt perangkat aktif terhadap PoE power budget switch 250W.",
         "alt": "Diagram kalkulasi daya PoE budget switch dan sambungan Access Point"
       }
+    },
+    {
+      "title": "Pemasangan Access Point di Plafon",
+      "analogy": "Memasang AP di plafon itu seperti memasang lampu penerangan ruangan. Kalau ditaruh di bawah meja, cahayanya tertutup bayangan kursi dan perabot kantor.",
+      "paragraphs": [
+        "Access Point modern dirancang untuk drop ceiling mount agar pola radiasi antena memancar merata ke seluruh ruangan kantor. Tarik kabel LAN UTP Cat6 tersembunyi di balik rangka plafon gypsum.",
+        "Pastikan posisi AP berjarak minimal dua meter dari pipa AC metal atau ducting seng pendingin udara. Jalankan kabel patch cord melewati bracket pengunci plafon dengan rapi."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Gunakan Plat Bracket Plafon Kokoh",
+          "text": "Pasang pelat besi penahan bracket di atas papan gypsum plafon sebelum memutar bodi AP hingga mengunci.",
+          "why": "Pelat penyangga mencegah baut bracket jebol dari plafon saat ada getaran AC."
+        },
+        {
+          "step": 2,
+          "title": "Atur Frekuensi Dual-Band 2.4 & 5 GHz",
+          "text": "Konfigurasikan channel 20 MHz pada 2.4 GHz dan 40/80 MHz pada 5 GHz untuk kecepatan transfer maksimal.",
+          "why": "Frekuensi 5 GHz memberikan throughput tinggi tanpa gangguan sinyal perangkat bluetooth."
+        }
+      ],
+      "warning": "Jangan memasang Access Point tersembunyi di dalam celah sempit ducting AC karena logam akan memblokir 90 persen daya pancar sinyal Wi-Fi.",
+      "imageSlot": {
+        "id": "img-04-wifi-ap",
+        "filename": "images/wifi-ap-ceiling-mount.png",
+        "caption": "Pemasangan Access Point WiFi 6 drop ceiling mount dengan kabel LAN tersembunyi rapi di balik plafon.",
+        "alt": "Model 3D instalasi Access Point WiFi di plafon kantor"
+      }
     }
   ],
   "realCommands": [

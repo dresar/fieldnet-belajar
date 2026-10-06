@@ -73,6 +73,35 @@
         "caption": "Langkah pemotongan rata, penyusupan jaket luar, dan penekanan tang crimping RJ45.",
         "alt": "Langkah crimping konektor RJ45 dengan tang crimper dan jaket kabel terkunci"
       }
+    },
+    {
+      "title": "Toolkit UTP & Pengujian Tester LAN",
+      "analogy": "Tester kabel LAN itu seperti lampu spidometer mobil. Saat mesin dihidupkan, seluruh indikator wajib menyala berurutan agar perjalanan aman tanpa mogok.",
+      "paragraphs": [
+        "Perlengkapan teknisi UTP mencakup tang crimping ratchet heavy-duty, pemotong kawat presisi, punch-down tool untuk keystone jack, dan tester kabel LAN. Tang crimping dengan mekanisme ratchet menjamin konektor tertekan penuh sebelum tuas bisa dilepas.",
+        "Unit tester master dan remote digunakan untuk mendeteksi kabel putus, korslet, atau salah urutan pin. Pada kabel lurus standar T568B, kedelapan lampu LED hijau harus berkedip serempak dari angka satu hingga delapan."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Periksa Lampu Grounding Shielded",
+          "text": "Amati lampu indikator G (Ground) jika menguji kabel FTP atau SFTP luar ruangan.",
+          "why": "Lampu G memastikan kawat drain wire terhubung ke bodi metal konektor RJ45."
+        },
+        {
+          "step": 2,
+          "title": "Uji Tekuk Ujung Konektor",
+          "text": "Goyangkan leher konektor perlahan saat pengujian tester berlangsung untuk memastikan pin tidak goyang.",
+          "why": "Sambungan pin yang longgar sering kali menyebabkan koneksi gigabit turun ke sepuluh megabit."
+        }
+      ],
+      "warning": "Jangan pernah mencolok kabel tester LAN ke port switch yang sedang dialiri daya PoE aktif karena arus listrik akan merusak sirkuit internal tester.",
+      "imageSlot": {
+        "id": "img-02-tools-kit",
+        "filename": "images/utp-crimper-lan-tester-kit.png",
+        "caption": "Toolkit lengkap teknisi UTP: tang crimping ratchet, LAN tester 8-LED, punch down, dan konektor RJ45 Cat6.",
+        "alt": "Tas perlengkapan kerja teknisi UTP dan tester kabel LAN"
+      }
     }
   ],
   "realCommands": [

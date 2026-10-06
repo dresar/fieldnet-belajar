@@ -11,33 +11,56 @@
   ],
   "sections": [
     {
-      "title": "Arsitektur Analog HD vs IP Camera",
-      "analogy": "Kamera analog itu mirip walkie-talkie konvensional yang menyiarkan gelombang mentah langsung lewat kabel ke pangkalan. Sedangkan IP Camera itu smartphone canggih yang memproses video sendiri lalu mengirim paket file digital lewat jaringan LAN.",
+      "title": "Kamera IP Dome vs Analog Bullet",
+      "analogy": "Kamera analog itu seperti walkie-talkie yang mengirim gelombang mentah lewat kabel. Sedangkan IP camera adalah ponsel pintar yang memproses video sendiri sebelum mengirim paket data digital.",
       "paragraphs": [
-        "Sistem Analog HD (TVI, CVI, AHD) mengirimkan sinyal video mentah langsung ke DVR melalui kabel coaxial atau kabel UTP yang dipasangi video balun. DVR bertugas mengompresi dan mengubah sinyal mentah tersebut menjadi file digital untuk disimpan ke harddisk. Sistem analog ini disukai untuk proyek dengan anggaran hemat karena harga kamera dan instalasinya sangat terjangkau.",
-        "Sebaliknya, IP Camera memproses kompresi video langsung di dalam badan kamera, lalu mengirimkan aliran data video dalam bentuk paket IP ke NVR. IP camera menggunakan konektor RJ45 standar dan protokol terbuka ONVIF sehingga kamera merk A bisa dihubungkan ke NVR merk B. Fleksibilitas ini membuat IP camera mudah diintegrasikan dengan infrastruktur kabel jaringan gedung yang sudah ada."
+        "Kamera IP dome umumnya dipasang di dalam ruangan dengan satu port RJ45 PoE bersih tanpa colokan listrik tambahan. Kamera analog bullet memiliki kabel buntut bercabang berisi konektor BNC metal dan jack daya DC 12V.",
+        "Kamera IP memproses kompresi video langsung di dalam badan kamera dan berkomunikasi lewat protokol ONVIF. Kamera analog membutuhkan DVR untuk mengolah dan mengompres sinyal video mentah."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Pilih Kamera Dome untuk Area Plafon",
+          "text": "Pasang kamera tipe dome di area kasir atau lorong kantor agar sudut pandang luas dan arah lensa terlindungi.",
+          "why": "Kubah kaca pelindung dome menyulitkan orang luar melihat arah bidik lensa secara langsung."
+        },
+        {
+          "step": 2,
+          "title": "Pilih Kamera Bullet untuk Luar Ruangan",
+          "text": "Pasang kamera tipe bullet bersertifikasi IP66 atau IP67 untuk memantau gerbang masuk atau area parkir luar.",
+          "why": "Bodi moncong kamera bullet memiliki kanopi penahan air hujan dan jangkauan infrared lebih jauh."
+        }
+      ],
+      "warning": "Pastikan seal karet pelindung kabel outdoor terpasang rapat agar air hujan tidak meresap ke soket RJ45 atau BNC.",
+      "imageSlot": {
+        "id": "img-07-ip-vs-analog",
+        "filename": "images/cctv-ip-vs-analog.png",
+        "caption": "Perbandingan fisik kamera IP Dome PoE dan kamera Analog Bullet BNC dengan konektornya.",
+        "alt": "Model 3D perbandingan kamera CCTV IP Dome dan kamera Analog Bullet"
+      }
+    },
+    {
+      "title": "Topologi DVR Coaxial vs NVR PoE Switch",
+      "analogy": "Topologi analog itu seperti jalan tol satu arah khusus setiap mobil. Sedangkan topologi IP adalah jalan protokol bersama yang bisa dilewati ribuan kendaraan sekaligus.",
+      "paragraphs": [
+        "Sistem analog menyalurkan sinyal video mentah dari setiap kamera langsung ke DVR melalui kabel coaxial atau kabel UTP yang dipasangi video balun. Satu pasang kawat UTP membawa satu sinyal video kamera analog.",
+        "Sistem IP camera cukup menghubungkan seluruh kamera ke satu switch PoE menggunakan kabel LAN Cat6 standar. Dari switch PoE, satu tarikan kabel uplink gigabit mengalirkan seluruh rekaman langsung ke NVR."
       ],
       "steps": [
         {
           "step": 1,
           "title": "Gunakan Video Balun pada Kabel UTP",
           "text": "Jika memasang kamera analog dengan kabel UTP, pasang video balun pasif di kedua ujung kabel pada satu pasang kawat warna.",
-          "why": "Balun (Balanced-to-Unbalanced) menyamakan impedansi 75 ohm kabel kamera dengan 100 ohm kabel UTP sehingga gambar tidak berbayang."
+          "why": "Balun menyamakan impedansi 75 ohm kabel kamera dengan 100 ohm kabel UTP sehingga gambar tidak berbayang."
         },
         {
           "step": 2,
-          "title": "Verifikasi Kompatibilitas ONVIF",
-          "text": "Pastikan menu profil ONVIF aktif pada IP Camera dan cocokkan Profile S atau Profile T pada NVR penerima.",
-          "why": "Protokol ONVIF menjamin fitur streaming video, audio, dan kontrol gerak kamera PTZ bekerja lintas pabrikan."
-        },
-        {
-          "step": 3,
-          "title": "Gunakan Power Supply Sentral 12V DC Bersekring",
-          "text": "Pasang power supply jaring 12V 10A-20A dengan fuse box tersendiri untuk kamera analog, bukan adaptor colokan satuan.",
-          "why": "Sekring individu mencegah satu kamera yang korslet mematikan seluruh kamera lain di dalam gedung."
+          "title": "Gunakan Power Supply Sentral Bersekring",
+          "text": "Pasang power supply jaring 12V 10A-20A dengan fuse box tersendiri untuk kamera analog.",
+          "why": "Sekring individu mencegah satu kamera yang korslet mematikan seluruh kamera lain di gedung."
         }
       ],
-      "warning": "Jangan pernah memakai adaptor voltase AC pada kamera CCTV yang membutuhkan arus 12V DC, karena sirkuit sensor gambar kamera akan langsung meledak mengeluarkan asap.",
+      "warning": "Jangan pernah memakai adaptor voltase AC pada kamera CCTV yang membutuhkan arus 12V DC.",
       "imageSlot": {
         "id": "img-07-cctv-topology",
         "filename": "images/cctv-system-topology.png",

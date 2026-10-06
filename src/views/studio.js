@@ -105,6 +105,16 @@ export const STUDIO_SLOTS = [
     desc: 'Diagram alokasi daya watt switch PoE untuk Access Point dan CCTV IP.',
     prompt: 'create images Model 3D diagram isometrik switch PoE gigabit 24 port berdaya 250W dengan lampu indikator watt menyala hijau aman. Dari port-port switch menjulur kabel UTP Cat6 terhubung rapi ke Access Point WiFi 6 plafon dan kamera CCTV IP outdoor. Render 3D isometrik bersih menampilkan konsep pembagian daya PoE budget stabil tanpa teks rumit.'
   },
+  {
+    id: 'slot-wifi-controller',
+    category: 'wifi',
+    categoryName: 'WiFi',
+    title: 'WiFi Controller & AP',
+    filename: 'wifi-controller-management.png',
+    path: 'public/images/wifi-controller-management.png',
+    desc: 'Hardware controller manajemen terpusat multi-AP, seamless roaming, dan captive portal.',
+    prompt: 'create images Model 3D perangkat hardware controller WiFi gigabit warna hitam metalik berdampingan dengan dashboard laptop teknisi yang mengelola denah multi Access Point secara terpusat. Tampak visualisasi gelombang radio roaming mulus antar-ruangan dan indikator status hijau online. Render 3D bersih dengan pencahayaan studio modern.'
+  },
 
   // MikroTik Category
   {
@@ -320,16 +330,21 @@ function showToast(message) {
 
 // GitHub Contents API commit
 async function commitImageToGithub(token, repo, branch, filename, base64Content) {
-  const path = `public/images/${filename}`;
+  const cleanFilename = filename.replace(/^public\//, '').replace(/^images\//, '');
+  const path = `public/images/${cleanFilename}`;
   const apiUrl = `https://api.github.com/repos/${repo}/contents/${path}`;
+  const trimmedToken = (token || '').trim();
+  const authHeader = trimmedToken.startsWith('Bearer ') || trimmedToken.startsWith('token ')
+    ? trimmedToken
+    : (trimmedToken.startsWith('ghp_') ? `token ${trimmedToken}` : `Bearer ${trimmedToken}`);
 
   // 1. Check existing file to obtain SHA if updating
   let sha = null;
   try {
     const checkRes = await fetch(`${apiUrl}?ref=${branch}`, {
       headers: {
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/vnd.github.v3+json'
+        'Authorization': authHeader,
+        'Accept': 'application/vnd.github+json'
       }
     });
     if (checkRes.ok) {
@@ -342,7 +357,7 @@ async function commitImageToGithub(token, repo, branch, filename, base64Content)
 
   // 2. Commit file with PUT
   const payload = {
-    message: `Upload ${filename} via Studio Gambar`,
+    message: `Upload ${cleanFilename} via Studio Gambar`,
     content: base64Content,
     branch: branch
   };
@@ -353,8 +368,8 @@ async function commitImageToGithub(token, repo, branch, filename, base64Content)
   const putRes = await fetch(apiUrl, {
     method: 'PUT',
     headers: {
-      'Authorization': `Bearer ${token}`,
-      'Accept': 'application/vnd.github.v3+json',
+      'Authorization': authHeader,
+      'Accept': 'application/vnd.github+json',
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(payload)
@@ -376,17 +391,82 @@ export async function renderStudio(container) {
   let currentToken = localStorage.getItem('fn_gh_token') || DEFAULT_GH_TOKEN;
   let currentRepo = localStorage.getItem('fn_gh_repo') || DEFAULT_GH_REPO;
 
-  // Load all cached images from IndexedDB
-  const settingsList = await db.settings.toArray();
+  // Load all cached images from IndexedDB (settings & images tables)
   const imageCache = new Map();
-  for (const s of settingsList) {
-    if (s.key && s.key.startsWith('image:') && s.dataUrl) {
-      const fname = s.key.replace(/^image:/, '').replace(/^images\//, '');
-      imageCache.set(fname, s.dataUrl);
+
+  async function refreshImageCache() {
+    imageCache.clear();
+    const settingsList = await db.settings.toArray();
+    for (const s of settingsList) {
+      if (s.key && s.key.startsWith('image:') && s.dataUrl) {
+        const fname = s.key.replace(/^image:/, '').replace(/^images\//, '');
+        imageCache.set(fname, s.dataUrl);
+      }
+    }
+    if (db.images) {
+      const imagesList = await db.images.toArray();
+      for (const img of imagesList) {
+        if (img.id && img.dataUrl && !imageCache.has(img.id)) {
+          imageCache.set(img.id, img.dataUrl);
+        }
+      }
     }
   }
 
-  function renderView() {
+  await refreshImageCache();
+
+  // Helper: Process and save image lossless raw base64
+  async function processAndSaveFile(file, filename) {
+    if (!file || !file.type.startsWith('image/')) {
+      showToast('Pilih berkas gambar yang valid.');
+      return;
+    }
+
+    const cleanFilename = filename.replace(/^public\//, '').replace(/^images\//, '');
+    const reader = new FileReader();
+
+    reader.onload = async () => {
+      const dataUrl = reader.result;
+      imageCache.set(cleanFilename, dataUrl);
+      imageCache.set(filename, dataUrl);
+
+      // Save lossless image to IndexedDB across multiple key aliases and tables
+      const saves = [
+        db.settings.put({
+          key: `image:${cleanFilename}`,
+          dataUrl: dataUrl,
+          filename: cleanFilename,
+          updatedAt: Date.now()
+        }),
+        db.settings.put({
+          key: `image:images/${cleanFilename}`,
+          dataUrl: dataUrl,
+          filename: cleanFilename,
+          updatedAt: Date.now()
+        })
+      ];
+
+      if (db.images) {
+        saves.push(
+          db.images.put({
+            id: cleanFilename,
+            dataUrl: dataUrl,
+            filename: cleanFilename,
+            updatedAt: Date.now()
+          })
+        );
+      }
+
+      await Promise.all(saves);
+      showToast('Gambar disimpan di IndexedDB lokal!');
+      renderView(true);
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  function renderView(preserveScroll = false) {
+    const scrollY = preserveScroll ? window.scrollY : 0;
     const filteredSlots = activeCategory === 'all'
       ? STUDIO_SLOTS
       : STUDIO_SLOTS.filter(s => s.category === activeCategory);
@@ -429,7 +509,7 @@ export async function renderStudio(container) {
               <ol style="margin-left: var(--space-4); margin-top: var(--space-1); display: flex; flex-direction: column; gap: 4px;">
                 <li>Klik tombol <b>Salin</b> pada slot target untuk menyalin prompt model 3D bahasa Indonesia.</li>
                 <li>Buka generator AI gambar, paste prompt, dan download hasil gambarnya.</li>
-                <li>Pilih atau tarik file gambar ke slot di bawah ini tanpa kompresi (lossless).</li>
+                <li>Tarik gambar (drag & drop) atau klik <b>Pilih</b> ke slot di bawah ini tanpa kompresi (lossless).</li>
                 <li>Klik tombol <b>Upload</b> untuk commit langsung ke GitHub repository tanpa terminal.</li>
                 <li>Gambar otomatis tersimpan di IndexedDB dan langsung tampil di modul belajar!</li>
               </ol>
@@ -478,11 +558,12 @@ export async function renderStudio(container) {
         <!-- Slot Cards Grid -->
         <div style="display: flex; flex-direction: column; gap: var(--space-3);">
           ${filteredSlots.map(slot => {
-            const cachedData = imageCache.get(slot.filename);
+            const cleanFilename = slot.filename.replace(/^public\//, '').replace(/^images\//, '');
+            const cachedData = imageCache.get(cleanFilename) || imageCache.get(slot.filename);
             const isReady = !!cachedData;
 
             return `
-              <div class="card" id="card-${slot.id}" style="gap: var(--space-3);">
+              <div class="card slot-card" id="card-${slot.id}" data-filename="${cleanFilename}" style="gap: var(--space-3); transition: border-color var(--trans-quick), background-color var(--trans-quick);">
                 <!-- Slot Header -->
                 <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-2);">
                   <div style="display: flex; flex-direction: column; gap: 2px;">
@@ -510,7 +591,7 @@ export async function renderStudio(container) {
                     <span style="font-size: 11px; font-weight: 600; color: #94A3B8; display: flex; align-items: center; gap: 4px;">
                       ${icon('image', 14)} Prompt 3D Model
                     </span>
-                    <button class="btn btn-primary btn-sm btn-copy-prompt" data-prompt="${encodeURIComponent(slot.prompt)}" style="min-height: 32px; padding: 0 10px;">
+                    <button class="btn btn-primary btn-sm btn-copy-prompt" data-prompt="${encodeURIComponent(slot.prompt)}">
                       ${icon('copy', 14)} Salin
                     </button>
                   </div>
@@ -523,27 +604,32 @@ export async function renderStudio(container) {
                     <div style="position: relative; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-subtle); background: #000; text-align: center;">
                       <img src="${cachedData}" alt="${slot.title}" style="max-height: 240px; width: 100%; object-fit: contain; display: block;" />
                     </div>
-                  ` : ''}
+                  ` : `
+                    <div class="drop-zone" data-filename="${cleanFilename}" style="border: 2px dashed var(--border-subtle); border-radius: var(--radius-md); padding: var(--space-4); text-align: center; cursor: pointer; transition: all var(--trans-quick); min-height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-1); background: var(--bg-surface-elevated);">
+                      <div style="color: var(--text-muted);">${icon('upload', 22)}</div>
+                      <span style="font-size: var(--text-xs); color: var(--text-muted);">Tarik berkas gambar ke sini atau klik Pilih</span>
+                    </div>
+                  `}
 
                   <!-- Actions Row -->
                   <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); margin-top: var(--space-1);">
                     <div style="display: flex; gap: var(--space-2);">
                       <label class="btn btn-secondary btn-sm" style="cursor: pointer;">
                         ${icon('upload', 14)} Pilih
-                        <input type="file" accept="image/*" class="input-file-slot" data-slotid="${slot.id}" data-filename="${slot.filename}" style="display: none;">
+                        <input type="file" accept="image/*" class="input-file-slot" data-slotid="${slot.id}" data-filename="${cleanFilename}" style="display: none;">
                       </label>
                       ${isReady ? `
-                        <button class="btn btn-outline btn-sm btn-view-full" data-slotid="${slot.id}" data-filename="${slot.filename}">
+                        <button class="btn btn-outline btn-sm btn-view-full" data-slotid="${slot.id}" data-filename="${cleanFilename}">
                           ${icon('eye', 14)} Lihat
                         </button>
-                        <button class="btn btn-danger btn-sm btn-delete-slot" data-filename="${slot.filename}">
+                        <button class="btn btn-danger btn-sm btn-delete-slot" data-filename="${cleanFilename}">
                           ${icon('trash', 14)} Hapus
                         </button>
                       ` : ''}
                     </div>
 
                     <div style="display: flex; gap: var(--space-2);">
-                      <button class="btn btn-primary btn-sm btn-upload-github" data-filename="${slot.filename}" ${!isReady ? 'disabled style="opacity: 0.5;"' : ''}>
+                      <button class="btn btn-primary btn-sm btn-upload-github" data-filename="${cleanFilename}" ${!isReady ? 'disabled style="opacity: 0.5;"' : ''}>
                         ${icon('upload', 14)} Upload
                       </button>
                     </div>
@@ -577,6 +663,10 @@ export async function renderStudio(container) {
     `;
 
     bindEvents();
+
+    if (preserveScroll && scrollY > 0) {
+      window.scrollTo({ top: scrollY, behavior: 'instant' });
+    }
   }
 
   function bindEvents() {
@@ -585,7 +675,7 @@ export async function renderStudio(container) {
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         activeCategory = btn.getAttribute('data-cat');
-        renderView();
+        renderView(false);
       });
     });
 
@@ -631,58 +721,61 @@ export async function renderStudio(container) {
     // 4. File picker lossless upload
     const fileInputs = container.querySelectorAll('.input-file-slot');
     fileInputs.forEach(input => {
-      input.addEventListener('change', async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-
+      input.addEventListener('change', (e) => {
+        const file = e.target.files?.[0];
         const filename = input.getAttribute('data-filename');
-        const reader = new FileReader();
-
-        reader.onload = async () => {
-          const dataUrl = reader.result;
-          imageCache.set(filename, dataUrl);
-
-          // Save lossless image to IndexedDB under multiple key aliases for instant lesson access
-          const bare = filename.replace(/^images\//, '');
-          await Promise.all([
-            db.settings.put({
-              key: `image:${filename}`,
-              dataUrl: dataUrl,
-              filename: filename,
-              updatedAt: Date.now()
-            }),
-            db.settings.put({
-              key: `image:images/${bare}`,
-              dataUrl: dataUrl,
-              filename: bare,
-              updatedAt: Date.now()
-            }),
-            db.settings.put({
-              key: `image:${bare}`,
-              dataUrl: dataUrl,
-              filename: bare,
-              updatedAt: Date.now()
-            })
-          ]);
-
-          showToast('Gambar disimpan di IndexedDB lokal!');
-          renderView();
-        };
-
-        reader.readAsDataURL(file);
+        if (file && filename) {
+          processAndSaveFile(file, filename);
+        }
       });
     });
 
-    // 5. Upload to GitHub API
+    // 5. Drag & Drop support on slot cards & drop zones
+    const dropTargets = container.querySelectorAll('.slot-card, .drop-zone');
+    dropTargets.forEach(dt => {
+      dt.addEventListener('dragenter', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dt.style.outline = '2px dashed var(--primary)';
+        dt.style.outlineOffset = '2px';
+      });
+      dt.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+      dt.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dt.style.outline = '';
+        dt.style.outlineOffset = '';
+      });
+      dt.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dt.style.outline = '';
+        dt.style.outlineOffset = '';
+        const files = e.dataTransfer?.files;
+        const filename = dt.getAttribute('data-filename');
+        if (files && files.length > 0 && filename) {
+          processAndSaveFile(files[0], filename);
+        }
+      });
+    });
+
+    // 6. Upload to GitHub API
     const uploadGithubBtns = container.querySelectorAll('.btn-upload-github');
     uploadGithubBtns.forEach(btn => {
       btn.addEventListener('click', async () => {
         const filename = btn.getAttribute('data-filename');
-        const dataUrl = imageCache.get(filename);
+        const cleanFilename = filename.replace(/^public\//, '').replace(/^images\//, '');
+        const dataUrl = imageCache.get(cleanFilename) || imageCache.get(filename);
         if (!dataUrl) {
           showToast('Pilih gambar terlebih dahulu.');
           return;
         }
+
+        const activeRepo = container.querySelector('#cfg-repo')?.value?.trim() || currentRepo;
+        const activeToken = container.querySelector('#cfg-token')?.value?.trim() || currentToken;
 
         // Extract raw base64 string without data prefix
         const base64Index = dataUrl.indexOf(',');
@@ -692,8 +785,9 @@ export async function renderStudio(container) {
         showToast('Mengunggah ke GitHub...');
 
         try {
-          await commitImageToGithub(currentToken, currentRepo, DEFAULT_GH_BRANCH, filename, base64Content);
+          await commitImageToGithub(activeToken, activeRepo, DEFAULT_GH_BRANCH, cleanFilename, base64Content);
           showToast('Sukses diunggah ke GitHub!');
+          renderView(true);
         } catch (err) {
           showToast('Upload gagal: ' + err.message);
         } finally {
@@ -702,26 +796,32 @@ export async function renderStudio(container) {
       });
     });
 
-    // 6. Delete / reset image
+    // 7. Delete / reset image
     const deleteBtns = container.querySelectorAll('.btn-delete-slot');
     deleteBtns.forEach(btn => {
       btn.addEventListener('click', async () => {
         const filename = btn.getAttribute('data-filename');
-        const bare = filename.replace(/^images\//, '');
+        const cleanFilename = filename.replace(/^public\//, '').replace(/^images\//, '');
+        imageCache.delete(cleanFilename);
         imageCache.delete(filename);
 
-        await Promise.all([
-          db.settings.delete(`image:${filename}`),
-          db.settings.delete(`image:images/${bare}`),
-          db.settings.delete(`image:${bare}`)
-        ]);
+        const deletes = [
+          db.settings.delete(`image:${cleanFilename}`),
+          db.settings.delete(`image:images/${cleanFilename}`),
+          db.settings.delete(`image:${filename}`)
+        ];
+        if (db.images) {
+          deletes.push(db.images.delete(cleanFilename));
+        }
+
+        await Promise.all(deletes);
 
         showToast('Gambar dihapus dari cache lokal.');
-        renderView();
+        renderView(true);
       });
     });
 
-    // 7. Modal preview full view
+    // 8. Modal preview full view
     const modal = container.querySelector('#studio-modal');
     const modalTitle = container.querySelector('#modal-title');
     const modalImg = container.querySelector('#modal-img');
@@ -732,9 +832,10 @@ export async function renderStudio(container) {
     viewBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const filename = btn.getAttribute('data-filename');
-        const dataUrl = imageCache.get(filename);
+        const cleanFilename = filename.replace(/^public\//, '').replace(/^images\//, '');
+        const dataUrl = imageCache.get(cleanFilename) || imageCache.get(filename);
         if (dataUrl && modal && modalImg && modalTitle) {
-          modalTitle.textContent = filename;
+          modalTitle.textContent = cleanFilename;
           modalImg.src = dataUrl;
           modal.style.display = 'flex';
         }
@@ -758,5 +859,5 @@ export async function renderStudio(container) {
     }
   }
 
-  renderView();
+  renderView(false);
 }

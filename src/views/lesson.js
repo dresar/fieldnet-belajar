@@ -46,12 +46,14 @@ export async function renderLesson(container, params) {
     for (const sec of mod.sections) {
       if (sec.imageSlot && sec.imageSlot.filename) {
         const fname = sec.imageSlot.filename;
-        const bare = fname.replace(/^images\//, '');
+        const bare = fname.replace(/^public\//, '').replace(/^images\//, '');
         const item = (await db.settings.get(`image:${fname}`)) ||
                      (await db.settings.get(`image:${bare}`)) ||
-                     (await db.settings.get(`image:images/${bare}`));
+                     (await db.settings.get(`image:images/${bare}`)) ||
+                     (db.images ? await db.images.get(bare) : null);
         if (item && item.dataUrl) {
           imageMap.set(fname, item.dataUrl);
+          imageMap.set(bare, item.dataUrl);
         }
       }
     }
@@ -152,8 +154,9 @@ export async function renderLesson(container, params) {
 
           <!-- Technical Illustration Card -->
           ${sec.imageSlot ? (() => {
-            const cachedUrl = imageMap.get(sec.imageSlot.filename);
-            const initialSrc = cachedUrl || `/${sec.imageSlot.filename}`;
+            const cleanFn = sec.imageSlot.filename.replace(/^public\//, '').replace(/^images\//, '');
+            const cachedUrl = imageMap.get(sec.imageSlot.filename) || imageMap.get(cleanFn);
+            const initialSrc = cachedUrl || (sec.imageSlot.filename.startsWith('/') ? sec.imageSlot.filename : `/${sec.imageSlot.filename}`);
             return `
               <div class="image-presentation" style="margin: var(--space-2) 0; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); overflow: hidden; background: var(--bg-surface-elevated);">
                 <div style="background: #000; text-align: center; position: relative; min-height: 160px; display: flex; align-items: center; justify-content: center;">

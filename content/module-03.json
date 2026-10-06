@@ -73,6 +73,35 @@
         "caption": "Tampilan layar fusion splicer saat alignment sumbu X-Y dan estimasi nilai redaman sambungan.",
         "alt": "Layar monitor fusion splicer menunjukkan penyelarasan core serat dan proses peleburan"
       }
+    },
+    {
+      "title": "Kit Perkakas Fiber & Pengukuran Loss",
+      "analogy": "Kit fiber optik itu seperti pisau bedah dokter operasi. Setiap alat punya fungsi steril agar serat kaca mikron tidak terkontaminasi debu atau minyak kulit.",
+      "paragraphs": [
+        "Perlengkapan wajib teknisi fiber optik terdiri dari fusion splicer mini, high-precision fiber cleaver, stripper drop core tiga lubang, botol dispenser alkohol 99%, dan Optical Power Meter (OPM). Cleaver berkualitas memotong kaca tegak lurus 90 derajat tanpa retakan mikro.",
+        "Pengukuran daya sinyal optik dengan OPM memastikan kabel transmisi berada pada batas aman operasional ONT, umumnya antara minus 15 dBm hingga minus 24 dBm. Redaman di atas minus 27 dBm akan menyebabkan koneksi internet sering terputus atau lampu LOS merah menyala."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Bersihkan Serat dengan Alkohol Isopropil",
+          "text": "Usap serat kaca yang sudah dikupas memakai tisu bebas serat yang dibasahi alkohol murni.",
+          "why": "Lapisan minyak sisa gel pelindung serat dapat menghalangi penjajaran kamera v-groove splicer."
+        },
+        {
+          "step": 2,
+          "title": "Kalibrasi Panjang Gelombang OPM",
+          "text": "Cocokkan tombol lambda pada OPM ke angka 1310 nm untuk uplink data atau 1490 nm untuk downstream GPON.",
+          "why": "Setiap panjang gelombang cahaya memiliki karakteristik pembacaan daya fotodioda yang berbeda."
+        }
+      ],
+      "warning": "Jangan pernah menatap langsung ke ujung konektor atau serat optik aktif yang memancarkan laser inframerah karena dapat membutakan retina mata secara permanen.",
+      "imageSlot": {
+        "id": "img-03-tools-kit",
+        "filename": "images/fiber-splicer-cleaver-kit.png",
+        "caption": "Kit lengkap perlengkapan kerja teknisi fiber optik: fusion splicer, cleaver presisi, stripper 3 lubang, dan OPM.",
+        "alt": "Satu set lengkap peralatan fusion splicing dan pengukur loss fiber optik"
+      }
     }
   ],
   "realCommands": [

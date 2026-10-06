@@ -240,6 +240,14 @@ Dokumen ini memuat seluruh daftar prompt pembuatan model 3D teknis dalam bahasa 
   create images Model 3D adaptor PoE Injector hitam dengan dua port LAN: port Data In dari router dan port Data+Power Out menuju perangkat Access Point atau kamera CCTV, bersanding dengan switch PoE multi-port. Render 3D bersih dengan diagram aliran arus listrik DC dan data.
   ```
 
+### `images/wifi-controller-management.png`
+- **Kategori:** WiFi & Access Point
+- **Deskripsi:** Hardware controller WiFi terpusat, roaming multi-AP, dan captive portal.
+- **Prompt:**
+  ```text
+  create images Model 3D perangkat hardware controller WiFi gigabit warna hitam metalik berdampingan dengan dashboard laptop teknisi yang mengelola denah multi Access Point secara terpusat. Tampak visualisasi gelombang radio roaming mulus antar-ruangan dan indikator status hijau online. Render 3D bersih dengan pencahayaan studio modern.
+  ```
+
 ### `images/fiber-splicer-cleaver-kit.png`
 - **Kategori:** Fiber Optik Tools
 - **Deskripsi:** Paket kit perlengkapan sambung fiber optik lapangan.
@@ -295,6 +303,7 @@ Dokumen ini memuat seluruh daftar prompt pembuatan model 3D teknis dalam bahasa 
 | `images/cctv-ip-vs-analog.png` | Studio / CCTV | 3D Kamera IP vs Analog | Studio Lapangan |
 | `images/wifi-ap-ceiling-mount.png` | Studio / WiFi | 3D AP Plafon WiFi 6 | Studio Lapangan |
 | `images/poe-injector-vs-switch.png` | Studio / Power | 3D PoE Injector vs Switch | Studio Lapangan |
+| `images/wifi-controller-management.png` | Studio / WiFi | 3D Hardware WiFi Controller | Studio Lapangan |
 | `images/fiber-splicer-cleaver-kit.png` | Studio / Fiber | 3D Kit Fusion Splicer | Studio Lapangan |
 | `images/utp-crimper-lan-tester-kit.png` | Studio / UTP | 3D Kit Tang Crimping & LAN | Studio Lapangan |
 | `images/it-support-work-kit.png` | Studio / IT Kit | 3D Toolkit IT Support | Studio Lapangan |

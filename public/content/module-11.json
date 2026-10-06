@@ -79,6 +79,35 @@
         "caption": "Format draf resmi Berita Acara Serah Terima (BAST) dengan daftar perangkat dan kolom tanda tangan.",
         "alt": "Contoh format dokumen resmi Berita Acara Serah Terima pekerjaan jaringan dan CCTV"
       }
+    },
+    {
+      "title": "Work Kit IT Support & Alat Uji Harian",
+      "analogy": "Work kit IT support itu seperti tas ransel paramedis darurat. Waktu ada insiden di lapangan, semua alat pacu jantung jaringan harus siap pakai tanpa tertinggal di kantor.",
+      "paragraphs": [
+        "Seorang staf IT support wajib membawa tas kerja tangguh berisi laptop berport RJ45 fisik, adaptor USB to LAN, multimeter digital berujung runcing, dan kabel console USB ke RJ45. Laptop diagnostik memudahkan pencarian IP kamera yang lupa password atau penanganan router via terminal serial.",
+        "Lengkapi tas kerjamu dengan label printer portabel, obeng set magnetik presisi, dan flashdisk bootable rescue. Pelabelan kabel di kedua ujung dan pembuatan dokumentasi port mapping menghemat ratusan jam waktu perbaikan di masa depan."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "title": "Siapkan Kabel Console Rollover",
+          "text": "Simpan kabel console USB to RJ45 di kantong laptop beserta driver serial siap pakai.",
+          "why": "Akses console serial adalah satu-satunya jalan masuk saat router MikroTik mengalami gagal boot atau salah aturan firewall."
+        },
+        {
+          "step": 2,
+          "title": "Bawa Multimeter Digital Terkalibrasi",
+          "text": "Gunakan multimeter pada mode DC Volt untuk mengukur tegangan adaptor kamera CCTV sebelum menyambungkan beban.",
+          "why": "Voltase adaptor yang drop di bawah sebelas volt akan menyebabkan kamera sering restart sendiri saat malam hari."
+        }
+      ],
+      "warning": "Selalu pastikan probe multimeter tercolok pada soket voltase, bukan soket ampere, saat mengukur tegangan listrik agar alat tester tidak korslet.",
+      "imageSlot": {
+        "id": "img-11-work-kit",
+        "filename": "images/it-support-work-kit.png",
+        "caption": "Perlengkapan kerja lengkap teknisi IT Support: laptop RJ45, console cable, multimeter digital, dan label printer.",
+        "alt": "Model 3D toolkit kerja harian staf IT Support lapangan"
+      }
     }
   ],
   "realCommands": [

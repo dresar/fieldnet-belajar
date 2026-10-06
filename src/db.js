@@ -5,7 +5,7 @@
  */
 
 const DB_NAME = 'FieldNetBelajarDB';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 class Table {
   constructor(dbPromise, name, keyPath, autoIncrement = false) {
@@ -117,6 +117,15 @@ class FieldNetDatabase {
     this.reports = new Table(this.dbPromise, 'reports', 'id', true);
     this.bastDocs = new Table(this.dbPromise, 'bastDocs', 'id', true);
     this.settings = new Table(this.dbPromise, 'settings', 'key');
+    this.images = new Table(this.dbPromise, 'images', 'id');
+  }
+
+  // Dexie-compatible table resolver
+  table(name) {
+    if (this[name]) return this[name];
+    if (name === 'images') return this.images;
+    if (name === 'settings') return this.settings;
+    return null;
   }
 
   _init() {
@@ -153,6 +162,9 @@ class FieldNetDatabase {
         if (!db.objectStoreNames.contains('settings')) {
           db.createObjectStore('settings', { keyPath: 'key' });
         }
+        if (!db.objectStoreNames.contains('images')) {
+          db.createObjectStore('images', { keyPath: 'id' });
+        }
       };
 
       request.onsuccess = () => resolve(request.result);
@@ -170,7 +182,8 @@ class FieldNetDatabase {
       noteList,
       reportList,
       bastList,
-      settingsList
+      settingsList,
+      imagesList
     ] = await Promise.all([
       this.progress.toArray(),
       this.quizResults.toArray(),
@@ -179,13 +192,14 @@ class FieldNetDatabase {
       this.notes.toArray(),
       this.reports.toArray(),
       this.bastDocs.toArray(),
-      this.settings.toArray()
+      this.settings.toArray(),
+      this.images.toArray()
     ]);
 
     return {
       appName: 'FieldNet Belajar',
       exportedAt: new Date().toISOString(),
-      version: 1,
+      version: 2,
       data: {
         progress: progressList,
         quizResults: quizList,
@@ -194,7 +208,8 @@ class FieldNetDatabase {
         notes: noteList,
         reports: reportList,
         bastDocs: bastList,
-        settings: settingsList
+        settings: settingsList,
+        images: imagesList
       }
     };
   }
@@ -213,6 +228,7 @@ class FieldNetDatabase {
     if (Array.isArray(d.reports)) await this.reports.bulkPut(d.reports);
     if (Array.isArray(d.bastDocs)) await this.bastDocs.bulkPut(d.bastDocs);
     if (Array.isArray(d.settings)) await this.settings.bulkPut(d.settings);
+    if (Array.isArray(d.images)) await this.images.bulkPut(d.images);
     return true;
   }
 
@@ -226,7 +242,8 @@ class FieldNetDatabase {
       this.notes.clear(),
       this.reports.clear(),
       this.bastDocs.clear(),
-      this.settings.clear()
+      this.settings.clear(),
+      this.images.clear()
     ]);
   }
 }
